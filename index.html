@@ -25,11 +25,14 @@
         /* --- Header e Navbar --- */
         header { background-color: var(--primary-blue); padding: 10px 0; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .navbar { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
-        .logo { height: 50px; }
-        .nav-links { display: flex; gap: 20px; color: var(--white); font-weight: 500; }
+        .logo { height: 50px; position: relative; z-index: 1001; }
+        .nav-links { display: flex; gap: 20px; color: var(--white); font-weight: 500; align-items: center; transition: 0.3s; }
         .nav-links a:not(.btn-solicitar):hover { color: var(--accent-blue); }
-        .btn-solicitar { background-color: var(--accent-blue); color: var(--primary-blue); padding: 10px 20px; border-radius: 25px; font-weight: bold; transition: background-color 0.3s ease, color 0.3s ease; }
+        .btn-solicitar { background-color: var(--accent-blue); color: var(--primary-blue); padding: 10px 20px; border-radius: 25px; font-weight: bold; transition: background-color 0.3s ease, color 0.3s ease; display: inline-block; }
         .btn-solicitar:hover { background-color: var(--white); color: var(--primary-blue); }
+        
+        /* Ícone do Menu Sanduíche (escondido no desktop) */
+        .menu-toggle { display: none; color: var(--white); font-size: 2rem; cursor: pointer; position: relative; z-index: 1001; }
 
         /* --- Main e Seções Gerais --- */
         main { margin-top: 70px; }
@@ -37,110 +40,46 @@
         h2 { font-size: 2.5rem; color: var(--primary-blue); margin-bottom: 50px; position: relative; display: inline-block; }
         h2::after { content: ''; position: absolute; width: 60px; height: 4px; background-color: var(--accent-blue); bottom: -10px; left: 50%; transform: translateX(-50%); }
 
-        /* --- Hero (Seção do Topo com 300px e Efeito) --- */
-        .hero {
-            height: 300px; /* Altura pequena e fixa */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden; /* Corta o que sobrar quando a imagem der zoom */
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://gruposoulbr.com/wp-content/uploads/2024/11/Soul-Luis-Rectangle-7.webp') no-repeat center center;
-            background-size: cover;
-            z-index: 1;
-            transform-origin: center;
-            will-change: transform;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.6); /* Escurece a foto para ler o texto */
-            z-index: 2;
-        }
-
-        .hero-content {
-            color: var(--white);
-            z-index: 3;
-            position: relative;
-            transform-origin: center;
-            will-change: transform, opacity;
-        }
-
+        /* --- Hero --- */
+        .hero { height: 300px; display: flex; justify-content: center; align-items: center; text-align: center; position: relative; overflow: hidden; }
+        .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://gruposoulbr.com/wp-content/uploads/2024/11/Soul-Luis-Rectangle-7.webp') no-repeat center center; background-size: cover; z-index: 1; transform-origin: center; will-change: transform; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); z-index: 2; }
+        .hero-content { color: var(--white); z-index: 3; position: relative; transform-origin: center; will-change: transform, opacity; padding: 0 20px; }
         h1 { font-size: 2.2rem; margin-bottom: 10px; font-weight: 800; }
         .hero p { font-size: 1.2rem; margin-bottom: 30px; }
         .btn-hero { background-color: var(--accent-blue); color: var(--primary-blue); padding: 12px 30px; font-size: 1.1rem; font-weight: bold; border-radius: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); display: inline-block; transition: transform 0.3s ease, background-color 0.3s ease; }
         .btn-hero:hover { transform: translateY(-5px); background-color: var(--white); }
 
-        /* --- Quem Somos (Atualizado com Cards MVV) --- */
+        /* --- Quem Somos --- */
         .quem-somos-content { max-width: 1200px; margin: 0 auto; text-align: left; }
         .quem-somos-intro { max-width: 800px; margin: 0 auto 50px auto; font-size: 1.1rem; text-align: center; color: #444; }
-        
-        ..mvv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; align-items: start; }
+        .mvv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; align-items: start; }
         .mvv-card { background-color: var(--background-grey); padding: 40px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease; display: flex; flex-direction: column; }
         .mvv-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .mvv-card i { font-size: 3rem; color: var(--primary-blue); margin-bottom: 20px; text-align: center; }
         .mvv-card h3 { color: var(--primary-blue); margin-bottom: 20px; text-align: center; font-size: 1.5rem; }
         .mvv-card p { font-size: 1rem; color: #555; text-align: justify; line-height: 1.7; }
-        
         .valores-list { list-style: none; padding: 0; }
         .valores-list li { margin-bottom: 15px; font-size: 1rem; color: #555; text-align: justify; line-height: 1.6; }
         .valores-list li strong { color: var(--primary-blue); font-weight: bold; font-size: 1.05rem; display: inline-block; margin-bottom: 5px; }
 
         /* --- Serviços --- */
-        #servicos { 
-            background-color: var(--background-grey); 
-            position: relative; /* Segura os ícones aqui dentro */
-            overflow: hidden; /* Corta os ícones quando chegam no fim da seção */
-        }
-        
-        /* Garante que os títulos e os cartões fiquem na frente do fundo animado */
+        #servicos { background-color: var(--background-grey); position: relative; overflow: hidden; }
         #servicos h2, #servicos .servicos-grid { position: relative; z-index: 1; }
-        
-        /* Container invisível pro fundo */
         .bg-animado { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-        
-        /* Estilo dos ícones que vão cair girando */
-        .icone-flutuante { 
-            position: absolute; 
-            color: var(--primary-blue); /* Usa o azul da marca */
-            opacity: 0.1; /* Bem transparente pra não atrapalhar a leitura */
-            top: -50px; 
-            animation: flutuar linear infinite; 
-        }
-        
-        /* A animação de cair e girar */
-        @keyframes flutuar {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.1; }
-            90% { opacity: 0.1; }
-            100% { transform: translateY(1200px) rotate(360deg); opacity: 0; }
-        }
-
+        .icone-flutuante { position: absolute; color: var(--primary-blue); opacity: 0.1; top: -50px; animation: flutuar linear infinite; }
+        @keyframes flutuar { 0% { transform: translateY(0) rotate(0deg); opacity: 0; } 10% { opacity: 0.1; } 90% { opacity: 0.1; } 100% { transform: translateY(1200px) rotate(360deg); opacity: 0; } }
         .servicos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 20px; }
         .servico-card { background-color: var(--white); padding: 40px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
         .servico-card:hover { transform: translateY(-10px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .servico-card i { font-size: 3rem; color: var(--primary-blue); margin-bottom: 20px; }
         .servico-card h3 { color: var(--primary-blue); font-size: 1.1rem; margin-bottom: 15px; }
 
-        /* --- Parceiros (Carrossel Automático) --- */
+        /* --- Parceiros --- */
         .parceiros-carrossel-container { overflow: hidden; padding: 50px 0; background-color: var(--white); }
         .parceiros-carrossel-track { display: flex; width: max-content; animation: scroll_parceiros 30s linear infinite; align-items: center; }
-        
-        /* ESSA É A LINHA QUE HAVIA SUMIDO: Mantém as logos normais pequenas */
         .parceiros-carrossel-track img { height: 60px; width: auto; margin: 0 50px; }
-        
-        /* Ajuste específico e sutil APENAS para o logo pequeno */
-        .parceiros-carrossel-track img[src^="https://gozgames.neocities.org/BackgroundEraser"] {
-            height: 130px; 
-        }
-        
+        .parceiros-carrossel-track img[src^="https://gozgames.neocities.org/BackgroundEraser"] { height: 130px; }
         @keyframes scroll_parceiros { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* --- Contato --- */
@@ -158,56 +97,41 @@
         footer { background-color: var(--primary-blue); color: var(--white); padding: 30px; text-align: center; }
         .logo-footer { height: 40px; margin-bottom: 10px; }
 
-        /* --- Animações de Entrada --- */
+        /* --- Animações --- */
         .fade-in { opacity: 0; transition: opacity 0.8s ease-out, transform 0.8s ease-out; transform: translateY(20px); }
         .fade-in.is-visible { opacity: 1; transform: translateY(0); }
 
-        /* --- Responsividade --- */
+        /* --- Botão Flutuante WhatsApp --- */
+        .btn-whatsapp { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background-color: #25d366; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 9999; transition: transform 0.3s ease, box-shadow 0.3s ease; animation: pulse-whatsapp 2s infinite; }
+        .btn-whatsapp img { width: 35px; height: 35px; }
+        .btn-whatsapp:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(0,0,0,0.4); animation: none; }
+        @keyframes pulse-whatsapp { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+
+        /* --- Responsividade (COM MENU SANDUÍCHE) --- */
         @media (max-width: 768px) {
-            header { padding: 10px 0; }
-            .navbar { flex-direction: column; }
-            .nav-links { flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 10px; }
-            h1 { font-size: 1.8rem; }
+            header { padding: 15px 0; }
+            .menu-toggle { display: block; } /* Mostra o sanduíche */
+            
+            /* Esconde os links e formata como um menu dropdown vertical */
+            .nav-links { 
+                position: absolute; 
+                top: 70px; 
+                left: -100%; /* Começa escondido fora da tela */
+                width: 100%; 
+                background-color: var(--primary-blue); 
+                flex-direction: column; 
+                padding: 20px 0; 
+                box-shadow: 0 5px 5px rgba(0,0,0,0.1); 
+            }
+            .nav-links.active { left: 0; } /* Classe que o JS vai adicionar pra mostrar */
+            .nav-links li { margin: 10px 0; }
+            .btn-solicitar { margin-top: 10px; }
+
+            h1 { font-size: 1.6rem; }
             .hero p { font-size: 1rem; }
             .mvv-grid { grid-template-columns: 1fr; }
             .contact-content { flex-direction: column-reverse; gap: 30px; }
             #orcamento-form { width: 100%; }
-        }
-
-        /* --- Botão Flutuante WhatsApp --- */
-        .btn-whatsapp {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            background-color: #25d366; /* Cor oficial do WhatsApp */
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            z-index: 9999; /* Fica na frente de tudo */
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: pulse-whatsapp 2s infinite; /* Faz ele dar um "pulso" para chamar atenção */
-        }
-
-        .btn-whatsapp img {
-            width: 35px;
-            height: 35px;
-        }
-
-        .btn-whatsapp:hover {
-            transform: scale(1.1); /* Aumenta um pouco ao passar o mouse */
-            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-            animation: none; /* Pára de pulsar se o mouse estiver em cima */
-        }
-
-        /* Efeito de pulso para chamar atenção */
-        @keyframes pulse-whatsapp {
-            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
         }
     </style>
 </head>
@@ -216,7 +140,10 @@
     <header>
         <nav class="navbar">
             <img src="https://gozgames.neocities.org/Logo%20horizontal%20-%20fundo%20azul.png" alt="Logo Grupo Soul" class="logo">
-            <ul class="nav-links">
+            
+            <i class="material-icons menu-toggle" id="mobile-menu-btn">menu</i>
+
+            <ul class="nav-links" id="nav-menu">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#quem-somos">Quem Somos</a></li>
                 <li><a href="#servicos">Serviços</a></li>
@@ -231,8 +158,8 @@
             <div class="hero-bg"></div>
             <div class="hero-overlay"></div>
             <div class="hero-content">
-                <h1>GRUPO SOUL SOLUÇÕES INTELIGENTES EM TERCEIRIZAÇÃO</h1>
-                <p>Profissionalismo, Qualidade e Excelência em cada serviço.</p>
+                <h1>SOUL SEGURANÇA E FACILITIES</h1>
+                <p>Facilidade e Segurança para Cidades, Empresas e Condomínios.</p>
                 <a href="#contato" class="btn-hero">Solicitar Orçamento</a>
             </div>
         </section>
@@ -383,7 +310,7 @@
                 </form>
                 <div class="contact-info">
                     <p><i class="material-icons">email</i> atendimento@gruposoulbr.com</p>
-                    <p><i class="material-icons">phone</i> (XX) XXXX-XXXX</p>
+                    <p><i class="material-icons">phone</i> (55) 19 99737-0190</p>
                     <p><i class="material-icons">location_on</i> Endereço da Sede, Cidade/UF</p>
                 </div>
             </div>
@@ -401,6 +328,30 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- MENU SANDUÍCHE (MOBILE) ---
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const navMenu = document.getElementById('nav-menu');
+            const navLinks = document.querySelectorAll('.nav-links a');
+
+            // Abre e fecha o menu ao clicar no ícone
+            menuBtn.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                if (navMenu.classList.contains('active')) {
+                    menuBtn.textContent = 'close'; // Muda o ícone para "X"
+                } else {
+                    menuBtn.textContent = 'menu'; // Volta para "sanduíche"
+                }
+            });
+
+            // Fecha o menu automaticamente quando clicar em algum link
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    menuBtn.textContent = 'menu';
+                });
+            });
+
             // --- EFEITO DE SCROLL NO HERO (ZOOM E FADE-OUT) ---
             const hero = document.querySelector('.hero');
             const heroBg = document.querySelector('.hero-bg');
@@ -465,25 +416,19 @@
 
         // --- FUNÇÃO PARA ABRIR O GMAIL ---
         function enviarOrçamento() {
-            // Pega os valores preenchidos nos campos
             const nome = document.getElementById('form-nome').value;
             const emailCliente = document.getElementById('form-email').value;
             const servico = document.getElementById('form-servico').value;
             const mensagem = document.getElementById('form-mensagem').value;
 
-            // Validação simples (garante que preencheu pelo menos o nome e escolheu o serviço)
             if(!nome || !servico) {
                 alert("Por favor, preencha pelo menos o seu Nome e escolha o Serviço antes de enviar.");
                 return;
             }
 
-            // O E-mail da Grupo Soul
             const emailDestino = "atendimento@gruposoulbr.com";
-            
-            // Cria o Assunto do e-mail
             const assunto = `Solicitação de Orçamento pelo Site - ${nome}`;
 
-            // Cria o Corpo do E-mail formatado
             const corpoEmail = `Olá Equipe Grupo Soul,\n\nGostaria de solicitar um orçamento para os seus serviços. Abaixo estão as minhas informações:\n\n` +
                                `Nome/Empresa: ${nome}\n` +
                                `E-mail de Contato: ${emailCliente}\n` +
@@ -491,11 +436,7 @@
                                `Detalhes do Pedido:\n${mensagem}\n\n` +
                                `Aguardando retorno. Obrigado!`;
 
-            // O link mágico que abre o Gmail diretamente (view=cm significa 'compose message')
-            // Usamos encodeURIComponent para formatar os espaços e quebras de linha pro link
             const urlGmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${emailDestino}&su=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpoEmail)}`;
-
-            // Abre a janela do Gmail numa nova aba
             window.open(urlGmail, '_blank');
         }
     </script>
