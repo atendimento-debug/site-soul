@@ -55,12 +55,15 @@
         .quem-somos-intro { max-width: 800px; margin: 0 auto 50px auto; font-size: 1.1rem; text-align: center; color: #444; }
         .quem-somos-titulo-destaque { font-size: 1.8rem; color: var(--primary-blue); font-weight: bold; margin-bottom: 10px; }
         .quem-somos-subtitulo { font-size: 1.2rem; color: #666; margin-bottom: 30px; display: block; }
-        .mvv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; align-items: start; margin-bottom: 40px; }
-        .mvv-card { background-color: var(--background-grey); padding: 40px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease; display: flex; flex-direction: column; }
+        
+        /* Ajuste do Grid para alinhar perfeitamente Missão e Visão na MESMA altura */
+        .mvv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; align-items: stretch; margin-bottom: 40px; }
+        .mvv-card { background-color: var(--background-grey); padding: 40px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease; display: flex; flex-direction: column; height: 100%; }
         .mvv-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .mvv-card i { font-size: 3rem; color: var(--primary-blue); margin-bottom: 20px; text-align: center; }
         .mvv-card h3 { color: var(--primary-blue); margin-bottom: 20px; text-align: center; font-size: 1.5rem; }
-        .mvv-card p { font-size: 1rem; color: #555; text-align: justify; line-height: 1.7; }
+        /* margin-top: auto empurra o texto para baixo para equalizar os espaços vazios */
+        .mvv-card p { font-size: 1rem; color: #555; text-align: justify; line-height: 1.7; margin-top: auto; }
 
         /* --- Valores --- */
         .valores-container { margin-top: 20px; text-align: center; }
@@ -70,30 +73,17 @@
         .valores-list li:hover { transform: translateY(-8px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); border-top-color: var(--accent-blue); }
         .valores-list li strong { color: var(--primary-blue); font-weight: 800; font-size: 1.2rem; display: block; margin-bottom: 10px; }
 
-        /* --- Serviços (AGORA EM CARROSSEL INTERATIVO) --- */
+        /* --- Serviços --- */
         #servicos { background-color: var(--background-grey); position: relative; overflow: hidden; }
         #servicos h2 { position: relative; z-index: 1; }
         .bg-animado { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
         .icone-flutuante { position: absolute; color: var(--primary-blue); opacity: 0.1; top: -50px; animation: flutuar linear infinite; }
         @keyframes flutuar { 0% { transform: translateY(0) rotate(0deg); opacity: 0; } 10% { opacity: 0.1; } 90% { opacity: 0.1; } 100% { transform: translateY(1200px) rotate(360deg); opacity: 0; } }
         
-        .servicos-carousel-wrapper {
-            position: relative;
-            max-width: 100%;
-            padding: 0 50px; /* Espaço para as setas no PC */
-            z-index: 1;
-        }
+        .servicos-carousel-wrapper { position: relative; max-width: 100%; padding: 0 50px; z-index: 1; }
 
-        .servicos-carrossel-track {
-            display: flex;
-            gap: 30px;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            scroll-snap-type: x mandatory;
-            padding: 20px 10px 40px 10px; /* Padding extra para não cortar a sombra e o hover */
-        }
-        
-        /* Esconde a barra de rolagem mas mantém a função */
+        /* Ajustes dos cartões para não ficarem muito esticados e descerem a explicação */
+        .servicos-carrossel-track { display: flex; gap: 30px; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; padding: 20px 10px 40px 10px; }
         .servicos-carrossel-track::-webkit-scrollbar { display: none; }
         .servicos-carrossel-track { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -104,33 +94,21 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
-            min-width: 300px; /* Define o tamanho fixo de cada cartão no carrossel */
+            min-width: 350px; /* Mais largo para o texto não criar linhas desnecessárias, reduzindo a altura */
             flex: 0 0 auto;
-            scroll-snap-align: start; /* Para parar certinho no cartão ao rolar */
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centraliza tudo horizontalmente */
         }
         .servico-card:hover { transform: translateY(-10px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .servico-card i { font-size: 3rem; color: var(--primary-blue); margin-bottom: 20px; }
-        .servico-card h3 { color: var(--primary-blue); font-size: 1.1rem; margin-bottom: 15px; }
+        .servico-card h3 { color: var(--primary-blue); font-size: 1.1rem; margin-bottom: 15px; text-align: center; }
+        /* Empurra a explicação sempre para a base do cartão */
+        .servico-card p { margin-top: auto; text-align: center; } 
 
         /* Setas do Carrossel */
-        .carousel-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: var(--primary-blue);
-            color: var(--white);
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            z-index: 10;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
+        .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background-color: var(--primary-blue); color: var(--white); border: none; border-radius: 50%; width: 50px; height: 50px; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: background-color 0.3s ease, transform 0.3s ease; }
         .carousel-btn:hover { background-color: var(--accent-blue); color: var(--primary-blue); transform: translateY(-50%) scale(1.1); }
         .prev-btn { left: 0; }
         .next-btn { right: 0; }
@@ -190,9 +168,8 @@
             .mvv-grid { grid-template-columns: 1fr; }
             .valores-list { grid-template-columns: 1fr; } 
             
-            /* Ajustes do Carrossel para o Mobile */
             .servicos-carousel-wrapper { padding: 0; }
-            .carousel-btn { display: none; } /* Oculta as setas, usuário arrasta com o dedo */
+            .carousel-btn { display: none; } 
             
             .contact-content { flex-direction: column-reverse; gap: 30px; }
             #orcamento-form { width: 100%; }
@@ -510,9 +487,7 @@
             if (servicosTrack && btnPrevServicos && btnNextServicos) {
                 const scrollAmount = 330; // 300px largura do cartão + 30px de gap
 
-                // Função para mover o carrossel para frente
                 const moveNext = () => {
-                    // Se chegou no final, volta suavemente para o início
                     if (servicosTrack.scrollLeft + servicosTrack.clientWidth >= servicosTrack.scrollWidth - 10) {
                         servicosTrack.scrollTo({ left: 0, behavior: 'smooth' });
                     } else {
@@ -520,20 +495,17 @@
                     }
                 };
 
-                // Inicia o auto-scroll (roda a cada 3 segundos)
                 const startCarrossel = () => {
                     clearInterval(autoScrollServicos);
                     autoScrollServicos = setInterval(moveNext, 3000); 
                 };
 
-                // Para o auto-scroll
                 const stopCarrossel = () => {
                     clearInterval(autoScrollServicos);
                 };
 
                 startCarrossel();
 
-                // Botões de navegação
                 btnNextServicos.addEventListener('click', () => {
                     stopCarrossel();
                     moveNext();
@@ -544,11 +516,9 @@
                     servicosTrack.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
                 });
 
-                // Pausa o carrossel se o usuário arrastar ou clicar nos cartões
                 servicosTrack.addEventListener('mousedown', stopCarrossel);
                 servicosTrack.addEventListener('touchstart', stopCarrossel);
 
-                // Retoma o carrossel quando o usuário clica fora da seção de serviços
                 document.addEventListener('click', (e) => {
                     if (servicosSec && !servicosSec.contains(e.target)) {
                         startCarrossel();
