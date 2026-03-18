@@ -112,36 +112,65 @@ h2::after {
     transform: translateX(-50%);
 }
 
-/* --- Hero (com Imagem de Fundo e Altura PEQUENA e ESPECÍFICA) --- */
+/* --- Hero (com Efeito Dinâmico de Scroll / Parallax Zoom) --- */
 .hero {
-    /* 1. Definir a nova altura PEQUENA e específica. */
-    height: 300px; /* Altere para a altura desejada (ex: 200px, 350px). */
+    /* Altura Pequena e fixa definida anteriormente, mas vamos usar 'min-height' para maior controle */
+    min-height: 300px; 
+    height: 300px;
     
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     position: relative;
+    overflow: hidden; /* IMPORTANTE: Garante que a imagem gigante do zoom não vaze para fora do box */
+}
 
-    /* 2. Como funciona a imagem atrás: Usamos a propriedade 'background' */
-    /* Camada 1: Gradiente preto transparente (overlay) para legibilidade do texto branco */
-    /* Camada 2: url('...') coloca a sua foto de fundo. Substitua o link pelo real! */
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                url('https://gozgames.neocities.org/WhatsApp%20Image%202025-04-29%20at%2011.12.26%20(2).jpeg') no-repeat center center;
+/* Nova DIV para a imagem de fundo com efeito de zoom */
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     
-    /* 3. Garante que a imagem preencha todo o container pequeno sem esticar ou distorcer */
-    background-size: cover;
+    /* Substitua pelo link real da sua imagem! */
+    background: url('https://gozgames.neocities.org/WhatsApp%20Image%202025-04-29%20at%2011.12.26%20(2).jpeg') no-repeat center center;
+    
+    background-size: cover; /* Garante que a imagem preencha todo o box pequeno */
+    z-index: 1; /* Fica no fundo */
+    
+    /* O SEGREDO DO EFEITO: Como funciona a imagem atrás e fica maior:
+       A animação não é de zoom de câmera, mas sim uma mudança de tamanho (scale) controlada por JS. 
+       Definimos o ponto de origem do zoom como o centro. */
+    transform-origin: center; 
+    will-change: transform; /* Otimização de performance para o navegador */
+}
 
-    /* 4. Mantém o efeito parallax (se desejar). Se ficar estranho no box pequeno, apague a linha abaixo. */
-    background-attachment: fixed;
+/* Camada escura de legibilidade (overlay) separada para maior controle */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Gradiente preto transparente */
+    z-index: 2; /* Fica na frente da imagem, mas atrás do texto */
 }
 
 .hero-content {
     color: var(--white);
+    z-index: 3; /* Fica na frente de tudo */
+    position: relative;
+    
+    /* Prepara o texto para o efeito de aumento e desaparecimento (fade-out) */
+    transform-origin: center;
+    will-change: transform, opacity; /* Otimização */
 }
 
+/* Ajuste o tamanho do título para caber melhor no box pequeno */
 h1 {
-    font-size: 2.2rem; /* Estava 3.5rem, diminuímos para caber melhor no box pequeno. */
+    font-size: 2.2rem;
     margin-bottom: 20px;
     font-weight: 800;
 }
@@ -165,6 +194,12 @@ h1 {
 .btn-hero:hover {
     transform: translateY(-5px);
     background-color: var(--white);
+}
+
+/* AJUSTE RESPONSIVO ADICIONAL: Diminui ainda mais a altura do hero em celulares muito pequenos */
+@media (max-width: 480px) {
+    .hero { height: 250px; min-height: 250px; }
+    h1 { font-size: 1.8rem; }
 }
 
 /* --- Quem Somos --- */
