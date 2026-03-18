@@ -53,54 +53,65 @@
         /* --- Quem Somos --- */
         .quem-somos-content { max-width: 1200px; margin: 0 auto; text-align: left; }
         .quem-somos-intro { max-width: 800px; margin: 0 auto 50px auto; font-size: 1.1rem; text-align: center; color: #444; }
-        
-        /* NOVO TÍTULO NO QUEM SOMOS */
         .quem-somos-titulo-destaque { font-size: 1.8rem; color: var(--primary-blue); font-weight: bold; margin-bottom: 10px; }
         .quem-somos-subtitulo { font-size: 1.2rem; color: #666; margin-bottom: 30px; display: block; }
 
-        .mvv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; align-items: start; }
+        .mvv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; align-items: start; margin-bottom: 40px; }
         .mvv-card { background-color: var(--background-grey); padding: 40px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease; display: flex; flex-direction: column; }
         .mvv-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .mvv-card i { font-size: 3rem; color: var(--primary-blue); margin-bottom: 20px; text-align: center; }
         .mvv-card h3 { color: var(--primary-blue); margin-bottom: 20px; text-align: center; font-size: 1.5rem; }
         .mvv-card p { font-size: 1rem; color: #555; text-align: justify; line-height: 1.7; }
-       /* --- ESTILO DOS VALORES (HORIZONTAL NO PC) --- */
-        .card-valores {
-            grid-column: 1 / -1; /* Faz o cartão esticar de ponta a ponta na linha de baixo */
-        }
 
+        /* --- ESTILO DOS VALORES CORRIGIDO --- */
+        .valores-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .valores-container h3 {
+            color: var(--primary-blue);
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
         .valores-list { 
             list-style: none; 
             padding: 0; 
             display: grid; 
-            grid-template-columns: repeat(3, 1fr); /* Divide em 3 colunas horizontais */
-            gap: 15px; 
+            grid-template-columns: repeat(3, 1fr); /* Divide em 3 colunas horizontais no PC */
+            gap: 20px; 
         }
         
         .valores-list li { 
-            background-color: var(--white); 
-            padding: 15px; 
+            background-color: var(--background-grey); /* Fundo cinza claro para destacar no fundo branco do site */
+            padding: 25px; 
             border-radius: 10px; 
-            border-left: 4px solid var(--accent-blue); 
+            border-top: 4px solid var(--primary-blue); /* Borda em cima fica mais elegante em blocos separados */
             font-size: 0.95rem; 
             color: #555; 
-            text-align: left; 
+            text-align: center; /* Alinhamento ao centro para blocos horizontais */
             line-height: 1.5; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02); 
-            transition: transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .valores-list li:hover {
-            transform: translateY(-5px); /* Animação sobe um pouquinho */
-            border-left-color: var(--primary-blue);
+            transform: translateY(-8px); 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-top-color: var(--accent-blue);
         }
         
         .valores-list li strong { 
             color: var(--primary-blue); 
             font-weight: 800; 
-            font-size: 1.05rem; 
+            font-size: 1.2rem; 
             display: block; 
-            margin-bottom: 3px; 
+            margin-bottom: 10px; 
         }
 
         /* --- Serviços --- */
@@ -131,11 +142,14 @@
         .btn-solicitar-full:hover { background-color: var(--hover-blue); }
         .contact-info { flex: 1; display: flex; flex-direction: column; gap: 20px; }
         
-        /* ESTILO PARA OS LINKS DE CONTATO CLICÁVEIS */
         .contact-link { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; color: #333; text-decoration: none; transition: color 0.3s ease; }
         .contact-link i { color: var(--primary-blue); transition: transform 0.3s ease; }
         .contact-link:hover { color: var(--primary-blue); }
         .contact-link:hover i { transform: scale(1.1); }
+        
+        /* Ajuste pro ícone do WhatsApp no contato */
+        .icon-wpp-contato { width: 24px; height: 24px; transition: transform 0.3s ease; }
+        .contact-link:hover .icon-wpp-contato { transform: scale(1.1); }
 
         /* --- Footer --- */
         footer { background-color: var(--primary-blue); color: var(--white); padding: 30px; text-align: center; }
@@ -151,30 +165,19 @@
         .btn-whatsapp:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(0,0,0,0.4); animation: none; }
         @keyframes pulse-whatsapp { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
 
-        /* --- Responsividade (COM MENU SANDUÍCHE) --- */
+        /* --- Responsividade (COM MENU SANDUÍCHE E VALORES) --- */
         @media (max-width: 768px) {
             header { padding: 15px 0; }
-            .menu-toggle { display: block; } /* Mostra o sanduíche */
-            
-            /* Esconde os links e formata como um menu dropdown vertical */
-            .nav-links { 
-                position: absolute; 
-                top: 70px; 
-                left: -100%; /* Começa escondido fora da tela */
-                width: 100%; 
-                background-color: var(--primary-blue); 
-                flex-direction: column; 
-                padding: 20px 0; 
-                box-shadow: 0 5px 5px rgba(0,0,0,0.1); 
-            }
-            .valores-list { grid-template-columns: 1fr; } /* No celular, vira 1 coluna só (Vertical) */
-            .nav-links.active { left: 0; } /* Classe que o JS vai adicionar pra mostrar */
+            .menu-toggle { display: block; }
+            .nav-links { position: absolute; top: 70px; left: -100%; width: 100%; background-color: var(--primary-blue); flex-direction: column; padding: 20px 0; box-shadow: 0 5px 5px rgba(0,0,0,0.1); }
+            .nav-links.active { left: 0; }
             .nav-links li { margin: 10px 0; }
             .btn-solicitar { margin-top: 10px; }
-
+            
             h1 { font-size: 1.6rem; }
             .hero p { font-size: 1rem; }
             .mvv-grid { grid-template-columns: 1fr; }
+            .valores-list { grid-template-columns: 1fr; } /* No celular, vira 1 coluna só (Vertical) */
             .contact-content { flex-direction: column-reverse; gap: 30px; }
             #orcamento-form { width: 100%; }
             .quem-somos-titulo-destaque { font-size: 1.5rem; }
@@ -227,27 +230,25 @@
                         <p>Oferecer soluções ágeis e eficazes, descomplicando a terceirização de mão de obra e segurança eletrônica, com foco na proteção, praticidade e eficiência para nossos clientes e parceiros. Atuamos com respeito e transparência, garantindo serviços personalizados que proporcionam tranquilidade e uma gestão simplificada.</p>
                     </div>
                     
-                    <div class="mvv-card card-valores">
-                        <i class="material-icons">diamond</i>
-                        <h3>VALORES</h3>
-                        <ul class="valores-list">
-                            <li><strong>Respeito</strong> Priorizamos o cuidado com pessoas e ambientes...</li>
-                            </ul>
-                    </div>
-                    
                     <div class="mvv-card">
-                        <i class="material-icons">diamond</i>
-                        <h3>VALORES</h3>
-                        <ul class="valores-list">
-                            <li><strong>Respeito</strong> Priorizamos o cuidado com pessoas e ambientes, agindo sempre com ética e consideração nas relações.</li>
-                            <li><strong>Praticidade</strong> Nossas soluções são desenhadas para facilitar a vida de nossos clientes, garantindo eficiência no dia a dia.</li>
-                            <li><strong>Honestidade</strong> Atuamos com integridade em todas as nossas práticas, mantendo a transparência em cada serviço prestado.</li>
-                            <li><strong>Agilidade</strong> Rapidez ao atender cada necessidade de nossos clientes, sempre mantendo o alto padrão de qualidade.</li>
-                            <li><strong>Eficácia</strong> Focamos em entregar resultados que superem expectativas, assegurando a segurança e a gestão eficiente.</li>
-                            <li><strong>Humanidade</strong> Valorizamos a individualidade e o cuidado em nossas relações, promovendo uma abordagem humana com todos.</li>
-                        </ul>
+                        <i class="material-icons">visibility</i>
+                        <h3>VISÃO</h3>
+                        <p>Sermos sempre a primeira referência de confiança e parceria de nossos clientes. Muitos buscam a grandeza de serem os primeiros do ramo, nós focamos na grandeza de atendermos bem a necessidade de nossos clientes, almejamos construir um futuro onde a segurança e a gestão de espaços estejam sempre em evolução, garantindo ambientes protegidos e bem administrados. Sabemos que esse é o caminho para nosso reconhecimento, liderar o ramo de segurança e facilities é saber ouvir e atender com agilidade cada necessidade apresentada.</p>
                     </div>
                 </div>
+
+                <div class="valores-container">
+                    <h3><i class="material-icons">diamond</i> NOSSOS VALORES</h3>
+                    <ul class="valores-list">
+                        <li><strong>Respeito</strong> Priorizamos o cuidado com pessoas e ambientes, agindo sempre com ética e consideração nas relações.</li>
+                        <li><strong>Praticidade</strong> Nossas soluções são desenhadas para facilitar a vida de nossos clientes, garantindo eficiência no dia a dia.</li>
+                        <li><strong>Honestidade</strong> Atuamos com integridade em todas as nossas práticas, mantendo a transparência em cada serviço prestado.</li>
+                        <li><strong>Agilidade</strong> Rapidez ao atender cada necessidade de nossos clientes, sempre mantendo o alto padrão de qualidade.</li>
+                        <li><strong>Eficácia</strong> Focamos em entregar resultados que superem expectativas, assegurando a segurança e a gestão eficiente.</li>
+                        <li><strong>Humanidade</strong> Valorizamos a individualidade e o cuidado em nossas relações, promovendo uma abordagem humana com todos.</li>
+                    </ul>
+                </div>
+                
             </div>
         </section>
 
@@ -366,7 +367,8 @@
                     </a>
                     
                     <a href="https://wa.me/5519997370190" target="_blank" class="contact-link">
-                        <i class="material-icons">phone</i> (19) 99737-0190
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="icon-wpp-contato"> 
+                        (19) 99737-0190
                     </a>
                     
                     <a href="https://www.google.com/maps/search/?api=1&query=R.+Antonio+Lealdini,+162,+Mogi+Guaçu+-+SP" target="_blank" class="contact-link">
@@ -383,7 +385,7 @@
 
     <footer>
         <img src="https://gozgames.neocities.org/Logo%20horizontal%20-%20fundo%20azul.png" alt="Logo Grupo Soul" class="logo-footer">
-        <p>&copy; 2024 Grupo Soul. Todos os direitos reservados.</p>
+        <p>© 2024 Grupo Soul. Todos os direitos reservados.</p>
     </footer>
 
     <script>
