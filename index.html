@@ -132,11 +132,15 @@
         /* --- Parceiros (Carrossel Automático) --- */
         .parceiros-carrossel-container { overflow: hidden; padding: 50px 0; background-color: var(--white); }
         .parceiros-carrossel-track { display: flex; width: max-content; animation: scroll_parceiros 30s linear infinite; align-items: center; }
-        /* Ajuste específico e sutil para o logo pequeno do parceiro Supermercado Ponto Certo */
-        /* Seleciona apenas as imagens que 'começam' com esse link */
+        
+        /* ESSA É A LINHA QUE HAVIA SUMIDO: Mantém as logos normais pequenas */
+        .parceiros-carrossel-track img { height: 60px; width: auto; margin: 0 50px; }
+        
+        /* Ajuste específico e sutil APENAS para o logo pequeno */
         .parceiros-carrossel-track img[src^="https://gozgames.neocities.org/BackgroundEraser"] {
-            height: 90px; /* Aumentamos de 60px para 90px (50% maior), sutil e eficaz */
+            height: 90px; 
         }
+        
         @keyframes scroll_parceiros { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* --- Contato --- */
