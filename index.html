@@ -64,30 +64,34 @@
         .mvv-card i { font-size: 3rem; color: var(--primary-blue); margin-bottom: 20px; text-align: center; }
         .mvv-card h3 { color: var(--primary-blue); margin-bottom: 20px; text-align: center; font-size: 1.5rem; }
         .mvv-card p { font-size: 1rem; color: #555; text-align: justify; line-height: 1.7; }
-        /* --- ESTILO NOVO E ELEGANTE PARA OS VALORES --- */
+       /* --- ESTILO DOS VALORES (HORIZONTAL NO PC) --- */
+        .card-valores {
+            grid-column: 1 / -1; /* Faz o cartão esticar de ponta a ponta na linha de baixo */
+        }
+
         .valores-list { 
             list-style: none; 
             padding: 0; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 15px; /* Espaço entre cada valor */
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); /* Divide em 3 colunas horizontais */
+            gap: 15px; 
         }
         
         .valores-list li { 
-            background-color: var(--white); /* Fundo branco pra destacar do cinza do cartão */
+            background-color: var(--white); 
             padding: 15px; 
             border-radius: 10px; 
-            border-left: 4px solid var(--accent-blue); /* Uma bordinha azul na esquerda pra dar charme */
+            border-left: 4px solid var(--accent-blue); 
             font-size: 0.95rem; 
             color: #555; 
-            text-align: left; /* Alinhamento à esquerda fica muito melhor pra leitura curta */
+            text-align: left; 
             line-height: 1.5; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02); /* Sombra super leve */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02); 
             transition: transform 0.2s ease;
         }
 
         .valores-list li:hover {
-            transform: translateX(5px); /* Efeito legal: o item dá um "passinho" pro lado quando passa o mouse */
+            transform: translateY(-5px); /* Animação sobe um pouquinho */
             border-left-color: var(--primary-blue);
         }
         
@@ -95,7 +99,7 @@
             color: var(--primary-blue); 
             font-weight: 800; 
             font-size: 1.05rem; 
-            display: block; /* Faz o título ficar na linha de cima da descrição */
+            display: block; 
             margin-bottom: 3px; 
         }
 
@@ -163,6 +167,7 @@
                 padding: 20px 0; 
                 box-shadow: 0 5px 5px rgba(0,0,0,0.1); 
             }
+            .valores-list { grid-template-columns: 1fr; } /* No celular, vira 1 coluna só (Vertical) */
             .nav-links.active { left: 0; } /* Classe que o JS vai adicionar pra mostrar */
             .nav-links li { margin: 10px 0; }
             .btn-solicitar { margin-top: 10px; }
@@ -222,10 +227,12 @@
                         <p>Oferecer soluções ágeis e eficazes, descomplicando a terceirização de mão de obra e segurança eletrônica, com foco na proteção, praticidade e eficiência para nossos clientes e parceiros. Atuamos com respeito e transparência, garantindo serviços personalizados que proporcionam tranquilidade e uma gestão simplificada.</p>
                     </div>
                     
-                    <div class="mvv-card">
-                        <i class="material-icons">visibility</i>
-                        <h3>VISÃO</h3>
-                        <p>Sermos sempre a primeira referência de confiança e parceria de nossos clientes. Muitos buscam a grandeza de serem os primeiros do ramo, nós focamos na grandeza de atendermos bem a necessidade de nossos clientes, almejamos construir um futuro onde a segurança e a gestão de espaços estejam sempre em evolução, garantindo ambientes protegidos e bem administrados. Sabemos que esse é o caminho para nosso reconhecimento, liderar o ramo de segurança e facilities é saber ouvir e atender com agilidade cada necessidade apresentada.</p>
+                    <div class="mvv-card card-valores">
+                        <i class="material-icons">diamond</i>
+                        <h3>VALORES</h3>
+                        <ul class="valores-list">
+                            <li><strong>Respeito</strong> Priorizamos o cuidado com pessoas e ambientes...</li>
+                            </ul>
                     </div>
                     
                     <div class="mvv-card">
