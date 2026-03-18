@@ -64,9 +64,40 @@
         .mvv-card i { font-size: 3rem; color: var(--primary-blue); margin-bottom: 20px; text-align: center; }
         .mvv-card h3 { color: var(--primary-blue); margin-bottom: 20px; text-align: center; font-size: 1.5rem; }
         .mvv-card p { font-size: 1rem; color: #555; text-align: justify; line-height: 1.7; }
-        .valores-list { list-style: none; padding: 0; }
-        .valores-list li { margin-bottom: 15px; font-size: 1rem; color: #555; text-align: justify; line-height: 1.6; }
-        .valores-list li strong { color: var(--primary-blue); font-weight: bold; font-size: 1.05rem; display: inline-block; margin-bottom: 5px; }
+        /* --- ESTILO NOVO E ELEGANTE PARA OS VALORES --- */
+        .valores-list { 
+            list-style: none; 
+            padding: 0; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; /* Espaço entre cada valor */
+        }
+        
+        .valores-list li { 
+            background-color: var(--white); /* Fundo branco pra destacar do cinza do cartão */
+            padding: 15px; 
+            border-radius: 10px; 
+            border-left: 4px solid var(--accent-blue); /* Uma bordinha azul na esquerda pra dar charme */
+            font-size: 0.95rem; 
+            color: #555; 
+            text-align: left; /* Alinhamento à esquerda fica muito melhor pra leitura curta */
+            line-height: 1.5; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02); /* Sombra super leve */
+            transition: transform 0.2s ease;
+        }
+
+        .valores-list li:hover {
+            transform: translateX(5px); /* Efeito legal: o item dá um "passinho" pro lado quando passa o mouse */
+            border-left-color: var(--primary-blue);
+        }
+        
+        .valores-list li strong { 
+            color: var(--primary-blue); 
+            font-weight: 800; 
+            font-size: 1.05rem; 
+            display: block; /* Faz o título ficar na linha de cima da descrição */
+            margin-bottom: 3px; 
+        }
 
         /* --- Serviços --- */
         #servicos { background-color: var(--background-grey); position: relative; overflow: hidden; }
@@ -201,12 +232,12 @@
                         <i class="material-icons">diamond</i>
                         <h3>VALORES</h3>
                         <ul class="valores-list">
-                            <li><strong>Respeito:</strong> Priorizamos o cuidado com pessoas e ambientes, agindo sempre com ética e consideração nas relações.</li>
-                            <li><strong>Praticidade:</strong> Nossas soluções são desenhadas para facilitar a vida de nossos clientes, garantindo eficiência no dia a dia.</li>
-                            <li><strong>Honestidade:</strong> Atuamos com integridade em todas as nossas práticas, mantendo a transparência em cada serviço prestado.</li>
-                            <li><strong>Agilidade:</strong> Rapidez ao atender cada necessidade de nossos clientes, sempre mantendo o alto padrão de qualidade.</li>
-                            <li><strong>Eficácia:</strong> Focamos em entregar resultados que superem expectativas, assegurando a segurança e a gestão eficiente.</li>
-                            <li><strong>Humanidade:</strong> Valorizamos a individualidade e o cuidado em nossas relações, promovendo uma abordagem humana com todos.</li>
+                            <li><strong>Respeito</strong> Priorizamos o cuidado com pessoas e ambientes, agindo sempre com ética e consideração nas relações.</li>
+                            <li><strong>Praticidade</strong> Nossas soluções são desenhadas para facilitar a vida de nossos clientes, garantindo eficiência no dia a dia.</li>
+                            <li><strong>Honestidade</strong> Atuamos com integridade em todas as nossas práticas, mantendo a transparência em cada serviço prestado.</li>
+                            <li><strong>Agilidade</strong> Rapidez ao atender cada necessidade de nossos clientes, sempre mantendo o alto padrão de qualidade.</li>
+                            <li><strong>Eficácia</strong> Focamos em entregar resultados que superem expectativas, assegurando a segurança e a gestão eficiente.</li>
+                            <li><strong>Humanidade</strong> Valorizamos a individualidade e o cuidado em nossas relações, promovendo uma abordagem humana com todos.</li>
                         </ul>
                     </div>
                 </div>
