@@ -82,7 +82,35 @@
         .quem-somos-content { max-width: 800px; margin: 0 auto; font-size: 1.1rem; text-align: left; }
 
         /* --- Serviços --- */
-        #servicos { background-color: var(--background-grey); }
+       /* --- Serviços --- */
+        #servicos { 
+            background-color: var(--background-grey); 
+            position: relative; /* Segura os ícones aqui dentro */
+            overflow: hidden; /* Corta os ícones quando chegam no fim da seção */
+        }
+        
+        /* Garante que os títulos e os cartões fiquem na frente do fundo animado */
+        #servicos h2, #servicos .servicos-grid { position: relative; z-index: 1; }
+        
+        /* Container invisível pro fundo */
+        .bg-animado { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        
+        /* Estilo dos ícones que vão cair girando */
+        .icone-flutuante { 
+            position: absolute; 
+            color: var(--primary-blue); /* Usa o azul da marca */
+            opacity: 0.1; /* Bem transparente pra não atrapalhar a leitura */
+            top: -50px; 
+            animation: flutuar linear infinite; 
+        }
+        
+        /* A animação de cair e girar */
+        @keyframes flutuar {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.1; }
+            90% { opacity: 0.1; }
+            100% { transform: translateY(800px) rotate(360deg); opacity: 0; }
+        }
         .servicos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 20px; }
         .servico-card { background-color: var(--white); padding: 40px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
         .servico-card:hover { transform: translateY(-10px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
@@ -277,6 +305,40 @@
             }, { threshold: 0.1 });
 
             document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+            // --- EFEITO ÍCONES FLUTUANTES (SÓ NA SEÇÃO SERVIÇOS) ---
+            const servicosSec = document.getElementById('servicos');
+            if (servicosSec) {
+                // Cria a div do fundo animado
+                const bgAnimado = document.createElement('div');
+                bgAnimado.className = 'bg-animado';
+                servicosSec.appendChild(bgAnimado);
+
+                // Lista de ícones temáticos (facilities e segurança)
+                const iconesArray = ['security', 'cleaning_services', 'shield', 'vpn_key', 'build', 'apartment', 'health_and_safety'];
+                
+                // Cria 15 ícones caindo aleatoriamente
+                for (let i = 0; i < 15; i++) {
+                    const icone = document.createElement('i');
+                    icone.className = 'material-icons icone-flutuante';
+                    // Escolhe um ícone aleatório da lista
+                    icone.textContent = iconesArray[Math.floor(Math.random() * iconesArray.length)];
+                    
+                    // Sorteia a posição horizontal (0 a 100% da tela)
+                    icone.style.left = `${Math.random() * 100}%`;
+                    
+                    // Sorteia o tamanho (entre 30px e 60px)
+                    icone.style.fontSize = `${Math.random() * 30 + 30}px`; 
+                    
+                    // Sorteia o tempo de queda (caindo devagar, entre 15s e 25s)
+                    icone.style.animationDuration = `${Math.random() * 10 + 15}s`; 
+                    
+                    // Um atraso negativo para que a tela já comece cheia de ícones rolando
+                    icone.style.animationDelay = `-${Math.random() * 15}s`; 
+                    
+                    bgAnimado.appendChild(icone);
+                }
+            }
         });
     </script>
     </body>
