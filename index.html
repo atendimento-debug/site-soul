@@ -173,6 +173,42 @@
             .contact-content { flex-direction: column-reverse; gap: 30px; }
             #orcamento-form { width: 100%; }
         }
+
+        /* --- Botão Flutuante WhatsApp --- */
+        .btn-whatsapp {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #25d366; /* Cor oficial do WhatsApp */
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 9999; /* Fica na frente de tudo */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: pulse-whatsapp 2s infinite; /* Faz ele dar um "pulso" para chamar atenção */
+        }
+
+        .btn-whatsapp img {
+            width: 35px;
+            height: 35px;
+        }
+
+        .btn-whatsapp:hover {
+            transform: scale(1.1); /* Aumenta um pouco ao passar o mouse */
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+            animation: none; /* Pára de pulsar se o mouse estiver em cima */
+        }
+
+        /* Efeito de pulso para chamar atenção */
+        @keyframes pulse-whatsapp {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
     </style>
 </head>
 <body>
@@ -353,6 +389,10 @@
             </div>
         </section>
     </main>
+
+    <a href="https://wa.me/5519997370190?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20serviços%20da%20Grupo%20Soul." target="_blank" class="btn-whatsapp" title="Fale conosco pelo WhatsApp">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    </a>
 
     <footer>
         <img src="https://gozgames.neocities.org/Logo%20horizontal%20-%20fundo%20azul.png" alt="Logo Grupo Soul" class="logo-footer">
