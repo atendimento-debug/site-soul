@@ -56,8 +56,8 @@
         .quem-somos-titulo-destaque { font-size: 1.8rem; color: var(--primary-blue); font-weight: bold; margin-bottom: 10px; }
         .quem-somos-subtitulo { font-size: 1.2rem; color: #666; margin-bottom: 30px; display: block; }
         
-        /* Missão e Visão (Alturas Iguais Perfeitas) */
-        .mvv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; align-items: stretch; margin-bottom: 40px; }
+        /* Ajuste: alinhamento no topo (start) e remoção do margin-top: auto do 'p' para não deixar buracos */
+        .mvv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; align-items: start; margin-bottom: 40px; }
         .mvv-card { background-color: var(--background-grey); padding: 40px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; }
         .mvv-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .mvv-card i { font-size: 3rem; color: var(--primary-blue); margin-bottom: 20px; }
@@ -169,7 +169,7 @@
             .valores-list { grid-template-columns: 1fr; } 
             
             .servicos-carousel-wrapper { padding: 0; }
-            .servico-card { min-width: 300px; } /* Ajuste no mobile */
+            .servico-card { min-width: 300px; } 
             .carousel-btn { display: none; } 
             
             .contact-content { flex-direction: column-reverse; gap: 30px; }
@@ -362,7 +362,7 @@
                 </form>
                 
                 <div class="contact-info">
-                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=atendimento@gruposoulbr.com" target="_blank" class="contact-link">
+                    <a href="mailto:atendimento@gruposoulbr.com" class="contact-link">
                         <i class="material-icons">email</i> atendimento@gruposoulbr.com
                     </a>
                     
@@ -528,7 +528,7 @@
             }
         });
 
-        // --- FUNÇÃO PARA ABRIR O GMAIL DO FORMULÁRIO ---
+        // --- FUNÇÃO PARA ABRIR O GMAIL DO FORMULÁRIO (VIA APP) ---
         function enviarOrçamento() {
             const nome = document.getElementById('form-nome').value;
             const emailCliente = document.getElementById('form-email').value;
@@ -550,8 +550,9 @@
                                `Detalhes do Pedido:\n${mensagem}\n\n` +
                                `Aguardando retorno. Obrigado!`;
 
-            const urlGmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${emailDestino}&su=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpoEmail)}`;
-            window.open(urlGmail, '_blank');
+            // Mudamos para usar 'mailto:' (Isso abre o aplicativo padrão de E-mail do celular ou computador)
+            const urlMailto = `mailto:${emailDestino}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpoEmail)}`;
+            window.location.href = urlMailto;
         }
     </script>
 </body>
