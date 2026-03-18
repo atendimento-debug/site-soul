@@ -25,7 +25,48 @@
 
         /* --- Header e Navbar --- */
         header { background-color: var(--primary-blue); padding: 10px 0; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .navbar { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+       /* --- Ajuste no Navbar (fora do media query) --- */
+.navbar {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    position: relative; /* ADICIONE ISSO: Referência para o menu mobile */
+}
+
+/* --- Ajustes dentro do Media Query (max-width: 768px) --- */
+@media (max-width: 768px) {
+    header {
+        padding: 10px 0; /* Diminuí um pouco para não ficar tão alto */
+        width: 100%;
+        left: 0;
+    }
+
+    .logo {
+        height: 40px; /* Logo um pouco menor no mobile ajuda no espaço */
+    }
+
+    .nav-links {
+        position: fixed; /* Mude de absolute para fixed para evitar quebrar o scroll */
+        top: 60px; /* Ajuste conforme a altura do seu header */
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 60px); /* Ocupa a tela toda menos o header */
+        background-color: var(--primary-blue);
+        flex-direction: column;
+        padding: 40px 0;
+        transition: 0.4s;
+        z-index: 999;
+    }
+
+    /* Impede o "balanço" lateral do site */
+    html, body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+}
         .logo { height: 50px; position: relative; z-index: 1001; }
         .nav-links { display: flex; gap: 20px; color: var(--white); font-weight: 500; align-items: center; transition: 0.3s; }
         .nav-links a:not(.btn-solicitar):hover { color: var(--accent-blue); }
