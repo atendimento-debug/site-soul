@@ -82,7 +82,6 @@
         .quem-somos-content { max-width: 800px; margin: 0 auto; font-size: 1.1rem; text-align: left; }
 
         /* --- Serviços --- */
-       /* --- Serviços --- */
         #servicos { 
             background-color: var(--background-grey); 
             position: relative; /* Segura os ícones aqui dentro */
@@ -109,13 +108,14 @@
             0% { transform: translateY(0) rotate(0deg); opacity: 0; }
             10% { opacity: 0.1; }
             90% { opacity: 0.1; }
-            100% { transform: translateY(800px) rotate(360deg); opacity: 0; }
+            100% { transform: translateY(1200px) rotate(360deg); opacity: 0; }
         }
+
         .servicos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 20px; }
         .servico-card { background-color: var(--white); padding: 40px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
         .servico-card:hover { transform: translateY(-10px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .servico-card i { font-size: 3rem; color: var(--primary-blue); margin-bottom: 20px; }
-        .servico-card h3 { color: var(--primary-blue); margin-bottom: 15px; }
+        .servico-card h3 { color: var(--primary-blue); font-size: 1.1rem; margin-bottom: 15px; }
 
         /* --- Parceiros (Carrossel Automático) --- */
         .parceiros-carrossel-container { overflow: hidden; padding: 50px 0; background-color: var(--white); }
@@ -153,7 +153,7 @@
             #orcamento-form { width: 100%; }
         }
     </style>
-    </head>
+</head>
 <body>
 
     <header>
@@ -210,6 +210,48 @@
                     <h3>ZELADORIA</h3>
                     <p>Manutenção e supervisão geral do condomínio, garantindo o bom funcionamento de todas as áreas comuns.</p>
                 </div>
+                <div class="servico-card">
+                    <i class="material-icons">recycling</i>
+                    <h3>COLETORES</h3>
+                    <p>Gerenciamento de resíduos, coleta seletiva e descarte consciente para manter o ambiente limpo e organizado.</p>
+                </div>
+                <div class="servico-card">
+                    <i class="material-icons">park</i>
+                    <h3>JARDINEIROS</h3>
+                    <p>Manutenção de áreas verdes, poda, plantio e conservação paisagística para valorizar o seu espaço.</p>
+                </div>
+                <div class="servico-card">
+                    <i class="material-icons">inventory_2</i>
+                    <h3>ESTOQUISTAS</h3>
+                    <p>Organização, controle de inventário, recebimento e gestão eficiente do armazenamento de materiais.</p>
+                </div>
+                
+                <div class="servico-card">
+                    <i class="material-icons">medical_services</i>
+                    <h3>ENFERMAGEM</h3>
+                    <p>Assistência em saúde, cuidados preventivos, suporte clínico e atendimento humanizado para empresas e clínicas.</p>
+                </div>
+                <div class="servico-card">
+                    <i class="material-icons">biotech</i>
+                    <h3>BIOMÉDICO E ANALISTA</h3>
+                    <p>Profissionais altamente capacitados para análises clínicas, diagnósticos e gestão laboratorial de excelência.</p>
+                </div>
+                <div class="servico-card">
+                    <i class="material-icons">science</i>
+                    <h3>TÉCNICO DE LABORATÓRIO</h3>
+                    <p>Suporte técnico rigoroso na coleta, manuseio de amostras, preparo de reagentes e assistência em exames.</p>
+                </div>
+                
+                <div class="servico-card">
+                    <i class="material-icons">supervisor_account</i>
+                    <h3>SUPERVISORES</h3>
+                    <p>Liderança, fiscalização e acompanhamento contínuo de equipes para garantir a máxima qualidade operacional.</p>
+                </div>
+                <div class="servico-card">
+                    <i class="material-icons">add_circle_outline</i>
+                    <h3>ENTRE OUTROS...</h3>
+                    <p>Disponibilizamos diversos outros profissionais qualificados. Montamos a equipe sob medida para a sua necessidade!</p>
+                </div>
             </div>
         </section>
 
@@ -243,7 +285,13 @@
                         <option value="limpeza">Auxiliar de Limpeza</option>
                         <option value="portaria">Portaria e Recepção</option>
                         <option value="zeladoria">Zeladoria</option>
-                        <option value="outro">Outro</option>
+                        <option value="coletor">Coletor de Resíduos</option>
+                        <option value="jardineiro">Jardinagem</option>
+                        <option value="estoquista">Estoquista</option>
+                        <option value="saude">Enfermagem</option>
+                        <option value="laboratorio">Apoio Laboratorial / Biomédico</option>
+                        <option value="supervisao">Supervisores</option>
+                        <option value="outro">Outros Profissionais</option>
                     </select>
                     <textarea name="mensagem" placeholder="Detalhes do seu pedido..." rows="5"></textarea>
                     <button type="submit" class="btn-solicitar-full">Enviar Pedido</button>
@@ -270,24 +318,21 @@
             const heroContent = document.querySelector('.hero-content');
 
             if (hero && heroBg && heroContent) {
-                const imageZoomSpeed = 0.0008; // Controla a velocidade do zoom da imagem
-                const textScaleSpeed = 0.003;  // Controla o quanto o texto cresce
+                const imageZoomSpeed = 0.0008; 
+                const textScaleSpeed = 0.003;  
                 const heroHeight = hero.offsetHeight;
 
                 window.addEventListener('scroll', () => {
                     const scrollY = window.scrollY;
 
-                    // Aplica o efeito apenas enquanto o topo do site estiver na tela
                     if (scrollY <= heroHeight + 100) {
-                        // 1. Aumenta a imagem de fundo devagarinho
                         const scaleBg = 1 + (scrollY * imageZoomSpeed);
                         heroBg.style.transform = `scale(${scaleBg})`;
 
-                        // 2. Aumenta o texto mais rápido e faz ele sumir
                         const scaleText = 1 + (scrollY * textScaleSpeed);
                         let opacityText = 1 - (scrollY / (heroHeight - 50)); 
                         
-                        if (opacityText < 0) opacityText = 0; // Impede valor negativo
+                        if (opacityText < 0) opacityText = 0; 
 
                         heroContent.style.transform = `scale(${scaleText}) translateY(${scrollY * 0.2}px)`;
                         heroContent.style.opacity = opacityText;
@@ -309,31 +354,21 @@
             // --- EFEITO ÍCONES FLUTUANTES (SÓ NA SEÇÃO SERVIÇOS) ---
             const servicosSec = document.getElementById('servicos');
             if (servicosSec) {
-                // Cria a div do fundo animado
                 const bgAnimado = document.createElement('div');
                 bgAnimado.className = 'bg-animado';
                 servicosSec.appendChild(bgAnimado);
 
-                // Lista de ícones temáticos (facilities e segurança)
-                const iconesArray = ['security', 'cleaning_services', 'shield', 'vpn_key', 'build', 'apartment', 'health_and_safety'];
+                // Nova lista com os ícones atualizados (inclui DNA, médico, caixa, etc)
+                const iconesArray = ['security', 'cleaning_services', 'shield', 'vpn_key', 'build', 'apartment', 'health_and_safety', 'recycling', 'park', 'inventory_2', 'medical_services', 'biotech', 'science', 'supervisor_account'];
                 
-                // Cria 15 ícones caindo aleatoriamente
-                for (let i = 0; i < 15; i++) {
+                // Aumentei pra 25 ícones porque a seção agora é muito maior!
+                for (let i = 0; i < 25; i++) {
                     const icone = document.createElement('i');
                     icone.className = 'material-icons icone-flutuante';
-                    // Escolhe um ícone aleatório da lista
                     icone.textContent = iconesArray[Math.floor(Math.random() * iconesArray.length)];
-                    
-                    // Sorteia a posição horizontal (0 a 100% da tela)
                     icone.style.left = `${Math.random() * 100}%`;
-                    
-                    // Sorteia o tamanho (entre 30px e 60px)
                     icone.style.fontSize = `${Math.random() * 30 + 30}px`; 
-                    
-                    // Sorteia o tempo de queda (caindo devagar, entre 15s e 25s)
                     icone.style.animationDuration = `${Math.random() * 10 + 15}s`; 
-                    
-                    // Um atraso negativo para que a tela já comece cheia de ícones rolando
                     icone.style.animationDelay = `-${Math.random() * 15}s`; 
                     
                     bgAnimado.appendChild(icone);
@@ -341,5 +376,5 @@
             }
         });
     </script>
-    </body>
+</body>
 </html>
