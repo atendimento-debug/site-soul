@@ -132,7 +132,11 @@
         /* --- Parceiros (Carrossel Automático) --- */
         .parceiros-carrossel-container { overflow: hidden; padding: 50px 0; background-color: var(--white); }
         .parceiros-carrossel-track { display: flex; width: max-content; animation: scroll_parceiros 30s linear infinite; align-items: center; }
-        .parceiros-carrossel-track img { height: 60px; width: auto; margin: 0 50px; }
+        /* Ajuste específico e sutil para o logo pequeno do parceiro Supermercado Ponto Certo */
+        /* Seleciona apenas as imagens que 'começam' com esse link */
+        .parceiros-carrossel-track img[src^="https://gozgames.neocities.org/BackgroundEraser"] {
+            height: 90px; /* Aumentamos de 60px para 90px (50% maior), sutil e eficaz */
+        }
         @keyframes scroll_parceiros { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* --- Contato --- */
@@ -240,7 +244,7 @@
                 <div class="servico-card">
                     <i class="material-icons">cleaning_services</i>
                     <h3>AUXILIAR DE LIMPEZA</h3>
-                    <p>Limpeza e higienização profissional, mantendo ambientes corporativos e residenciais sempre impecáveis.</p>
+                    <p>Limpeza e higienização profissional, mantendo ambientes corporativos impecáveis.</p>
                 </div>
                 <div class="servico-card">
                     <i class="material-icons">support_agent</i>
