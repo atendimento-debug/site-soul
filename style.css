@@ -112,17 +112,28 @@ h2::after {
     transform: translateX(-50%);
 }
 
-/* --- Hero (com Parallax) --- */
+/* --- Hero (com Imagem de Fundo e Altura PEQUENA e ESPECÍFICA) --- */
 .hero {
-    height: 90vh;
+    /* 1. Definir a nova altura PEQUENA e específica. */
+    height: 300px; /* Altere para a altura desejada (ex: 200px, 350px). */
+    
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     position: relative;
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                url('https://images.unsplash.com/photo-1549294413-26f1938b2512?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
-    background-attachment: fixed; /* Efeito Parallax */
+
+    /* 2. Como funciona a imagem atrás: Usamos a propriedade 'background' */
+    /* Camada 1: Gradiente preto transparente (overlay) para legibilidade do texto branco */
+    /* Camada 2: url('...') coloca a sua foto de fundo. Substitua o link pelo real! */
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                url('https://gozgames.neocities.org/WhatsApp%20Image%202025-04-29%20at%2011.12.26%20(2).jpeg') no-repeat center center;
+    
+    /* 3. Garante que a imagem preencha todo o container pequeno sem esticar ou distorcer */
+    background-size: cover;
+
+    /* 4. Mantém o efeito parallax (se desejar). Se ficar estranho no box pequeno, apague a linha abaixo. */
+    background-attachment: fixed;
 }
 
 .hero-content {
@@ -130,7 +141,7 @@ h2::after {
 }
 
 h1 {
-    font-size: 3.5rem;
+    font-size: 2.2rem; /* Estava 3.5rem, diminuímos para caber melhor no box pequeno. */
     margin-bottom: 20px;
     font-weight: 800;
 }
