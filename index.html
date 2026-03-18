@@ -53,6 +53,11 @@
         /* --- Quem Somos --- */
         .quem-somos-content { max-width: 1200px; margin: 0 auto; text-align: left; }
         .quem-somos-intro { max-width: 800px; margin: 0 auto 50px auto; font-size: 1.1rem; text-align: center; color: #444; }
+        
+        /* NOVO TÍTULO NO QUEM SOMOS */
+        .quem-somos-titulo-destaque { font-size: 1.8rem; color: var(--primary-blue); font-weight: bold; margin-bottom: 10px; }
+        .quem-somos-subtitulo { font-size: 1.2rem; color: #666; margin-bottom: 30px; display: block; }
+
         .mvv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; align-items: start; }
         .mvv-card { background-color: var(--background-grey); padding: 40px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease; display: flex; flex-direction: column; }
         .mvv-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
@@ -90,8 +95,12 @@
         .btn-solicitar-full { background-color: var(--primary-blue); color: var(--white); padding: 15px; font-size: 1.2rem; font-weight: bold; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; }
         .btn-solicitar-full:hover { background-color: var(--hover-blue); }
         .contact-info { flex: 1; display: flex; flex-direction: column; gap: 20px; }
-        .contact-info p { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; }
-        .contact-info p i { color: var(--primary-blue); }
+        
+        /* ESTILO PARA OS LINKS DE CONTATO CLICÁVEIS */
+        .contact-link { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; color: #333; text-decoration: none; transition: color 0.3s ease; }
+        .contact-link i { color: var(--primary-blue); transition: transform 0.3s ease; }
+        .contact-link:hover { color: var(--primary-blue); }
+        .contact-link:hover i { transform: scale(1.1); }
 
         /* --- Footer --- */
         footer { background-color: var(--primary-blue); color: var(--white); padding: 30px; text-align: center; }
@@ -132,6 +141,7 @@
             .mvv-grid { grid-template-columns: 1fr; }
             .contact-content { flex-direction: column-reverse; gap: 30px; }
             #orcamento-form { width: 100%; }
+            .quem-somos-titulo-destaque { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -168,6 +178,9 @@
             <h2>QUEM SOMOS</h2>
             <div class="quem-somos-content">
                 <div class="quem-somos-intro">
+                    <h3 class="quem-somos-titulo-destaque">SOUL SEGURANÇA E FACILITIES</h3>
+                    <span class="quem-somos-subtitulo">Facilidade e Segurança para Cidades, Empresas e Condomínios.</span>
+                    
                     <p>Com uma abordagem integrada e personalizada, trabalhamos lado a lado para entender suas necessidades e entregar soluções que garantam proteção e eficiência, além de uma gestão facilitada do seu dia a dia. Nossa missão é sermos o parceiro confiável que otimiza operações e garante a segurança de cada ambiente corporativo, unindo inovação, excelência, qualidade e segurança em tudo o que fazemos.</p>
                 </div>
                 
@@ -308,10 +321,19 @@
                     
                     <button type="button" class="btn-solicitar-full" onclick="enviarOrçamento()">Enviar Pedido</button>
                 </form>
+                
                 <div class="contact-info">
-                    <p><i class="material-icons">email</i> atendimento@gruposoulbr.com</p>
-                    <p><i class="material-icons">phone</i> (55) 19 99737-0190</p>
-                    <p><i class="material-icons">location_on</i> Endereço da Sede, Cidade/UF</p>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=atendimento@gruposoulbr.com" target="_blank" class="contact-link">
+                        <i class="material-icons">email</i> atendimento@gruposoulbr.com
+                    </a>
+                    
+                    <a href="https://wa.me/5519997370190" target="_blank" class="contact-link">
+                        <i class="material-icons">phone</i> (55) 19 99737-0190
+                    </a>
+                    
+                    <a href="google.com/maps?gs_lcrp=EgZjaHJvbWUqBggAEEUYOzIGCAAQRRg7Mg0IARAAGIMBGLEDGIAEMgoIAhAAGLEDGIAEMgoIAxAAGLEDGIAEMg0IBBAAGIMBGLEDGIAEMgYIBRBFGDwyBggGEEUYPDIGCAcQRRg80gEIMjIzMmowajeoAgCwAgA&um=1&ie=UTF-8&fb=1&gl=br&sa=X&geocode=KbXA4d2TIchLMVPulWqcc-Zh&daddr=R.+Antônio+Lealdini,+162+-+Jardim+Maria+Mendes,+Mogi+Guaçu+-+SP,+13845-332" target="_blank" class="contact-link">
+                        <i class="material-icons">location_on</i> Endereço da Sede, Cidade/UF
+                    </a>
                 </div>
             </div>
         </section>
@@ -334,17 +356,15 @@
             const navMenu = document.getElementById('nav-menu');
             const navLinks = document.querySelectorAll('.nav-links a');
 
-            // Abre e fecha o menu ao clicar no ícone
             menuBtn.addEventListener('click', () => {
                 navMenu.classList.toggle('active');
                 if (navMenu.classList.contains('active')) {
-                    menuBtn.textContent = 'close'; // Muda o ícone para "X"
+                    menuBtn.textContent = 'close'; 
                 } else {
-                    menuBtn.textContent = 'menu'; // Volta para "sanduíche"
+                    menuBtn.textContent = 'menu'; 
                 }
             });
 
-            // Fecha o menu automaticamente quando clicar em algum link
             navLinks.forEach(link => {
                 link.addEventListener('click', () => {
                     navMenu.classList.remove('active');
@@ -414,7 +434,7 @@
             }
         });
 
-        // --- FUNÇÃO PARA ABRIR O GMAIL ---
+        // --- FUNÇÃO PARA ABRIR O GMAIL DO FORMULÁRIO ---
         function enviarOrçamento() {
             const nome = document.getElementById('form-nome').value;
             const emailCliente = document.getElementById('form-email').value;
