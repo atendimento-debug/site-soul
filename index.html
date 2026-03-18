@@ -325,24 +325,25 @@
             <h2>SOLICITAR ORÇAMENTO</h2>
             <div class="contact-content">
                 <form id="orcamento-form">
-                    <input type="text" name="nome" placeholder="Seu Nome/Empresa" required>
-                    <input type="email" name="email" placeholder="Seu E-mail" required>
-                    <select name="servico" required>
+                    <input type="text" id="form-nome" name="nome" placeholder="Seu Nome/Empresa" required>
+                    <input type="email" id="form-email" name="email" placeholder="Seu E-mail" required>
+                    <select id="form-servico" name="servico" required>
                         <option value="" disabled selected>Selecione o Serviço de Interesse</option>
-                        <option value="controlador">Controlador de Acesso</option>
-                        <option value="limpeza">Auxiliar de Limpeza</option>
-                        <option value="portaria">Portaria e Recepção</option>
-                        <option value="zeladoria">Zeladoria</option>
-                        <option value="coletor">Coletor de Resíduos</option>
-                        <option value="jardineiro">Jardinagem</option>
-                        <option value="estoquista">Estoquista</option>
-                        <option value="saude">Enfermagem</option>
-                        <option value="laboratorio">Apoio Laboratorial / Biomédico</option>
-                        <option value="supervisao">Supervisores</option>
-                        <option value="outro">Outros Profissionais</option>
+                        <option value="Controlador de Acesso">Controlador de Acesso</option>
+                        <option value="Auxiliar de Limpeza">Auxiliar de Limpeza</option>
+                        <option value="Portaria e Recepção">Portaria e Recepção</option>
+                        <option value="Zeladoria">Zeladoria</option>
+                        <option value="Coletor de Resíduos">Coletor de Resíduos</option>
+                        <option value="Jardinagem">Jardinagem</option>
+                        <option value="Estoquista">Estoquista</option>
+                        <option value="Enfermagem">Enfermagem</option>
+                        <option value="Apoio Laboratorial / Biomédico">Apoio Laboratorial / Biomédico</option>
+                        <option value="Supervisores">Supervisores</option>
+                        <option value="Outros Profissionais">Outros Profissionais</option>
                     </select>
-                    <textarea name="mensagem" placeholder="Detalhes do seu pedido..." rows="5"></textarea>
-                    <button type="submit" class="btn-solicitar-full">Enviar Pedido</button>
+                    <textarea id="form-mensagem" name="mensagem" placeholder="Detalhes do seu pedido..." rows="5"></textarea>
+                    
+                    <button type="button" class="btn-solicitar-full" onclick="enviarOrçamento()">Enviar Pedido</button>
                 </form>
                 <div class="contact-info">
                     <p><i class="material-icons">email</i> atendimento@gruposoulbr.com</p>
@@ -421,6 +422,42 @@
                 }
             }
         });
+
+        // --- FUNÇÃO PARA ABRIR O GMAIL ---
+        function enviarOrçamento() {
+            // Pega os valores preenchidos nos campos
+            const nome = document.getElementById('form-nome').value;
+            const emailCliente = document.getElementById('form-email').value;
+            const servico = document.getElementById('form-servico').value;
+            const mensagem = document.getElementById('form-mensagem').value;
+
+            // Validação simples (garante que preencheu pelo menos o nome e escolheu o serviço)
+            if(!nome || !servico) {
+                alert("Por favor, preencha pelo menos o seu Nome e escolha o Serviço antes de enviar.");
+                return;
+            }
+
+            // O E-mail da Grupo Soul
+            const emailDestino = "atendimento@gruposoulbr.com";
+            
+            // Cria o Assunto do e-mail
+            const assunto = `Solicitação de Orçamento pelo Site - ${nome}`;
+
+            // Cria o Corpo do E-mail formatado
+            const corpoEmail = `Olá Equipe Grupo Soul,\n\nGostaria de solicitar um orçamento para os seus serviços. Abaixo estão as minhas informações:\n\n` +
+                               `Nome/Empresa: ${nome}\n` +
+                               `E-mail de Contato: ${emailCliente}\n` +
+                               `Serviço de Interesse: ${servico}\n\n` +
+                               `Detalhes do Pedido:\n${mensagem}\n\n` +
+                               `Aguardando retorno. Obrigado!`;
+
+            // O link mágico que abre o Gmail diretamente (view=cm significa 'compose message')
+            // Usamos encodeURIComponent para formatar os espaços e quebras de linha pro link
+            const urlGmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${emailDestino}&su=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpoEmail)}`;
+
+            // Abre a janela do Gmail numa nova aba
+            window.open(urlGmail, '_blank');
+        }
     </script>
 </body>
 </html>
