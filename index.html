@@ -5,8 +5,127 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grupo Soul - Excelência em Terceirização</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
+    
+    <style>
+        /* --- Reset e Fontes --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; line-height: 1.6; overflow-x: hidden; background-color: #ffffff; }
+        a { text-decoration: none; color: inherit; transition: color 0.3s ease; }
+        ul { list-style: none; }
+
+        /* --- Cores --- */
+        :root {
+            --primary-blue: #004b93;
+            --hover-blue: #1753a3;
+            --accent-blue: #89b8ff;
+            --background-grey: #f8f9fa;
+            --white: #ffffff;
+        }
+
+        /* --- Header e Navbar --- */
+        header { background-color: var(--primary-blue); padding: 10px 0; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .navbar { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+        .logo { height: 50px; }
+        .nav-links { display: flex; gap: 20px; color: var(--white); font-weight: 500; }
+        .nav-links a:not(.btn-solicitar):hover { color: var(--accent-blue); }
+        .btn-solicitar { background-color: var(--accent-blue); color: var(--primary-blue); padding: 10px 20px; border-radius: 25px; font-weight: bold; transition: background-color 0.3s ease, color 0.3s ease; }
+        .btn-solicitar:hover { background-color: var(--white); color: var(--primary-blue); }
+
+        /* --- Main e Seções Gerais --- */
+        main { margin-top: 70px; }
+        .section { padding: 100px 20px; max-width: 1200px; margin: 0 auto; text-align: center; }
+        h2 { font-size: 2.5rem; color: var(--primary-blue); margin-bottom: 50px; position: relative; display: inline-block; }
+        h2::after { content: ''; position: absolute; width: 60px; height: 4px; background-color: var(--accent-blue); bottom: -10px; left: 50%; transform: translateX(-50%); }
+
+        /* --- Hero (Seção do Topo com 300px e Efeito) --- */
+        .hero {
+            height: 300px; /* Altura pequena e fixa */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden; /* Corta o que sobrar quando a imagem der zoom */
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://gozgames.neocities.org/WhatsApp%20Image%202025-04-29%20at%2011.12.26%20(2).jpeg') no-repeat center center;
+            background-size: cover;
+            z-index: 1;
+            transform-origin: center;
+            will-change: transform;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* Escurece a foto para ler o texto */
+            z-index: 2;
+        }
+
+        .hero-content {
+            color: var(--white);
+            z-index: 3;
+            position: relative;
+            transform-origin: center;
+            will-change: transform, opacity;
+        }
+
+        h1 { font-size: 2.2rem; margin-bottom: 10px; font-weight: 800; }
+        .hero p { font-size: 1.2rem; margin-bottom: 30px; }
+        .btn-hero { background-color: var(--accent-blue); color: var(--primary-blue); padding: 12px 30px; font-size: 1.1rem; font-weight: bold; border-radius: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); display: inline-block; transition: transform 0.3s ease, background-color 0.3s ease; }
+        .btn-hero:hover { transform: translateY(-5px); background-color: var(--white); }
+
+        /* --- Quem Somos --- */
+        .quem-somos-content { max-width: 800px; margin: 0 auto; font-size: 1.1rem; text-align: left; }
+
+        /* --- Serviços --- */
+        #servicos { background-color: var(--background-grey); }
+        .servicos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 20px; }
+        .servico-card { background-color: var(--white); padding: 40px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
+        .servico-card:hover { transform: translateY(-10px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .servico-card i { font-size: 3rem; color: var(--primary-blue); margin-bottom: 20px; }
+        .servico-card h3 { color: var(--primary-blue); margin-bottom: 15px; }
+
+        /* --- Parceiros (Carrossel Automático) --- */
+        .parceiros-carrossel-container { overflow: hidden; padding: 50px 0; background-color: var(--white); }
+        .parceiros-carrossel-track { display: flex; width: 200%; animation: scroll_parceiros 30s linear infinite; align-items: center; }
+        .parceiros-carrossel-track img { height: 60px; width: auto; margin: 0 50px; }
+        @keyframes scroll_parceiros { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* --- Contato --- */
+        #contato { background-color: var(--background-grey); }
+        .contact-content { display: flex; justify-content: space-between; align-items: flex-start; gap: 50px; text-align: left; }
+        #orcamento-form { flex: 2; display: flex; flex-direction: column; gap: 20px; }
+        #orcamento-form input, #orcamento-form select, #orcamento-form textarea { padding: 15px; border: 1px solid #ccc; border-radius: 5px; font-family: inherit; }
+        .btn-solicitar-full { background-color: var(--primary-blue); color: var(--white); padding: 15px; font-size: 1.2rem; font-weight: bold; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; }
+        .btn-solicitar-full:hover { background-color: var(--hover-blue); }
+        .contact-info { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+        .contact-info p { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; }
+        .contact-info p i { color: var(--primary-blue); }
+
+        /* --- Footer --- */
+        footer { background-color: var(--primary-blue); color: var(--white); padding: 30px; text-align: center; }
+        .logo-footer { height: 40px; margin-bottom: 10px; }
+
+        /* --- Animações de Entrada --- */
+        .fade-in { opacity: 0; transition: opacity 0.8s ease-out, transform 0.8s ease-out; transform: translateY(20px); }
+        .fade-in.is-visible { opacity: 1; transform: translateY(0); }
+
+        /* --- Responsividade --- */
+        @media (max-width: 768px) {
+            header { padding: 10px 0; }
+            .navbar { flex-direction: column; }
+            .nav-links { flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 10px; }
+            h1 { font-size: 1.8rem; }
+            .hero p { font-size: 1rem; }
+            .contact-content { flex-direction: column-reverse; gap: 30px; }
+            #orcamento-form { width: 100%; }
+        }
+    </style>
+    </head>
 <body>
 
     <header>
@@ -24,12 +143,10 @@
 
     <main>
         <section id="home" class="hero">
-            <div class="hero-bg"></div> 
-            
+            <div class="hero-bg"></div>
             <div class="hero-overlay"></div>
-
             <div class="hero-content">
-                <h1>GRUPO SOUL SOLUÇÕES INTELIGENTES EM TERCEIRIZAÇÃO</h1>
+                <h1>GRUPO SOUL: SOLUÇÕES INTELIGENTES EM TERCEIRIZAÇÃO</h1>
                 <p>Profissionalismo, Qualidade e Excelência em cada serviço.</p>
                 <a href="#contato" class="btn-hero">Solicitar Orçamento</a>
             </div>
@@ -38,76 +155,75 @@
         <section id="quem-somos" class="section fade-in">
             <h2>QUEM SOMOS</h2>
             <div class="quem-somos-content">
-                <p>Conte aqui a história, missão e valores da Grupo Soul. Destaque o compromisso com a qualidade, treinamento de funcionários e a satisfação do cliente. Mencione quantos anos de experiência a empresa possui...</p>
-                </div>
+                <p>A Grupo Soul atua com excelência no mercado de terceirização de serviços, oferecendo soluções inteligentes para condomínios e empresas. Nosso compromisso é com a qualidade, o treinamento rigoroso dos nossos colaboradores e a satisfação total de nossos clientes. Com profissionais capacitados, garantimos segurança e eficiência para o seu negócio.</p>
+            </div>
         </section>
 
         <section id="servicos" class="section fade-in">
             <h2>NOSSOS SERVIÇOS</h2>
             <div class="servicos-grid">
                 <div class="servico-card">
-                    <i class="material-icons">account_circle</i>
+                    <i class="material-icons">security</i>
                     <h3>CONTROLADOR DE ACESSO</h3>
-                    <p>Controle de entrada e saída, monitoramento...</p>
+                    <p>Controle rigoroso de entrada e saída, monitoramento contínuo e segurança preventiva para o seu patrimônio.</p>
                 </div>
                 <div class="servico-card">
-                    <i class="material-icons">brush</i>
+                    <i class="material-icons">cleaning_services</i>
                     <h3>AUXILIAR DE LIMPEZA</h3>
-                    <p>Limpeza e higienização profissional...</p>
+                    <p>Limpeza e higienização profissional, mantendo ambientes corporativos e residenciais sempre impecáveis.</p>
                 </div>
                 <div class="servico-card">
-                    <i class="material-icons">doorbell</i>
+                    <i class="material-icons">support_agent</i>
                     <h3>PORTARIA E RECEPÇÃO</h3>
-                    <p>Atendimento cordial e gerenciamento de...</p>
+                    <p>Atendimento cordial, triagem de visitantes e gerenciamento de correspondências com máxima eficiência.</p>
                 </div>
                 <div class="servico-card">
-                    <i class="material-icons">vpn_key</i>
+                    <i class="material-icons">home_work</i>
                     <h3>ZELADORIA</h3>
-                    <p>Manutenção e supervisão geral do condomínio...</p>
+                    <p>Manutenção e supervisão geral do condomínio, garantindo o bom funcionamento de todas as áreas comuns.</p>
                 </div>
             </div>
         </section>
 
         <section id="parceiros" class="section fade-in">
-            <h2>NOSSOS PARCEIROS E CLIENTES</h2>
+            <h2>NOSSOS PARCEIROS</h2>
             <div class="parceiros-carrossel-container">
                 <div class="parceiros-carrossel-track">
-                    <img src="https://via.placeholder.com/150x50?text=Parceiro+1" alt="Parceiro 1">
-                    <img src="https://via.placeholder.com/150x50?text=Parceiro+2" alt="Parceiro 2">
-                    <img src="https://via.placeholder.com/150x50?text=Parceiro+3" alt="Parceiro 3">
-                    <img src="https://via.placeholder.com/150x50?text=Parceiro+4" alt="Parceiro 4">
-                    <img src="https://via.placeholder.com/150x50?text=Parceiro+5" alt="Parceiro 5">
-                    <img src="https://via.placeholder.com/150x50?text=Parceiro+6" alt="Parceiro 6">
-                    <img src="https://via.placeholder.com/150x50?text=Parceiro+1" alt="Parceiro 1">
-                    <img src="https://via.placeholder.com/150x50?text=Parceiro+2" alt="Parceiro 2">
-                    <img src="https://via.placeholder.com/150x50?text=Parceiro+3" alt="Parceiro 3">
-                    <img src="https://via.placeholder.com/150x50?text=Parceiro+4" alt="Parceiro 4">
-                    <img src="https://via.placeholder.com/150x50?text=Parceiro+5" alt="Parceiro 5">
-                    <img src="https://via.placeholder.com/150x50?text=Parceiro+6" alt="Parceiro 6">
+                    <img src="https://via.placeholder.com/150x60?text=Logo+Parceiro+1" alt="Parceiro 1">
+                    <img src="https://via.placeholder.com/150x60?text=Logo+Parceiro+2" alt="Parceiro 2">
+                    <img src="https://via.placeholder.com/150x60?text=Logo+Parceiro+3" alt="Parceiro 3">
+                    <img src="https://via.placeholder.com/150x60?text=Logo+Parceiro+4" alt="Parceiro 4">
+                    <img src="https://via.placeholder.com/150x60?text=Logo+Parceiro+5" alt="Parceiro 5">
+                    <img src="https://via.placeholder.com/150x60?text=Logo+Parceiro+1" alt="Parceiro 1">
+                    <img src="https://via.placeholder.com/150x60?text=Logo+Parceiro+2" alt="Parceiro 2">
+                    <img src="https://via.placeholder.com/150x60?text=Logo+Parceiro+3" alt="Parceiro 3">
+                    <img src="https://via.placeholder.com/150x60?text=Logo+Parceiro+4" alt="Parceiro 4">
+                    <img src="https://via.placeholder.com/150x60?text=Logo+Parceiro+5" alt="Parceiro 5">
                 </div>
             </div>
         </section>
 
-        <section id="contato" class="section contact fade-in">
+        <section id="contato" class="section fade-in">
             <h2>SOLICITAR ORÇAMENTO</h2>
             <div class="contact-content">
                 <form id="orcamento-form">
-                    <input type="text" name="nome" placeholder="Seu Nome" required>
+                    <input type="text" name="nome" placeholder="Seu Nome/Empresa" required>
                     <input type="email" name="email" placeholder="Seu E-mail" required>
                     <select name="servico" required>
-                        <option value="" disabled selected>Selecione o Serviço</option>
+                        <option value="" disabled selected>Selecione o Serviço de Interesse</option>
                         <option value="controlador">Controlador de Acesso</option>
                         <option value="limpeza">Auxiliar de Limpeza</option>
                         <option value="portaria">Portaria e Recepção</option>
                         <option value="zeladoria">Zeladoria</option>
+                        <option value="outro">Outro</option>
                     </select>
-                    <textarea name="mensagem" placeholder="Sua Mensagem" rows="5"></textarea>
+                    <textarea name="mensagem" placeholder="Detalhes do seu pedido..." rows="5"></textarea>
                     <button type="submit" class="btn-solicitar-full">Enviar Pedido</button>
                 </form>
                 <div class="contact-info">
                     <p><i class="material-icons">email</i> atendimento@gruposoulbr.com</p>
                     <p><i class="material-icons">phone</i> (XX) XXXX-XXXX</p>
-                    <p><i class="material-icons">location_on</i> Endereço da Empresa, Cidade/UF</p>
+                    <p><i class="material-icons">location_on</i> Endereço da Sede, Cidade/UF</p>
                 </div>
             </div>
         </section>
@@ -118,6 +234,50 @@
         <p>&copy; 2024 Grupo Soul. Todos os direitos reservados.</p>
     </footer>
 
-    <script src="script.js"></script>
-</body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- EFEITO DE SCROLL NO HERO (ZOOM E FADE-OUT) ---
+            const hero = document.querySelector('.hero');
+            const heroBg = document.querySelector('.hero-bg');
+            const heroContent = document.querySelector('.hero-content');
+
+            if (hero && heroBg && heroContent) {
+                const imageZoomSpeed = 0.0008; // Controla a velocidade do zoom da imagem
+                const textScaleSpeed = 0.003;  // Controla o quanto o texto cresce
+                const heroHeight = hero.offsetHeight;
+
+                window.addEventListener('scroll', () => {
+                    const scrollY = window.scrollY;
+
+                    // Aplica o efeito apenas enquanto o topo do site estiver na tela
+                    if (scrollY <= heroHeight + 100) {
+                        // 1. Aumenta a imagem de fundo devagarinho
+                        const scaleBg = 1 + (scrollY * imageZoomSpeed);
+                        heroBg.style.transform = `scale(${scaleBg})`;
+
+                        // 2. Aumenta o texto mais rápido e faz ele sumir
+                        const scaleText = 1 + (scrollY * textScaleSpeed);
+                        let opacityText = 1 - (scrollY / (heroHeight - 50)); 
+                        
+                        if (opacityText < 0) opacityText = 0; // Impede valor negativo
+
+                        heroContent.style.transform = `scale(${scaleText}) translateY(${scrollY * 0.2}px)`;
+                        heroContent.style.opacity = opacityText;
+                    }
+                });
+            }
+
+            // --- ANIMAÇÃO DE ENTRADA (FADE-IN) DAS SEÇÕES ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        });
+    </script>
+    </body>
 </html>
