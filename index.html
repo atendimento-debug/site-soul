@@ -51,19 +51,22 @@
         .hero-bg {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            /* Fundo gradiente laranja pastel super moderno combinando com a logo */
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            background: url('https://gruposoulbr.com/wp-content/uploads/2024/11/Soul-Luis-Rectangle-7.webp') no-repeat center center;
+            background-size: cover;
             z-index: 1;
             transform-origin: center;
             will-change: transform;
         }
 
         .hero-overlay {
-            display: none; /* Desativa a película escura */
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* Escurece a foto para ler o texto */
+            z-index: 2;
         }
 
         .hero-content {
-            color: var(--primary-blue); /* Mudamos de --white para o Azul da Logo */
+            color: var(--white);
             z-index: 3;
             position: relative;
             transform-origin: center;
@@ -143,7 +146,7 @@
             <div class="hero-bg"></div>
             <div class="hero-overlay"></div>
             <div class="hero-content">
-                <h1>GRUPO SOUL SOLUÇÕES INTELIGENTES EM TERCEIRIZAÇÃO</h1>
+                <h1>GRUPO SOUL: SOLUÇÕES INTELIGENTES EM TERCEIRIZAÇÃO</h1>
                 <p>Profissionalismo, Qualidade e Excelência em cada serviço.</p>
                 <a href="#contato" class="btn-hero">Solicitar Orçamento</a>
             </div>
