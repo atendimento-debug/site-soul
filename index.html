@@ -56,7 +56,7 @@
         .quem-somos-titulo-destaque { font-size: 1.8rem; color: var(--primary-blue); font-weight: bold; margin-bottom: 10px; }
         .quem-somos-subtitulo { font-size: 1.2rem; color: #666; margin-bottom: 30px; display: block; }
         
-        /* Ajuste: alinhamento no topo (start) sem forçar esticamento */
+        /* Ajuste: alinhamento no topo (start) e remoção do margin-top: auto do 'p' para não deixar buracos */
         .mvv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; align-items: start; margin-bottom: 40px; }
         .mvv-card { background-color: var(--background-grey); padding: 40px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease; display: flex; flex-direction: column; }
         .mvv-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
@@ -82,7 +82,6 @@
         .servicos-carousel-wrapper { position: relative; max-width: 100%; padding: 0 50px; z-index: 1; }
 
         /* Ajustes do Carrossel */
-        /* align-items: start evita que os cartões curtos estiquem até a altura do mais alto */
         .servicos-carrossel-track { display: flex; gap: 30px; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; padding: 20px 10px 40px 10px; align-items: start; }
         .servicos-carrossel-track::-webkit-scrollbar { display: none; }
         .servicos-carrossel-track { -ms-overflow-style: none; scrollbar-width: none; }
@@ -94,7 +93,8 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
-            min-width: 350px;
+            /* Aumentei a largura mínima para caber melhor os textos compridos, exibindo geralmente 2 ou 3 por tela no PC */
+            min-width: 450px; 
             flex: 0 0 auto;
             scroll-snap-align: start;
             display: flex;
@@ -104,6 +104,7 @@
         .servico-card:hover { transform: translateY(-10px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .servico-card i { font-size: 3rem; color: var(--primary-blue); margin-bottom: 20px; }
         .servico-card h3 { color: var(--primary-blue); font-size: 1.1rem; margin-bottom: 15px; text-align: center; }
+        /* Removido o margin-top: auto; para não dar aquele vão entre o título e a descrição */
         .servico-card p { text-align: center; color: #555; } 
 
         /* Setas do Carrossel */
@@ -168,6 +169,8 @@
             .valores-list { grid-template-columns: 1fr; } 
             
             .servicos-carousel-wrapper { padding: 0; }
+            /* Volta o cartão para um tamanho menor na tela estreita do celular */
+            .servico-card { min-width: 300px; } 
             .carousel-btn { display: none; } 
             
             .contact-content { flex-direction: column-reverse; gap: 30px; }
@@ -484,7 +487,8 @@
             let autoScrollServicos;
 
             if (servicosTrack && btnPrevServicos && btnNextServicos) {
-                const scrollAmount = 330; 
+                // Aumentei o salto para 480px (450px da largura nova + 30px de gap)
+                const scrollAmount = 480; 
 
                 const moveNext = () => {
                     if (servicosTrack.scrollLeft + servicosTrack.clientWidth >= servicosTrack.scrollWidth - 10) {
