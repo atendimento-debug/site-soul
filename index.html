@@ -51,22 +51,19 @@
         .hero-bg {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://gozgames.neocities.org/lines%20-%20fundo%20preto.jpg') no-repeat center center;
-            background-size: cover;
+            /* Fundo gradiente laranja pastel super moderno combinando com a logo */
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
             z-index: 1;
             transform-origin: center;
             will-change: transform;
         }
 
         .hero-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.6); /* Escurece a foto para ler o texto */
-            z-index: 2;
+            display: none; /* Desativa a película escura */
         }
 
         .hero-content {
-            color: var(--white);
+            color: var(--primary-blue); /* Mudamos de --white para o Azul da Logo */
             z-index: 3;
             position: relative;
             transform-origin: center;
