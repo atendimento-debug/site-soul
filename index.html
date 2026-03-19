@@ -65,18 +65,20 @@
         .btn-hero { background-color: var(--accent-blue); color: var(--primary-blue); padding: 12px 30px; font-size: 1.1rem; font-weight: bold; border-radius: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); display: inline-block; transition: transform 0.3s ease, background-color 0.3s ease; cursor: pointer; }
         .btn-hero:hover { transform: translateY(-5px); background-color: var(--white); }
 
-        /* --- Quem Somos, Valores, Serviços, Parceiros --- (Mantidos do original) */
+        /* --- Quem Somos --- */
         .quem-somos-content { max-width: 1200px; margin: 0 auto; text-align: left; }
         .quem-somos-intro { max-width: 800px; margin: 0 auto 50px auto; font-size: 1.1rem; text-align: center; color: #444; }
         .quem-somos-titulo-destaque { font-size: 1.8rem; color: var(--primary-blue); font-weight: bold; margin-bottom: 10px; }
         .quem-somos-subtitulo { font-size: 1.2rem; color: #666; margin-bottom: 30px; display: block; }
+        
         .mvv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; align-items: start; margin-bottom: 40px; }
         .mvv-card { background-color: var(--background-grey); padding: 40px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; }
         .mvv-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .mvv-card i { font-size: 3rem; color: var(--primary-blue); margin-bottom: 20px; }
         .mvv-card h3 { color: var(--primary-blue); margin-bottom: 20px; font-size: 1.5rem; }
         .mvv-card p { font-size: 1rem; color: #555; text-align: justify; line-height: 1.7; margin: 0; width: 100%; }
-        
+
+        /* --- Valores --- */
         .valores-container { margin-top: 20px; text-align: center; }
         .valores-container h3 { color: var(--primary-blue); font-size: 1.8rem; margin-bottom: 30px; display: flex; align-items: center; justify-content: center; gap: 10px; }
         .valores-list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
@@ -84,6 +86,7 @@
         .valores-list li:hover { transform: translateY(-8px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); border-top-color: var(--accent-blue); }
         .valores-list li strong { color: var(--primary-blue); font-weight: 800; font-size: 1.2rem; display: block; margin-bottom: 10px; }
 
+        /* --- Serviços --- */
         #servicos { background-color: var(--background-grey); position: relative; overflow: hidden; }
         #servicos h2 { position: relative; z-index: 1; }
         .bg-animado { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
@@ -93,28 +96,31 @@
         .servicos-carousel-wrapper { position: relative; max-width: 100%; padding: 0 50px; z-index: 1; }
         .servicos-carrossel-track { display: flex; gap: 30px; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; padding: 20px 10px 40px 10px; align-items: start; -ms-overflow-style: none; scrollbar-width: none; }
         .servicos-carrossel-track::-webkit-scrollbar { display: none; }
+
         .servico-card { background-color: var(--white); padding: 40px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; min-width: 320px; max-width: 400px; flex: 0 0 auto; scroll-snap-align: start; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
         .servico-card:hover { transform: translateY(-10px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .servico-card i { font-size: 3rem; color: var(--primary-blue); margin-bottom: 20px; }
         .servico-card h3 { color: var(--primary-blue); font-size: 1.1rem; margin-bottom: 15px; text-align: center; }
         .servico-card p { text-align: center; color: #555; margin: 0; } 
+
         .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background-color: var(--primary-blue); color: var(--white); border: none; border-radius: 50%; width: 50px; height: 50px; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: background-color 0.3s ease, transform 0.3s ease; }
         .carousel-btn:hover { background-color: var(--accent-blue); color: var(--primary-blue); transform: translateY(-50%) scale(1.1); }
         .prev-btn { left: 0; }
         .next-btn { right: 0; }
 
+        /* --- Parceiros --- */
         .parceiros-carrossel-container { overflow: hidden; padding: 50px 0; background-color: var(--white); }
         .parceiros-carrossel-track { display: flex; width: max-content; animation: scroll_parceiros 30s linear infinite; align-items: center; }
         .parceiros-carrossel-track img { height: 60px; width: auto; margin: 0 50px; }
         .parceiros-carrossel-track img[src^="https://gozgames.neocities.org/BackgroundEraser"] { height: 130px; }
         @keyframes scroll_parceiros { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* --- Estilo das Páginas Isoladas (Formulários) --- */
-        .isolated-page { background-color: var(--background-grey); padding: 80px 20px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+        /* --- ESTILO DAS PÁGINAS ISOLADAS (Formulários) --- */
+        .isolated-page { background-color: var(--background-grey); padding: 80px 20px; min-height: calc(100vh - 70px); display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .isolated-card { background-color: var(--white); max-width: 800px; width: 100%; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); padding: 50px; text-align: center; }
         
-        .isolated-card h2 { font-size: 2.2rem; color: var(--primary-blue); margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 15px; border: none; }
-        .isolated-card h2::after { display: none; } /* Tira a barrinha de baixo */
+        .isolated-card h2 { font-size: 2.2rem; color: var(--primary-blue); margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 15px; border: none; width: 100%; }
+        .isolated-card h2::after { display: none; } 
         .isolated-card .icon-title { font-size: 3rem; color: var(--accent-blue); background: #f0f6ff; padding: 15px; border-radius: 50%; }
         
         .form-container { width: 100%; display: flex; flex-direction: column; gap: 20px; margin-top: 30px; text-align: left; }
@@ -132,20 +138,19 @@
         .file-upload-wrapper:hover .file-upload-custom { border-color: var(--primary-blue); background-color: #eef5ff; }
         .file-upload-custom.file-selected { border-style: solid; border-color: #25d366; background-color: #eafff1; color: #1da851; }
 
-        /* --- Novo Footer Elegante --- */
+        /* --- NOVO RODAPÉ (FOOTER) PROFISSIONAL --- */
         footer { background-color: var(--primary-blue); color: var(--white); padding: 50px 20px 30px 20px; text-align: center; }
         .footer-content { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 25px; }
-        .logo-footer { height: 50px; }
+        .logo-footer { height: 50px; cursor: pointer; }
         
         .social-buttons { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
-        .social-btn { display: flex; align-items: center; gap: 8px; padding: 12px 25px; border-radius: 30px; color: #fff; font-weight: bold; text-decoration: none; font-size: 1rem; transition: transform 0.3s, box-shadow 0.3s; }
-        .social-btn:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
         
-        .btn-wpp { background-color: #25d366; }
-        .btn-insta { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
-        .btn-email { background-color: #ea4335; }
+        /* Botões minimalistas e elegantes */
+        .social-btn { display: flex; align-items: center; gap: 8px; padding: 12px 25px; border: 2px solid var(--white); border-radius: 30px; color: var(--white); font-weight: bold; text-decoration: none; font-size: 1rem; background: transparent; transition: all 0.3s ease; }
+        .social-btn:hover { background-color: var(--white); color: var(--primary-blue); transform: translateY(-3px); }
+        .social-btn svg, .social-btn i { fill: currentColor; transition: fill 0.3s ease; }
         
-        .footer-line { width: 100%; height: 1px; background-color: rgba(255,255,255,0.1); margin: 30px 0; }
+        .footer-line { width: 100%; height: 1px; background-color: rgba(255,255,255,0.2); margin: 30px 0; }
         .developer-credit { font-size: 0.9rem; color: #ccc; }
         .developer-credit a { color: var(--accent-blue); font-weight: bold; transition: color 0.3s ease; }
         .developer-credit a:hover { color: var(--white); text-decoration: underline; }
@@ -168,7 +173,7 @@
 
         @media (max-width: 768px) {
             .isolated-card { padding: 30px 20px; }
-            .isolated-card h2 { font-size: 1.8rem; }
+            .isolated-card h2 { font-size: 1.8rem; flex-direction: column; gap: 5px; }
             .social-buttons { flex-direction: column; width: 100%; }
             .social-btn { width: 100%; justify-content: center; }
         }
@@ -281,74 +286,78 @@
                     </div>
                 </div>
             </section>
-        </div> <div id="page-orcamento" class="page-view isolated-page">
-            <div class="isolated-card fade-in">
-                <h2><i class="material-icons icon-title">request_quote</i> Solicitar Orçamento</h2>
-                <p style="color: #666; margin-bottom: 30px; font-size: 1.1rem;">Preencha os dados abaixo e entraremos em contato rapidamente com a melhor proposta para o seu negócio.</p>
-                
-                <div class="form-container">
-                    <form id="orcamento-form">
-                        <input type="text" id="form-nome" name="nome" placeholder="Seu Nome / Nome da Empresa" required>
-                        <input type="email" id="form-email" name="email" placeholder="E-mail para contato" required>
-                        
-                        <select id="form-servico" name="servico" required>
-                            <option value="" disabled selected>Selecione o Serviço de Interesse</option>
-                            <option value="Controlador de Acesso">Controlador de Acesso</option>
-                            <option value="Auxiliar de Limpeza">Auxiliar de Limpeza</option>
-                            <option value="Portaria e Recepção">Portaria e Recepção</option>
-                            <option value="Zeladoria">Zeladoria</option>
-                            <option value="Coletor de Resíduos">Coletor de Resíduos</option>
-                            <option value="Jardinagem">Jardinagem</option>
-                            <option value="Estoquista">Estoquista</option>
-                            <option value="Enfermagem">Enfermagem</option>
-                            <option value="Apoio Laboratorial / Biomédico">Apoio Laboratorial / Biomédico</option>
-                            <option value="Supervisores">Supervisores</option>
-                            <option value="Outros Profissionais">Outros Profissionais</option>
-                        </select>
-                        
-                        <textarea id="form-mensagem" name="mensagem" placeholder="Detalhes do seu pedido (metragem, quantidade de profissionais, etc.)..." rows="5"></textarea>
-                        
-                        <button type="button" class="btn-solicitar-full" onclick="enviarOrçamento()"><i class="material-icons" style="vertical-align: middle; margin-right: 5px;">send</i> Enviar Pedido de Orçamento</button>
-                    </form>
+        </div> <div id="page-orcamento" class="page-view">
+            <div class="isolated-page">
+                <div class="isolated-card fade-in">
+                    <h2><i class="material-icons icon-title">request_quote</i> Solicitar Orçamento</h2>
+                    <p style="color: #666; margin-bottom: 30px; font-size: 1.1rem;">Preencha os dados abaixo e nossa equipe entrará em contato com a melhor proposta.</p>
+                    
+                    <div class="form-container">
+                        <form id="orcamento-form">
+                            <input type="text" id="form-nome" name="nome" placeholder="Seu Nome / Nome da Empresa" required>
+                            <input type="email" id="form-email" name="email" placeholder="E-mail para contato" required>
+                            
+                            <select id="form-servico" name="servico" required>
+                                <option value="" disabled selected>Selecione o Serviço de Interesse</option>
+                                <option value="Controlador de Acesso">Controlador de Acesso</option>
+                                <option value="Auxiliar de Limpeza">Auxiliar de Limpeza</option>
+                                <option value="Portaria e Recepção">Portaria e Recepção</option>
+                                <option value="Zeladoria">Zeladoria</option>
+                                <option value="Coletor de Resíduos">Coletor de Resíduos</option>
+                                <option value="Jardinagem">Jardinagem</option>
+                                <option value="Estoquista">Estoquista</option>
+                                <option value="Enfermagem">Enfermagem</option>
+                                <option value="Apoio Laboratorial / Biomédico">Apoio Laboratorial / Biomédico</option>
+                                <option value="Supervisores">Supervisores</option>
+                                <option value="Outros Profissionais">Outros Profissionais</option>
+                            </select>
+                            
+                            <textarea id="form-mensagem" name="mensagem" placeholder="Detalhes do seu pedido (metragem, quantidade de profissionais, etc.)..." rows="5"></textarea>
+                            
+                            <button type="button" class="btn-solicitar-full" onclick="enviarOrçamento()"><i class="material-icons" style="vertical-align: middle; margin-right: 5px;">send</i> Enviar Pedido de Orçamento</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div> <div id="page-trabalhe" class="page-view isolated-page">
-            <div class="isolated-card fade-in">
-                <h2><i class="material-icons icon-title">badge</i> Trabalhe Conosco</h2>
-                <p style="color: #666; margin-bottom: 30px; font-size: 1.1rem;">Faça parte da equipe Grupo Soul! Preencha os dados, escolha sua área e anexe seu currículo atualizado em PDF.</p>
-                
-                <div class="form-container">
-                    <form id="form-curriculo">
-                        <input type="text" id="cand-nome" placeholder="Seu Nome Completo" required>
-                        <input type="email" id="cand-email" placeholder="Seu E-mail" required>
-                        
-                        <select id="cand-vaga" required>
-                            <option value="" disabled selected>Qual a sua Área de Interesse?</option>
-                            <option value="Controlador de Acesso">Controlador de Acesso</option>
-                            <option value="Auxiliar de Limpeza">Auxiliar de Limpeza</option>
-                            <option value="Portaria e Recepção">Portaria e Recepção</option>
-                            <option value="Zeladoria">Zeladoria</option>
-                            <option value="Coletor de Resíduos">Coletor de Resíduos</option>
-                            <option value="Jardineiro">Jardineiro</option>
-                            <option value="Estoquista">Estoquista</option>
-                            <option value="Enfermagem">Enfermagem</option>
-                            <option value="Biomédico e Analista">Biomédico e Analista</option>
-                            <option value="Técnico de Laboratório">Técnico de Laboratório</option>
-                            <option value="Supervisores">Supervisores</option>
-                            <option value="Outros">Outros Profissionais</option>
-                        </select>
-                        
-                        <div class="file-upload-wrapper">
-                            <input type="file" id="cand-arquivo" class="file-upload-input" accept=".pdf" required>
-                            <div class="file-upload-custom" id="file-upload-display">
-                                <i class="material-icons">cloud_upload</i>
-                                <span id="file-upload-text">Clique ou arraste para anexar o Currículo (Apenas .PDF)</span>
+        </div> <div id="page-trabalhe" class="page-view">
+            <div class="isolated-page">
+                <div class="isolated-card fade-in">
+                    <h2><i class="material-icons icon-title">badge</i> Trabalhe Conosco</h2>
+                    <p style="color: #666; margin-bottom: 30px; font-size: 1.1rem;">Faça parte da nossa equipe! Selecione sua área e anexe seu currículo em formato PDF.</p>
+                    
+                    <div class="form-container">
+                        <form id="form-curriculo">
+                            <input type="text" id="cand-nome" placeholder="Seu Nome Completo" required>
+                            <input type="email" id="cand-email" placeholder="Seu E-mail" required>
+                            
+                            <select id="cand-vaga" required>
+                                <option value="" disabled selected>Qual a sua Área de Interesse?</option>
+                                <option value="Controlador de Acesso">Controlador de Acesso</option>
+                                <option value="Auxiliar de Limpeza">Auxiliar de Limpeza</option>
+                                <option value="Portaria e Recepção">Portaria e Recepção</option>
+                                <option value="Zeladoria">Zeladoria</option>
+                                <option value="Coletor de Resíduos">Coletor de Resíduos</option>
+                                <option value="Jardineiro">Jardineiro</option>
+                                <option value="Estoquista">Estoquista</option>
+                                <option value="Enfermagem">Enfermagem</option>
+                                <option value="Biomédico e Analista">Biomédico e Analista</option>
+                                <option value="Técnico de Laboratório">Técnico de Laboratório</option>
+                                <option value="Supervisores">Supervisores</option>
+                                <option value="Outros">Outros Profissionais</option>
+                            </select>
+                            
+                            <div class="file-upload-wrapper">
+                                <input type="file" id="cand-arquivo" class="file-upload-input" accept=".pdf" required>
+                                <div class="file-upload-custom" id="file-upload-display">
+                                    <i class="material-icons">cloud_upload</i>
+                                    <span id="file-upload-text">Clique ou arraste para anexar o Currículo (.PDF)</span>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <button type="submit" id="btn-enviar-cv" class="btn-solicitar-full"><i class="material-icons" style="vertical-align: middle; margin-right: 5px;">upload_file</i> Enviar Currículo</button>
-                        <p id="msg-retorno" style="margin-top: 15px; font-weight: bold; text-align: center; font-size: 1.1rem;"></p>
-                    </form>
+                            
+                            <button type="submit" id="btn-enviar-cv" class="btn-solicitar-full"><i class="material-icons" style="vertical-align: middle; margin-right: 5px;">upload_file</i> Enviar Currículo</button>
+                            <p id="msg-retorno" style="margin-top: 15px; font-weight: bold; text-align: center; font-size: 1.1rem;"></p>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div> </main>
@@ -359,22 +368,22 @@
 
     <footer>
         <div class="footer-content">
-            <img src="https://gozgames.neocities.org/Logo%20horizontal%20-%20fundo%20azul.png" alt="Logo Grupo Soul" class="logo-footer" onclick="goToHomeSection('home')" style="cursor:pointer;">
-            <p>Facilidade e Segurança para Cidades, Empresas e Condomínios.</p>
+            <img src="https://gozgames.neocities.org/Logo%20horizontal%20-%20fundo%20azul.png" alt="Logo Grupo Soul" class="logo-footer" onclick="goToHomeSection('home')">
+            <p style="margin: 0;">Facilidade e Segurança para Cidades, Empresas e Condomínios.</p>
             
             <div class="social-buttons">
-                <a href="https://wa.me/5519997370190" target="_blank" class="social-btn btn-wpp">
-                    <svg viewBox="0 0 24 24" width="22" height="22" fill="white"><path d="M12.031 0C5.392 0 0 5.392 0 12.031c0 2.115.55 4.175 1.594 5.99L.04 24l6.115-1.562a11.96 11.96 0 005.876 1.528h.005c6.638 0 12.031-5.392 12.031-12.031S18.669 0 12.031 0zm0 21.962h-.004a9.92 9.92 0 01-5.068-1.385l-.364-.216-3.766.96.985-3.674-.237-.378a9.932 9.932 0 01-1.517-5.238c0-5.485 4.468-9.953 9.958-9.953s9.952 4.468 9.952 9.953-4.467 9.953-9.952 9.953zm5.458-7.442c-.299-.15-1.77-.875-2.044-.976-.275-.099-.475-.15-.675.15-.2.3-.775.975-.95 1.175-.175.2-.35.225-.65.075-1.25-.625-2.225-1.125-3.075-2.4-.225-.325.25-.3.675-1.15.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.25-.6-.5-.525-.675-.525h-.575c-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5s1.075 2.9 1.225 3.1c.15.2 2.1 3.225 5.1 4.525.725.3 1.275.475 1.725.625.725.225 1.375.2 1.9.125.575-.075 1.77-.725 2.025-1.425.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z"/></svg> 
+                <a href="https://wa.me/5519997370190" target="_blank" class="social-btn">
+                    <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12.031 0C5.392 0 0 5.392 0 12.031c0 2.115.55 4.175 1.594 5.99L.04 24l6.115-1.562a11.96 11.96 0 005.876 1.528h.005c6.638 0 12.031-5.392 12.031-12.031S18.669 0 12.031 0zm0 21.962h-.004a9.92 9.92 0 01-5.068-1.385l-.364-.216-3.766.96.985-3.674-.237-.378a9.932 9.932 0 01-1.517-5.238c0-5.485 4.468-9.953 9.958-9.953s9.952 4.468 9.952 9.953-4.467 9.953-9.952 9.953zm5.458-7.442c-.299-.15-1.77-.875-2.044-.976-.275-.099-.475-.15-.675.15-.2.3-.775.975-.95 1.175-.175.2-.35.225-.65.075-1.25-.625-2.225-1.125-3.075-2.4-.225-.325.25-.3.675-1.15.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.25-.6-.5-.525-.675-.525h-.575c-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5s1.075 2.9 1.225 3.1c.15.2 2.1 3.225 5.1 4.525.725.3 1.275.475 1.725.625.725.225 1.375.2 1.9.125.575-.075 1.77-.725 2.025-1.425.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z"/></svg> 
                     (19) 99737-0190
                 </a>
                 
-                <a href="mailto:atendimento@gruposoulbr.com" class="social-btn btn-email">
-                    <i class="material-icons">email</i>
+                <a href="mailto:atendimento@gruposoulbr.com" class="social-btn">
+                    <i class="material-icons" style="font-size: 20px;">email</i>
                     atendimento@gruposoulbr.com
                 </a>
                 
-                <a href="#" target="_blank" class="social-btn btn-insta" title="Siga nosso Instagram">
-                    <svg viewBox="0 0 24 24" width="22" height="22" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                <a href="#" target="_blank" class="social-btn" title="Siga nosso Instagram">
+                    <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                     @gruposoulbr
                 </a>
             </div>
@@ -382,22 +391,25 @@
         
         <div class="footer-line"></div>
         
-        <p>© 2026 Grupo Soul. Todos os direitos reservados.</p>
+        <p style="margin: 0;">© 2026 Grupo Soul. Todos os direitos reservados.</p>
         <p class="developer-credit">Desenvolvido por <a href="https://goscripts.com.br/" target="_blank">GoScripts</a></p>
     </footer>
 
     <script>
         // --- FUNÇÃO DE ABAS (PÁGINAS ISOLADAS) ---
         function showPage(pageId) {
-            // Esconde todas as páginas
+            // 1. Esconde todas as páginas
             document.querySelectorAll('.page-view').forEach(page => {
                 page.classList.remove('active-page');
             });
-            // Mostra apenas a página selecionada
+            
+            // 2. Mostra apenas a página clicada
             document.getElementById(pageId).classList.add('active-page');
+            
+            // 3. Rola pro topo suavemente
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            // Fecha o menu mobile (se estiver aberto)
+            // 4. Fecha o menu no celular se estiver aberto
             const navMenu = document.getElementById('nav-menu');
             if (navMenu.classList.contains('active')) {
                 navMenu.classList.remove('active');
@@ -405,18 +417,19 @@
             }
         }
 
-        // Função para ir para a Home e rolar até a seção específica
+        // Função especial para voltar para a Home e rolar até a seção
         function goToHomeSection(sectionId) {
-            showPage('page-home'); // Garante que a tela inicial esteja visível
+            showPage('page-home'); 
+            
             setTimeout(() => {
                 const section = document.getElementById(sectionId);
                 if(section) {
-                    const offset = 70; // Altura do header fixo
+                    const offset = 70; // Desconto da altura do cabeçalho
                     const elementPosition = section.getBoundingClientRect().top;
                     const offsetPosition = elementPosition + window.pageYOffset - offset;
                     window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
                 }
-            }, 100);
+            }, 50);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -441,7 +454,8 @@
                 const heroHeight = hero.offsetHeight;
 
                 window.addEventListener('scroll', () => {
-                    if (!document.getElementById('page-home').classList.contains('active-page')) return; // Só anima se tiver na home
+                    // Só anima se a Home estiver ativada na tela
+                    if (!document.getElementById('page-home').classList.contains('active-page')) return;
                     
                     const scrollY = window.scrollY;
                     if (scrollY <= heroHeight + 100) {
@@ -538,7 +552,7 @@
                         fileDisplay.innerHTML = `<i class="material-icons">check_circle</i><span id="file-upload-text">${fileName}</span>`;
                     } else {
                         fileDisplay.classList.remove('file-selected');
-                        fileDisplay.innerHTML = `<i class="material-icons">cloud_upload</i><span id="file-upload-text">Clique ou arraste para anexar o Currículo (Apenas .PDF)</span>`;
+                        fileDisplay.innerHTML = `<i class="material-icons">cloud_upload</i><span id="file-upload-text">Clique ou arraste para anexar o Currículo (.PDF)</span>`;
                     }
                 });
             }
@@ -594,7 +608,7 @@
                                 msgRetorno.textContent = "Currículo enviado com sucesso! Cheque seu e-mail.";
                                 formCurriculo.reset();
                                 fileDisplay.classList.remove('file-selected');
-                                fileDisplay.innerHTML = `<i class="material-icons">cloud_upload</i><span id="file-upload-text">Clique ou arraste para anexar o Currículo (Apenas .PDF)</span>`;
+                                fileDisplay.innerHTML = `<i class="material-icons">cloud_upload</i><span id="file-upload-text">Clique ou arraste para anexar o Currículo (.PDF)</span>`;
                             } else {
                                 msgRetorno.style.color = "#ea4335";
                                 msgRetorno.textContent = "Erro ao enviar. Tente novamente mais tarde.";
