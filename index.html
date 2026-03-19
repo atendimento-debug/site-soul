@@ -130,6 +130,7 @@
         .btn-solicitar-full { background-color: var(--primary-blue); color: var(--white); padding: 18px; font-size: 1.2rem; font-weight: bold; border: none; border-radius: 10px; cursor: pointer; transition: background-color 0.3s ease, transform 0.1s ease; width: 100%; box-shadow: 0 5px 15px rgba(0, 75, 147, 0.2); }
         .btn-solicitar-full:hover { background-color: var(--hover-blue); transform: translateY(-2px); }
         .btn-solicitar-full:active { transform: scale(0.98); }
+        .btn-solicitar-full:disabled { background-color: #ccc; cursor: not-allowed; box-shadow: none; transform: none; }
 
         /* Customização Input File (Currículo) */
         .file-upload-wrapper { position: relative; width: 100%; }
@@ -294,10 +295,10 @@
                     
                     <div class="form-container">
                         <form id="orcamento-form">
-                            <input type="text" id="form-nome" name="nome" placeholder="Seu Nome / Nome da Empresa" required>
-                            <input type="email" id="form-email" name="email" placeholder="E-mail para contato" required>
+                            <input type="text" id="orc-nome" placeholder="Seu Nome / Nome da Empresa" required>
+                            <input type="email" id="orc-email" placeholder="E-mail para contato" required>
                             
-                            <select id="form-servico" name="servico" required>
+                            <select id="orc-servico" required>
                                 <option value="" disabled selected>Selecione o Serviço de Interesse</option>
                                 <option value="Controlador de Acesso">Controlador de Acesso</option>
                                 <option value="Auxiliar de Limpeza">Auxiliar de Limpeza</option>
@@ -312,9 +313,10 @@
                                 <option value="Outros Profissionais">Outros Profissionais</option>
                             </select>
                             
-                            <textarea id="form-mensagem" name="mensagem" placeholder="Detalhes do seu pedido (metragem, quantidade de profissionais, etc.)..." rows="5"></textarea>
+                            <textarea id="orc-mensagem" placeholder="Detalhes do seu pedido (metragem, quantidade de profissionais, etc.)..." rows="5"></textarea>
                             
-                            <button type="button" class="btn-solicitar-full" onclick="enviarOrçamento()"><i class="material-icons" style="vertical-align: middle; margin-right: 5px;">send</i> Enviar Pedido de Orçamento</button>
+                            <button type="submit" id="btn-enviar-orcamento" class="btn-solicitar-full"><i class="material-icons" style="vertical-align: middle; margin-right: 5px;">send</i> Enviar Pedido de Orçamento</button>
+                            <p id="msg-retorno-orcamento" style="margin-top: 15px; font-weight: bold; text-align: center; font-size: 1.1rem;"></p>
                         </form>
                     </div>
                 </div>
@@ -396,6 +398,9 @@
     </footer>
 
     <script>
+        // AQUI VAI A URL DO SEU APPSCRIPT (Não esqueça de colocar a nova URL gerada)
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxbIeXQvl1_6h1k38Y7RWNOi1YAPwvRehmqn_hVw7YwrwAgWPxAVnpavdmz4qQdymDVQg/exec";
+
         // --- FUNÇÃO DE ABAS (PÁGINAS ISOLADAS) ---
         function showPage(pageId) {
             // 1. Esconde todas as páginas
@@ -557,7 +562,58 @@
                 });
             }
 
-            // --- SCRIPT DE ENVIO DO CURRÍCULO VIA GOOGLE APPS SCRIPT ---
+            // ========================================================
+            // SCRIPT DE ENVIO: ORÇAMENTO
+            // ========================================================
+            const formOrcamento = document.getElementById('orcamento-form');
+            if (formOrcamento) {
+                formOrcamento.addEventListener('submit', function(e) {
+                    e.preventDefault(); 
+                    
+                    const btnEnviar = document.getElementById('btn-enviar-orcamento');
+                    const msgRetorno = document.getElementById('msg-retorno-orcamento');
+                    btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 5px;">hourglass_empty</i> Enviando Pedido...';
+                    btnEnviar.disabled = true;
+
+                    const payload = {
+                        formType: "orcamento", // Sinalizador para o App Script
+                        nome: document.getElementById('orc-nome').value,
+                        email: document.getElementById('orc-email').value,
+                        servico: document.getElementById('orc-servico').value,
+                        mensagem: document.getElementById('orc-mensagem').value
+                    };
+
+                    fetch(scriptURL, {
+                        method: 'POST',
+                        redirect: 'follow', 
+                        headers: { "Content-Type": "text/plain;charset=utf-8" },
+                        body: JSON.stringify(payload)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if(data.status === "success") {
+                            msgRetorno.style.color = "#1da851";
+                            msgRetorno.textContent = "Pedido de orçamento enviado com sucesso! Cheque seu e-mail.";
+                            formOrcamento.reset();
+                        } else {
+                            msgRetorno.style.color = "#ea4335";
+                            msgRetorno.textContent = "Erro ao enviar. Tente novamente mais tarde.";
+                        }
+                    })
+                    .catch(error => {
+                        msgRetorno.style.color = "#ea4335";
+                        msgRetorno.textContent = "Erro na conexão. Tente novamente.";
+                    })
+                    .finally(() => {
+                        btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 5px;">send</i> Enviar Pedido de Orçamento';
+                        btnEnviar.disabled = false;
+                    });
+                });
+            }
+
+            // ========================================================
+            // SCRIPT DE ENVIO: CURRÍCULO
+            // ========================================================
             const formCurriculo = document.getElementById('form-curriculo');
             if (formCurriculo) {
                 formCurriculo.addEventListener('submit', function(e) {
@@ -568,11 +624,7 @@
                     btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 5px;">hourglass_empty</i> Enviando... Aguarde.';
                     btnEnviar.disabled = true;
 
-                    const nome = document.getElementById('cand-nome').value;
-                    const email = document.getElementById('cand-email').value;
-                    const vaga = document.getElementById('cand-vaga').value;
                     const file = inputFile.files[0];
-
                     if (!file) {
                         alert("Por favor, anexe um currículo.");
                         btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 5px;">upload_file</i> Enviar Currículo';
@@ -585,15 +637,14 @@
                         const base64String = event.target.result.split(',')[1];
                         
                         const payload = {
-                            nome: nome,
-                            email: email,
-                            vaga: vaga,
+                            formType: "curriculo", // Sinalizador para o App Script
+                            nome: document.getElementById('cand-nome').value,
+                            email: document.getElementById('cand-email').value,
+                            vaga: document.getElementById('cand-vaga').value,
                             fileName: file.name,
                             mimeType: file.type,
                             fileBase64: base64String
                         };
-
-                        const scriptURL = "https://script.google.com/macros/s/AKfycbxbIeXQvl1_6h1k38Y7RWNOi1YAPwvRehmqn_hVw7YwrwAgWPxAVnpavdmz4qQdymDVQg/exec";
 
                         fetch(scriptURL, {
                             method: 'POST',
@@ -629,32 +680,6 @@
             }
 
         }); // FIM DO DOMContentLoaded
-
-        // --- FUNÇÃO PARA ABRIR O GMAIL DO FORMULÁRIO DE ORÇAMENTO ---
-        function enviarOrçamento() {
-            const nome = document.getElementById('form-nome').value;
-            const emailCliente = document.getElementById('form-email').value;
-            const servico = document.getElementById('form-servico').value;
-            const mensagem = document.getElementById('form-mensagem').value;
-
-            if(!nome || !servico) {
-                alert("Por favor, preencha pelo menos o seu Nome e escolha o Serviço antes de enviar.");
-                return;
-            }
-
-            const emailDestino = "atendimento@gruposoulbr.com";
-            const assunto = `Solicitação de Orçamento pelo Site - ${nome}`;
-
-            const corpoEmail = `Olá Equipe Grupo Soul,\n\nGostaria de solicitar um orçamento para os seus serviços. Abaixo estão as minhas informações:\n\n` +
-                               `Nome/Empresa: ${nome}\n` +
-                               `E-mail de Contato: ${emailCliente}\n` +
-                               `Serviço de Interesse: ${servico}\n\n` +
-                               `Detalhes do Pedido:\n${mensagem}\n\n` +
-                               `Aguardando retorno. Obrigado!`;
-
-            const urlMailto = `mailto:${emailDestino}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpoEmail)}`;
-            window.location.href = urlMailto;
-        }
     </script>
 </body>
 </html>
