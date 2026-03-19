@@ -25,45 +25,13 @@
 
         /* --- Header e Navbar --- */
         header { background-color: var(--primary-blue); padding: 10px 0; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .navbar {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            position: relative;
-        }
+        .navbar { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; position: relative; }
 
-        /* --- Ajustes dentro do Media Query (max-width: 768px) --- */
         @media (max-width: 768px) {
-            header {
-                padding: 10px 0; 
-                width: 100%;
-                left: 0;
-            }
-
-            .logo {
-                height: 40px; 
-            }
-
-            .nav-links {
-                position: fixed; 
-                top: 60px; 
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 60px); 
-                background-color: var(--primary-blue);
-                flex-direction: column;
-                padding: 40px 0;
-                transition: 0.4s;
-                z-index: 999;
-            }
-
-            html, body {
-                max-width: 100%;
-                overflow-x: hidden;
-            }
+            header { padding: 10px 0; width: 100%; left: 0; }
+            .logo { height: 40px; }
+            .nav-links { position: fixed; top: 60px; left: -100%; width: 100%; height: calc(100vh - 60px); background-color: var(--primary-blue); flex-direction: column; padding: 40px 0; transition: 0.4s; z-index: 999; }
+            html, body { max-width: 100%; overflow-x: hidden; }
         }
         
         .logo { height: 50px; position: relative; z-index: 1001; }
@@ -71,8 +39,6 @@
         .nav-links a:not(.btn-solicitar):hover { color: var(--accent-blue); }
         .btn-solicitar { background-color: var(--accent-blue); color: var(--primary-blue); padding: 10px 20px; border-radius: 25px; font-weight: bold; transition: background-color 0.3s ease, color 0.3s ease; display: inline-block; }
         .btn-solicitar:hover { background-color: var(--white); color: var(--primary-blue); }
-        
-        /* Ícone do Menu Sanduíche */
         .menu-toggle { display: none; color: var(--white); font-size: 2rem; cursor: pointer; position: relative; z-index: 1001; }
 
         /* --- Main e Seções Gerais --- */
@@ -120,27 +86,10 @@
         @keyframes flutuar { 0% { transform: translateY(0) rotate(0deg); opacity: 0; } 10% { opacity: 0.1; } 90% { opacity: 0.1; } 100% { transform: translateY(1200px) rotate(360deg); opacity: 0; } }
         
         .servicos-carousel-wrapper { position: relative; max-width: 100%; padding: 0 50px; z-index: 1; }
-
-        .servicos-carrossel-track { display: flex; gap: 30px; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; padding: 20px 10px 40px 10px; align-items: start; }
+        .servicos-carrossel-track { display: flex; gap: 30px; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; padding: 20px 10px 40px 10px; align-items: start; -ms-overflow-style: none; scrollbar-width: none; }
         .servicos-carrossel-track::-webkit-scrollbar { display: none; }
-        .servicos-carrossel-track { -ms-overflow-style: none; scrollbar-width: none; }
 
-        .servico-card {
-            background-color: var(--white);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-            min-width: 320px; 
-            max-width: 400px; 
-            flex: 0 0 auto;
-            scroll-snap-align: start;
-            display: flex;
-            flex-direction: column;
-            align-items: center; 
-            justify-content: flex-start; 
-        }
+        .servico-card { background-color: var(--white); padding: 40px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; min-width: 320px; max-width: 400px; flex: 0 0 auto; scroll-snap-align: start; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
         .servico-card:hover { transform: translateY(-10px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .servico-card i { font-size: 3rem; color: var(--primary-blue); margin-bottom: 20px; }
         .servico-card h3 { color: var(--primary-blue); font-size: 1.1rem; margin-bottom: 15px; text-align: center; }
@@ -158,22 +107,30 @@
         .parceiros-carrossel-track img[src^="https://gozgames.neocities.org/BackgroundEraser"] { height: 130px; }
         @keyframes scroll_parceiros { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* --- Contato --- */
-        #contato { background-color: var(--background-grey); }
-        .contact-content { display: flex; justify-content: space-between; align-items: flex-start; gap: 50px; text-align: left; }
-        #orcamento-form { flex: 2; display: flex; flex-direction: column; gap: 20px; }
-        #orcamento-form input, #orcamento-form select, #orcamento-form textarea { padding: 15px; border: 1px solid #ccc; border-radius: 5px; font-family: inherit; }
-        .btn-solicitar-full { background-color: var(--primary-blue); color: var(--white); padding: 15px; font-size: 1.2rem; font-weight: bold; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; }
+        /* --- Formulários (Contato e Trabalhe Conosco) --- */
+        #contato, #trabalhe-conosco { background-color: var(--background-grey); }
+        .form-container { width: 100%; display: flex; flex-direction: column; gap: 20px; }
+        .form-container input[type="text"], .form-container input[type="email"], .form-container select, .form-container textarea { width: 100%; padding: 15px; border: 1px solid #ccc; border-radius: 5px; font-family: inherit; font-size: 1rem; color: #333; transition: border-color 0.3s ease; }
+        .form-container input:focus, .form-container select:focus, .form-container textarea:focus { outline: none; border-color: var(--primary-blue); box-shadow: 0 0 5px rgba(0, 75, 147, 0.2); }
+        .btn-solicitar-full { background-color: var(--primary-blue); color: var(--white); padding: 15px; font-size: 1.2rem; font-weight: bold; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease, transform 0.1s ease; width: 100%; }
         .btn-solicitar-full:hover { background-color: var(--hover-blue); }
-        .contact-info { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+        .btn-solicitar-full:active { transform: scale(0.98); }
         
+        .contact-content { display: flex; justify-content: space-between; align-items: flex-start; gap: 50px; text-align: left; }
+        .contact-info { flex: 1; display: flex; flex-direction: column; gap: 20px; }
         .contact-link { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; color: #333; text-decoration: none; transition: color 0.3s ease; }
         .contact-link i { color: var(--primary-blue); transition: transform 0.3s ease; }
         .contact-link:hover { color: var(--primary-blue); }
         .contact-link:hover i { transform: scale(1.1); }
-        
         .icon-wpp-contato { width: 24px; height: 24px; transition: transform 0.3s ease; }
         .contact-link:hover .icon-wpp-contato { transform: scale(1.1); }
+
+        /* Customização Input File (Currículo) */
+        .file-upload-wrapper { position: relative; width: 100%; margin-bottom: 20px; }
+        .file-upload-input { position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; z-index: 2; }
+        .file-upload-custom { display: flex; align-items: center; gap: 10px; padding: 15px; border: 2px dashed #ccc; border-radius: 5px; background-color: var(--white); color: #777; font-size: 1rem; transition: border-color 0.3s ease, background-color 0.3s ease; }
+        .file-upload-wrapper:hover .file-upload-custom { border-color: var(--primary-blue); background-color: #f0f6ff; color: var(--primary-blue); }
+        .file-upload-custom.file-selected { border-style: solid; border-color: var(--primary-blue); background-color: #e8f0fe; color: var(--primary-blue); font-weight: 500; }
 
         /* --- Footer --- */
         footer { background-color: var(--primary-blue); color: var(--white); padding: 30px; text-align: center; }
@@ -185,13 +142,10 @@
         /* --- NOVAS ANIMAÇÕES DE REVEAL (VAI E VEM) --- */
         .fade-in { opacity: 0; transition: opacity 0.8s ease-out, transform 0.8s ease-out; transform: translateY(30px); }
         .fade-in.is-visible { opacity: 1; transform: translateY(0); }
-
         .reveal-left { opacity: 0; transform: translateX(-60px); transition: all 0.8s ease-out; }
         .reveal-left.is-visible { opacity: 1; transform: translateX(0); }
-
         .reveal-right { opacity: 0; transform: translateX(60px); transition: all 0.8s ease-out; }
         .reveal-right.is-visible { opacity: 1; transform: translateX(0); }
-
         .reveal-up { opacity: 0; transform: translateY(60px); transition: all 0.8s ease-out; }
         .reveal-up.is-visible { opacity: 1; transform: translateY(0); }
 
@@ -203,22 +157,13 @@
 
         /* --- Responsividade --- */
         @media (max-width: 768px) {
-            header { padding: 15px 0; }
-            .menu-toggle { display: block; }
-            .nav-links { position: absolute; top: 70px; left: -100%; width: 100%; background-color: var(--primary-blue); flex-direction: column; padding: 20px 0; box-shadow: 0 5px 5px rgba(0,0,0,0.1); }
-            .nav-links.active { left: 0; }
-            .nav-links li { margin: 10px 0; }
-            .btn-solicitar { margin-top: 10px; }
-            
             h1 { font-size: 1.6rem; }
             .hero p { font-size: 1rem; }
             .mvv-grid { grid-template-columns: 1fr; }
             .valores-list { grid-template-columns: 1fr; } 
-            
             .servicos-carousel-wrapper { padding: 0; }
             .servico-card { min-width: 300px; } 
             .carousel-btn { display: none; } 
-            
             .contact-content { flex-direction: column-reverse; gap: 30px; }
             #orcamento-form { width: 100%; }
             .quem-somos-titulo-destaque { font-size: 1.5rem; }
@@ -388,27 +333,29 @@
         <section id="contato" class="section fade-in">
             <h2>SOLICITAR ORÇAMENTO</h2>
             <div class="contact-content">
-                <form id="orcamento-form">
-                    <input type="text" id="form-nome" name="nome" placeholder="Seu Nome/Empresa" required>
-                    <input type="email" id="form-email" name="email" placeholder="E-mail para contato" required>
-                    <select id="form-servico" name="servico" required>
-                        <option value="" disabled selected>Selecione o Serviço de Interesse</option>
-                        <option value="Controlador de Acesso">Controlador de Acesso</option>
-                        <option value="Auxiliar de Limpeza">Auxiliar de Limpeza</option>
-                        <option value="Portaria e Recepção">Portaria e Recepção</option>
-                        <option value="Zeladoria">Zeladoria</option>
-                        <option value="Coletor de Resíduos">Coletor de Resíduos</option>
-                        <option value="Jardinagem">Jardinagem</option>
-                        <option value="Estoquista">Estoquista</option>
-                        <option value="Enfermagem">Enfermagem</option>
-                        <option value="Apoio Laboratorial / Biomédico">Apoio Laboratorial / Biomédico</option>
-                        <option value="Supervisores">Supervisores</option>
-                        <option value="Outros Profissionais">Outros Profissionais</option>
-                    </select>
-                    <textarea id="form-mensagem" name="mensagem" placeholder="Detalhes do seu pedido..." rows="5"></textarea>
-                    
-                    <button type="button" class="btn-solicitar-full" onclick="enviarOrçamento()">Enviar Pedido</button>
-                </form>
+                <div class="form-container" style="flex: 2;">
+                    <form id="orcamento-form" style="display: flex; flex-direction: column; gap: 20px;">
+                        <input type="text" id="form-nome" name="nome" placeholder="Seu Nome/Empresa" required>
+                        <input type="email" id="form-email" name="email" placeholder="E-mail para contato" required>
+                        <select id="form-servico" name="servico" required>
+                            <option value="" disabled selected>Selecione o Serviço de Interesse</option>
+                            <option value="Controlador de Acesso">Controlador de Acesso</option>
+                            <option value="Auxiliar de Limpeza">Auxiliar de Limpeza</option>
+                            <option value="Portaria e Recepção">Portaria e Recepção</option>
+                            <option value="Zeladoria">Zeladoria</option>
+                            <option value="Coletor de Resíduos">Coletor de Resíduos</option>
+                            <option value="Jardinagem">Jardinagem</option>
+                            <option value="Estoquista">Estoquista</option>
+                            <option value="Enfermagem">Enfermagem</option>
+                            <option value="Apoio Laboratorial / Biomédico">Apoio Laboratorial / Biomédico</option>
+                            <option value="Supervisores">Supervisores</option>
+                            <option value="Outros Profissionais">Outros Profissionais</option>
+                        </select>
+                        <textarea id="form-mensagem" name="mensagem" placeholder="Detalhes do seu pedido..." rows="5"></textarea>
+                        
+                        <button type="button" class="btn-solicitar-full" onclick="enviarOrçamento()">Enviar Pedido</button>
+                    </form>
+                </div>
                 
                 <div class="contact-info">
                     <a href="mailto:atendimento@gruposoulbr.com" class="contact-link">
@@ -429,29 +376,44 @@
             </div>
         </section>
 
-        <section id="trabalhe-conosco" class="section fade-in">
+        <section id="trabalhe-conosco" class="section fade-in" style="background-color: var(--white);">
             <h2>TRABALHE CONOSCO</h2>
-            <p>Faça parte da equipe Grupo Soul. Anexe seu currículo abaixo.</p>
+            <p style="max-width: 600px; margin: 0 auto 40px auto; color: #555;">Faça parte da equipe Grupo Soul. Preencha os dados abaixo, selecione a vaga de interesse e anexe seu currículo em formato PDF.</p>
             
             <div class="contact-content" style="justify-content: center;">
-                <form id="form-curriculo" style="max-width: 600px; width: 100%;">
-                    <input type="text" id="cand-nome" placeholder="Seu Nome Completo" required style="width: 100%; padding: 15px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 20px; font-family: inherit;">
-                    <input type="email" id="cand-email" placeholder="Seu E-mail" required style="width: 100%; padding: 15px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 20px; font-family: inherit;">
-                    
-                    <select id="cand-vaga" required style="width: 100%; padding: 15px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 20px; font-family: inherit;">
-                        <option value="" disabled selected>Área de Interesse</option>
-                        <option value="Controlador de Acesso">Controlador de Acesso</option>
-                        <option value="Limpeza">Auxiliar de Limpeza</option>
-                        <option value="Portaria">Portaria e Recepção</option>
-                        <option value="Outros">Outros</option>
-                    </select>
-                    
-                    <label for="cand-arquivo" style="display:block; text-align: left; font-weight: bold; margin-bottom: 5px;">Anexar Currículo (PDF):</label>
-                    <input type="file" id="cand-arquivo" accept=".pdf" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 20px; background-color: white;">
-                    
-                    <button type="submit" id="btn-enviar-cv" class="btn-solicitar-full" style="width: 100%;">Enviar Currículo</button>
-                    <p id="msg-retorno" style="margin-top: 15px; font-weight: bold; text-align: center;"></p>
-                </form>
+                <div class="form-container" style="max-width: 600px;">
+                    <form id="form-curriculo">
+                        <input type="text" id="cand-nome" placeholder="Seu Nome Completo" required>
+                        <input type="email" id="cand-email" placeholder="Seu E-mail" required>
+                        
+                        <select id="cand-vaga" required>
+                            <option value="" disabled selected>Área de Interesse</option>
+                            <option value="Controlador de Acesso">Controlador de Acesso</option>
+                            <option value="Auxiliar de Limpeza">Auxiliar de Limpeza</option>
+                            <option value="Portaria e Recepção">Portaria e Recepção</option>
+                            <option value="Zeladoria">Zeladoria</option>
+                            <option value="Coletor de Resíduos">Coletor de Resíduos</option>
+                            <option value="Jardineiro">Jardineiro</option>
+                            <option value="Estoquista">Estoquista</option>
+                            <option value="Enfermagem">Enfermagem</option>
+                            <option value="Biomédico e Analista">Biomédico e Analista</option>
+                            <option value="Técnico de Laboratório">Técnico de Laboratório</option>
+                            <option value="Supervisores">Supervisores</option>
+                            <option value="Outros">Outros Profissionais</option>
+                        </select>
+                        
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="cand-arquivo" class="file-upload-input" accept=".pdf" required>
+                            <div class="file-upload-custom" id="file-upload-display">
+                                <i class="material-icons">attach_file</i>
+                                <span id="file-upload-text">Anexar Currículo (Apenas PDF)</span>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" id="btn-enviar-cv" class="btn-solicitar-full">Enviar Currículo</button>
+                        <p id="msg-retorno" style="margin-top: 15px; font-weight: bold; text-align: center; font-size: 1.1rem;"></p>
+                    </form>
+                </div>
             </div>
         </section>
         
@@ -605,7 +567,27 @@
                 });
             }
 
-            // --- NOVO: SCRIPT DE ENVIO DO CURRÍCULO ---
+            // --- LÓGICA DO INPUT FILE PERSONALIZADO ---
+            const inputFile = document.getElementById('cand-arquivo');
+            const fileDisplay = document.getElementById('file-upload-display');
+            const fileText = document.getElementById('file-upload-text');
+
+            if(inputFile) {
+                inputFile.addEventListener('change', function() {
+                    if (this.files && this.files.length > 0) {
+                        const fileName = this.files[0].name;
+                        fileText.textContent = fileName;
+                        fileDisplay.classList.add('file-selected');
+                        fileDisplay.innerHTML = `<i class="material-icons">check_circle</i><span id="file-upload-text">${fileName}</span>`;
+                    } else {
+                        fileText.textContent = "Anexar Currículo (Apenas PDF)";
+                        fileDisplay.classList.remove('file-selected');
+                        fileDisplay.innerHTML = `<i class="material-icons">attach_file</i><span id="file-upload-text">Anexar Currículo (Apenas PDF)</span>`;
+                    }
+                });
+            }
+
+            // --- SCRIPT DE ENVIO DO CURRÍCULO ---
             const formCurriculo = document.getElementById('form-curriculo');
             if (formCurriculo) {
                 formCurriculo.addEventListener('submit', function(e) {
@@ -619,8 +601,7 @@
                     const nome = document.getElementById('cand-nome').value;
                     const email = document.getElementById('cand-email').value;
                     const vaga = document.getElementById('cand-vaga').value;
-                    const arquivoInput = document.getElementById('cand-arquivo');
-                    const file = arquivoInput.files[0];
+                    const file = inputFile.files[0];
 
                     if (!file) {
                         alert("Por favor, anexe um currículo.");
@@ -658,6 +639,9 @@
                                 msgRetorno.style.color = "green";
                                 msgRetorno.textContent = "Currículo enviado com sucesso! Cheque seu e-mail.";
                                 formCurriculo.reset();
+                                // Reseta o visual do input de arquivo
+                                fileDisplay.classList.remove('file-selected');
+                                fileDisplay.innerHTML = `<i class="material-icons">attach_file</i><span id="file-upload-text">Anexar Currículo (Apenas PDF)</span>`;
                             } else {
                                 msgRetorno.style.color = "red";
                                 msgRetorno.textContent = "Erro ao enviar. Tente novamente mais tarde.";
@@ -678,7 +662,7 @@
                 });
             }
 
-        }); // FIM DO DOMContentLoaded (Importante para carregar os botões antes de executar)
+        }); // FIM DO DOMContentLoaded
 
         // --- FUNÇÃO PARA ABRIR O GMAIL DO FORMULÁRIO DE ORÇAMENTO ---
         function enviarOrçamento() {
