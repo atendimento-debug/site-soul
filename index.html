@@ -27,22 +27,30 @@
         header { background-color: var(--primary-blue); padding: 10px 0; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .navbar { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; position: relative; }
 
+        .logo { height: 50px; position: relative; z-index: 1001; cursor: pointer; }
+        .nav-links { display: flex; gap: 20px; color: var(--white); font-weight: 500; align-items: center; transition: 0.3s; }
+        .nav-links a { cursor: pointer; }
+        .nav-links a:not(.btn-solicitar):hover { color: var(--accent-blue); }
+        .btn-solicitar { background-color: var(--accent-blue); color: var(--primary-blue); padding: 10px 20px; border-radius: 25px; font-weight: bold; transition: background-color 0.3s ease, color 0.3s ease; display: inline-block; cursor: pointer; }
+        .btn-solicitar:hover { background-color: var(--white); color: var(--primary-blue); }
+        .menu-toggle { display: none; color: var(--white); font-size: 2rem; cursor: pointer; position: relative; z-index: 1001; }
+
         @media (max-width: 768px) {
             header { padding: 10px 0; width: 100%; left: 0; }
             .logo { height: 40px; }
             .nav-links { position: fixed; top: 60px; left: -100%; width: 100%; height: calc(100vh - 60px); background-color: var(--primary-blue); flex-direction: column; padding: 40px 0; transition: 0.4s; z-index: 999; }
+            .nav-links.active { left: 0; }
+            .menu-toggle { display: block; }
             html, body { max-width: 100%; overflow-x: hidden; }
         }
-        
-        .logo { height: 50px; position: relative; z-index: 1001; }
-        .nav-links { display: flex; gap: 20px; color: var(--white); font-weight: 500; align-items: center; transition: 0.3s; }
-        .nav-links a:not(.btn-solicitar):hover { color: var(--accent-blue); }
-        .btn-solicitar { background-color: var(--accent-blue); color: var(--primary-blue); padding: 10px 20px; border-radius: 25px; font-weight: bold; transition: background-color 0.3s ease, color 0.3s ease; display: inline-block; }
-        .btn-solicitar:hover { background-color: var(--white); color: var(--primary-blue); }
-        .menu-toggle { display: none; color: var(--white); font-size: 2rem; cursor: pointer; position: relative; z-index: 1001; }
+
+        /* --- Sistema de Abas (Páginas Isoladas) --- */
+        .page-view { display: none; animation: fadeInPage 0.5s ease-in-out; }
+        .page-view.active-page { display: block; }
+        @keyframes fadeInPage { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- Main e Seções Gerais --- */
-        main { margin-top: 70px; }
+        main { margin-top: 70px; min-height: calc(100vh - 70px - 200px); }
         .section { padding: 100px 20px; max-width: 1400px; margin: 0 auto; text-align: center; }
         h2 { font-size: 2.5rem; color: var(--primary-blue); margin-bottom: 50px; position: relative; display: inline-block; }
         h2::after { content: ''; position: absolute; width: 60px; height: 4px; background-color: var(--accent-blue); bottom: -10px; left: 50%; transform: translateX(-50%); }
@@ -54,23 +62,21 @@
         .hero-content { color: var(--white); z-index: 3; position: relative; transform-origin: center; will-change: transform, opacity; padding: 0 20px; }
         h1 { font-size: 2.2rem; margin-bottom: 10px; font-weight: 800; }
         .hero p { font-size: 1.2rem; margin-bottom: 30px; }
-        .btn-hero { background-color: var(--accent-blue); color: var(--primary-blue); padding: 12px 30px; font-size: 1.1rem; font-weight: bold; border-radius: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); display: inline-block; transition: transform 0.3s ease, background-color 0.3s ease; }
+        .btn-hero { background-color: var(--accent-blue); color: var(--primary-blue); padding: 12px 30px; font-size: 1.1rem; font-weight: bold; border-radius: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); display: inline-block; transition: transform 0.3s ease, background-color 0.3s ease; cursor: pointer; }
         .btn-hero:hover { transform: translateY(-5px); background-color: var(--white); }
 
-        /* --- Quem Somos --- */
+        /* --- Quem Somos, Valores, Serviços, Parceiros --- (Mantidos do original) */
         .quem-somos-content { max-width: 1200px; margin: 0 auto; text-align: left; }
         .quem-somos-intro { max-width: 800px; margin: 0 auto 50px auto; font-size: 1.1rem; text-align: center; color: #444; }
         .quem-somos-titulo-destaque { font-size: 1.8rem; color: var(--primary-blue); font-weight: bold; margin-bottom: 10px; }
         .quem-somos-subtitulo { font-size: 1.2rem; color: #666; margin-bottom: 30px; display: block; }
-        
         .mvv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; align-items: start; margin-bottom: 40px; }
         .mvv-card { background-color: var(--background-grey); padding: 40px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; }
         .mvv-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .mvv-card i { font-size: 3rem; color: var(--primary-blue); margin-bottom: 20px; }
         .mvv-card h3 { color: var(--primary-blue); margin-bottom: 20px; font-size: 1.5rem; }
         .mvv-card p { font-size: 1rem; color: #555; text-align: justify; line-height: 1.7; margin: 0; width: 100%; }
-
-        /* --- Valores --- */
+        
         .valores-container { margin-top: 20px; text-align: center; }
         .valores-container h3 { color: var(--primary-blue); font-size: 1.8rem; margin-bottom: 30px; display: flex; align-items: center; justify-content: center; gap: 10px; }
         .valores-list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
@@ -78,7 +84,6 @@
         .valores-list li:hover { transform: translateY(-8px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); border-top-color: var(--accent-blue); }
         .valores-list li strong { color: var(--primary-blue); font-weight: 800; font-size: 1.2rem; display: block; margin-bottom: 10px; }
 
-        /* --- Serviços --- */
         #servicos { background-color: var(--background-grey); position: relative; overflow: hidden; }
         #servicos h2 { position: relative; z-index: 1; }
         .bg-animado { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
@@ -88,58 +93,64 @@
         .servicos-carousel-wrapper { position: relative; max-width: 100%; padding: 0 50px; z-index: 1; }
         .servicos-carrossel-track { display: flex; gap: 30px; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; padding: 20px 10px 40px 10px; align-items: start; -ms-overflow-style: none; scrollbar-width: none; }
         .servicos-carrossel-track::-webkit-scrollbar { display: none; }
-
         .servico-card { background-color: var(--white); padding: 40px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; min-width: 320px; max-width: 400px; flex: 0 0 auto; scroll-snap-align: start; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
         .servico-card:hover { transform: translateY(-10px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .servico-card i { font-size: 3rem; color: var(--primary-blue); margin-bottom: 20px; }
         .servico-card h3 { color: var(--primary-blue); font-size: 1.1rem; margin-bottom: 15px; text-align: center; }
         .servico-card p { text-align: center; color: #555; margin: 0; } 
-
         .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background-color: var(--primary-blue); color: var(--white); border: none; border-radius: 50%; width: 50px; height: 50px; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: background-color 0.3s ease, transform 0.3s ease; }
         .carousel-btn:hover { background-color: var(--accent-blue); color: var(--primary-blue); transform: translateY(-50%) scale(1.1); }
         .prev-btn { left: 0; }
         .next-btn { right: 0; }
 
-        /* --- Parceiros --- */
         .parceiros-carrossel-container { overflow: hidden; padding: 50px 0; background-color: var(--white); }
         .parceiros-carrossel-track { display: flex; width: max-content; animation: scroll_parceiros 30s linear infinite; align-items: center; }
         .parceiros-carrossel-track img { height: 60px; width: auto; margin: 0 50px; }
         .parceiros-carrossel-track img[src^="https://gozgames.neocities.org/BackgroundEraser"] { height: 130px; }
         @keyframes scroll_parceiros { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* --- Formulários (Contato e Trabalhe Conosco) --- */
-        #contato, #trabalhe-conosco { background-color: var(--background-grey); }
-        .form-container { width: 100%; display: flex; flex-direction: column; gap: 20px; }
-        .form-container input[type="text"], .form-container input[type="email"], .form-container select, .form-container textarea { width: 100%; padding: 15px; border: 1px solid #ccc; border-radius: 5px; font-family: inherit; font-size: 1rem; color: #333; transition: border-color 0.3s ease; }
-        .form-container input:focus, .form-container select:focus, .form-container textarea:focus { outline: none; border-color: var(--primary-blue); box-shadow: 0 0 5px rgba(0, 75, 147, 0.2); }
-        .btn-solicitar-full { background-color: var(--primary-blue); color: var(--white); padding: 15px; font-size: 1.2rem; font-weight: bold; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease, transform 0.1s ease; width: 100%; }
-        .btn-solicitar-full:hover { background-color: var(--hover-blue); }
-        .btn-solicitar-full:active { transform: scale(0.98); }
+        /* --- Estilo das Páginas Isoladas (Formulários) --- */
+        .isolated-page { background-color: var(--background-grey); padding: 80px 20px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+        .isolated-card { background-color: var(--white); max-width: 800px; width: 100%; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); padding: 50px; text-align: center; }
         
-        .contact-content { display: flex; justify-content: space-between; align-items: flex-start; gap: 50px; text-align: left; }
-        .contact-info { flex: 1; display: flex; flex-direction: column; gap: 20px; }
-        .contact-link { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; color: #333; text-decoration: none; transition: color 0.3s ease; }
-        .contact-link i { color: var(--primary-blue); transition: transform 0.3s ease; }
-        .contact-link:hover { color: var(--primary-blue); }
-        .contact-link:hover i { transform: scale(1.1); }
-        .icon-wpp-contato { width: 24px; height: 24px; transition: transform 0.3s ease; }
-        .contact-link:hover .icon-wpp-contato { transform: scale(1.1); }
+        .isolated-card h2 { font-size: 2.2rem; color: var(--primary-blue); margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 15px; border: none; }
+        .isolated-card h2::after { display: none; } /* Tira a barrinha de baixo */
+        .isolated-card .icon-title { font-size: 3rem; color: var(--accent-blue); background: #f0f6ff; padding: 15px; border-radius: 50%; }
+        
+        .form-container { width: 100%; display: flex; flex-direction: column; gap: 20px; margin-top: 30px; text-align: left; }
+        .form-container input[type="text"], .form-container input[type="email"], .form-container select, .form-container textarea { width: 100%; padding: 16px; border: 2px solid #eef2f6; border-radius: 10px; font-family: inherit; font-size: 1rem; color: #333; transition: border-color 0.3s ease, background-color 0.3s ease; background-color: #fafbfc; }
+        .form-container input:focus, .form-container select:focus, .form-container textarea:focus { outline: none; border-color: var(--primary-blue); background-color: #fff; }
+        
+        .btn-solicitar-full { background-color: var(--primary-blue); color: var(--white); padding: 18px; font-size: 1.2rem; font-weight: bold; border: none; border-radius: 10px; cursor: pointer; transition: background-color 0.3s ease, transform 0.1s ease; width: 100%; box-shadow: 0 5px 15px rgba(0, 75, 147, 0.2); }
+        .btn-solicitar-full:hover { background-color: var(--hover-blue); transform: translateY(-2px); }
+        .btn-solicitar-full:active { transform: scale(0.98); }
 
         /* Customização Input File (Currículo) */
-        .file-upload-wrapper { position: relative; width: 100%; margin-bottom: 20px; }
+        .file-upload-wrapper { position: relative; width: 100%; }
         .file-upload-input { position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; z-index: 2; }
-        .file-upload-custom { display: flex; align-items: center; gap: 10px; padding: 15px; border: 2px dashed #ccc; border-radius: 5px; background-color: var(--white); color: #777; font-size: 1rem; transition: border-color 0.3s ease, background-color 0.3s ease; }
-        .file-upload-wrapper:hover .file-upload-custom { border-color: var(--primary-blue); background-color: #f0f6ff; color: var(--primary-blue); }
-        .file-upload-custom.file-selected { border-style: solid; border-color: var(--primary-blue); background-color: #e8f0fe; color: var(--primary-blue); font-weight: 500; }
+        .file-upload-custom { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 20px; border: 2px dashed #b9d2f6; border-radius: 10px; background-color: #f8fbff; color: var(--primary-blue); font-size: 1.1rem; font-weight: 500; transition: all 0.3s ease; }
+        .file-upload-wrapper:hover .file-upload-custom { border-color: var(--primary-blue); background-color: #eef5ff; }
+        .file-upload-custom.file-selected { border-style: solid; border-color: #25d366; background-color: #eafff1; color: #1da851; }
 
-        /* --- Footer --- */
-        footer { background-color: var(--primary-blue); color: var(--white); padding: 30px; text-align: center; }
-        .logo-footer { height: 40px; margin-bottom: 10px; }
-        .developer-credit { margin-top: 15px; font-size: 0.9rem; color: #ccc; }
+        /* --- Novo Footer Elegante --- */
+        footer { background-color: var(--primary-blue); color: var(--white); padding: 50px 20px 30px 20px; text-align: center; }
+        .footer-content { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 25px; }
+        .logo-footer { height: 50px; }
+        
+        .social-buttons { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
+        .social-btn { display: flex; align-items: center; gap: 8px; padding: 12px 25px; border-radius: 30px; color: #fff; font-weight: bold; text-decoration: none; font-size: 1rem; transition: transform 0.3s, box-shadow 0.3s; }
+        .social-btn:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+        
+        .btn-wpp { background-color: #25d366; }
+        .btn-insta { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .btn-email { background-color: #ea4335; }
+        
+        .footer-line { width: 100%; height: 1px; background-color: rgba(255,255,255,0.1); margin: 30px 0; }
+        .developer-credit { font-size: 0.9rem; color: #ccc; }
         .developer-credit a { color: var(--accent-blue); font-weight: bold; transition: color 0.3s ease; }
         .developer-credit a:hover { color: var(--white); text-decoration: underline; }
 
-        /* --- NOVAS ANIMAÇÕES DE REVEAL (VAI E VEM) --- */
+        /* --- NOVAS ANIMAÇÕES DE REVEAL --- */
         .fade-in { opacity: 0; transition: opacity 0.8s ease-out, transform 0.8s ease-out; transform: translateY(30px); }
         .fade-in.is-visible { opacity: 1; transform: translateY(0); }
         .reveal-left { opacity: 0; transform: translateX(-60px); transition: all 0.8s ease-out; }
@@ -155,18 +166,11 @@
         .btn-whatsapp:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(0,0,0,0.4); animation: none; }
         @keyframes pulse-whatsapp { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
 
-        /* --- Responsividade --- */
         @media (max-width: 768px) {
-            h1 { font-size: 1.6rem; }
-            .hero p { font-size: 1rem; }
-            .mvv-grid { grid-template-columns: 1fr; }
-            .valores-list { grid-template-columns: 1fr; } 
-            .servicos-carousel-wrapper { padding: 0; }
-            .servico-card { min-width: 300px; } 
-            .carousel-btn { display: none; } 
-            .contact-content { flex-direction: column-reverse; gap: 30px; }
-            #orcamento-form { width: 100%; }
-            .quem-somos-titulo-destaque { font-size: 1.5rem; }
+            .isolated-card { padding: 30px 20px; }
+            .isolated-card h2 { font-size: 1.8rem; }
+            .social-buttons { flex-direction: column; width: 100%; }
+            .social-btn { width: 100%; justify-content: center; }
         }
     </style>
 </head>
@@ -174,169 +178,119 @@
 
     <header>
         <nav class="navbar">
-            <img src="https://gozgames.neocities.org/Logo%20horizontal%20-%20fundo%20azul.png" alt="Logo Grupo Soul" class="logo">
+            <img src="https://gozgames.neocities.org/Logo%20horizontal%20-%20fundo%20azul.png" alt="Logo Grupo Soul" class="logo" onclick="goToHomeSection('home')">
             
             <i class="material-icons menu-toggle" id="mobile-menu-btn">menu</i>
 
             <ul class="nav-links" id="nav-menu">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#quem-somos">Quem Somos</a></li>
-                <li><a href="#servicos">Serviços</a></li>
-                <li><a href="#parceiros">Parceiros</a></li>
-                <li><a href="#trabalhe-conosco">Trabalhe Conosco</a></li>
-                <li><a href="#contato" class="btn-solicitar">Solicitar Orçamento</a></li>
+                <li><a onclick="goToHomeSection('home')">Home</a></li>
+                <li><a onclick="goToHomeSection('quem-somos')">Quem Somos</a></li>
+                <li><a onclick="goToHomeSection('servicos')">Serviços</a></li>
+                <li><a onclick="goToHomeSection('parceiros')">Parceiros</a></li>
+                <li><a onclick="showPage('page-trabalhe')">Trabalhe Conosco</a></li>
+                <li><a onclick="showPage('page-orcamento')" class="btn-solicitar">Solicitar Orçamento</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <section id="home" class="hero">
-            <div class="hero-bg"></div>
-            <div class="hero-overlay"></div>
-            <div class="hero-content">
-                <h1>SOUL SEGURANÇA E FACILITIES</h1>
-                <p>Facilidade e Segurança para Cidades, Empresas e Condomínios.</p>
-                <a href="#contato" class="btn-hero">Solicitar Orçamento</a>
-            </div>
-        </section>
-
-        <section id="quem-somos" class="section">
-            <h2 class="reveal-up">QUEM SOMOS</h2>
-            <div class="quem-somos-content">
-                
-                <div class="quem-somos-intro reveal-up">
-                    <h3 class="quem-somos-titulo-destaque">SOUL SEGURANÇA E FACILITIES</h3>
-                    <span class="quem-somos-subtitulo">Facilidade e Segurança para Cidades, Empresas e Condomínios.</span>
-                    
-                    <p>Somos o Grupo Soul Segurança e Facilities, estamos no mercado há quase uma década, proporcionando facilidade, segurança, comodidade e praticidade no dia a dia de órgãos públicos, empresas públicas, empresas privadas e condomínios. Somos especialistas na terceirização de mão de obra qualificada e na implementação de tecnologias avançadas no ramo da segurança eletrônica. Nossa equipe cuida e zela por você e seu negócio, sempre com dedicação ao serviço e respeito aos nossos clientes.</p>
+    <main id="main-content">
+        
+        <div id="page-home" class="page-view active-page">
+            <section id="home" class="hero">
+                <div class="hero-bg"></div>
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h1>SOUL SEGURANÇA E FACILITIES</h1>
+                    <p>Facilidade e Segurança para Cidades, Empresas e Condomínios.</p>
+                    <a onclick="showPage('page-orcamento')" class="btn-hero">Solicitar Orçamento</a>
                 </div>
-                
-                <div class="mvv-grid">
-                    <div class="mvv-card reveal-left">
-                        <i class="material-icons">flag</i>
-                        <h3>MISSÃO</h3>
-                        <p>Oferecer soluções ágeis e eficazes, descomplicando a terceirização de mão de obra e segurança eletrônica, com foco na proteção, praticidade e eficiência para nossos clientes e parceiros. Atuamos com respeito e transparência, garantindo serviços personalizados que proporcionam tranquilidade e uma gestão simplificada.</p>
+            </section>
+
+            <section id="quem-somos" class="section">
+                <h2 class="reveal-up">QUEM SOMOS</h2>
+                <div class="quem-somos-content">
+                    <div class="quem-somos-intro reveal-up">
+                        <h3 class="quem-somos-titulo-destaque">SOUL SEGURANÇA E FACILITIES</h3>
+                        <span class="quem-somos-subtitulo">Facilidade e Segurança para Cidades, Empresas e Condomínios.</span>
+                        <p>Somos o Grupo Soul Segurança e Facilities, estamos no mercado há quase uma década, proporcionando facilidade, segurança, comodidade e praticidade no dia a dia de órgãos públicos, empresas públicas, empresas privadas e condomínios. Somos especialistas na terceirização de mão de obra qualificada e na implementação de tecnologias avançadas no ramo da segurança eletrônica. Nossa equipe cuida e zela por você e seu negócio, sempre com dedicação ao serviço e respeito aos nossos clientes.</p>
                     </div>
                     
-                    <div class="mvv-card reveal-right">
-                        <i class="material-icons">visibility</i>
-                        <h3>VISÃO</h3>
-                        <p>Sermos sempre a primeira referência de confiança e parceria de nossos clientes. Muitos buscam a grandeza de serem os primeiros do ramo, nós focamos na grandeza de atendermos bem a necessidade de nossos clientes, almejamos construir um futuro onde a segurança e a gestão de espaços estejam sempre em evolução, garantindo ambientes protegidos e bem administrados. Sabemos que esse é o caminho para nosso reconhecimento, liderar o ramo de segurança e facilities é saber ouvir e atender com agilidade cada necessidade apresentada.</p>
+                    <div class="mvv-grid">
+                        <div class="mvv-card reveal-left">
+                            <i class="material-icons">flag</i>
+                            <h3>MISSÃO</h3>
+                            <p>Oferecer soluções ágeis e eficazes, descomplicando a terceirização de mão de obra e segurança eletrônica, com foco na proteção, praticidade e eficiência para nossos clientes e parceiros. Atuamos com respeito e transparência, garantindo serviços personalizados que proporcionam tranquilidade e uma gestão simplificada.</p>
+                        </div>
+                        <div class="mvv-card reveal-right">
+                            <i class="material-icons">visibility</i>
+                            <h3>VISÃO</h3>
+                            <p>Sermos sempre a primeira referência de confiança e parceria de nossos clientes. Muitos buscam a grandeza de serem os primeiros do ramo, nós focamos na grandeza de atendermos bem a necessidade de nossos clientes, almejamos construir um futuro onde a segurança e a gestão de espaços estejam sempre em evolução, garantindo ambientes protegidos e bem administrados.</p>
+                        </div>
+                    </div>
+
+                    <div class="valores-container reveal-up">
+                        <h3><i class="material-icons">diamond</i> NOSSOS VALORES</h3>
+                        <ul class="valores-list">
+                            <li><strong>Respeito</strong> Priorizamos o cuidado com pessoas e ambientes, agindo sempre com ética e consideração nas relações.</li>
+                            <li><strong>Praticidade</strong> Nossas soluções são desenhadas para facilitar a vida de nossos clientes, garantindo eficiência no dia a dia.</li>
+                            <li><strong>Honestidade</strong> Atuamos com integridade em todas as nossas práticas, mantendo a transparência em cada serviço prestado.</li>
+                            <li><strong>Agilidade</strong> Rapidez ao atender cada necessidade de nossos clientes, sempre mantendo o alto padrão de qualidade.</li>
+                            <li><strong>Eficácia</strong> Focamos em entregar resultados que superem expectativas, assegurando a segurança e a gestão eficiente.</li>
+                            <li><strong>Humanidade</strong> Valorizamos a individualidade e o cuidado em nossas relações, promovendo uma abordagem humana com todos.</li>
+                        </ul>
                     </div>
                 </div>
+            </section>
 
-                <div class="valores-container reveal-up">
-                    <h3><i class="material-icons">diamond</i> NOSSOS VALORES</h3>
-                    <ul class="valores-list">
-                        <li><strong>Respeito</strong> Priorizamos o cuidado com pessoas e ambientes, agindo sempre com ética e consideração nas relações.</li>
-                        <li><strong>Praticidade</strong> Nossas soluções são desenhadas para facilitar a vida de nossos clientes, garantindo eficiência no dia a dia.</li>
-                        <li><strong>Honestidade</strong> Atuamos com integridade em todas as nossas práticas, mantendo a transparência em cada serviço prestado.</li>
-                        <li><strong>Agilidade</strong> Rapidez ao atender cada necessidade de nossos clientes, sempre mantendo o alto padrão de qualidade.</li>
-                        <li><strong>Eficácia</strong> Focamos em entregar resultados que superem expectativas, assegurando a segurança e a gestão eficiente.</li>
-                        <li><strong>Humanidade</strong> Valorizamos a individualidade e o cuidado em nossas relações, promovendo uma abordagem humana com todos.</li>
-                    </ul>
+            <section id="servicos" class="section fade-in">
+                <h2>NOSSOS SERVIÇOS</h2>
+                <div class="servicos-carousel-wrapper">
+                    <button class="carousel-btn prev-btn" id="btn-prev-servicos"><i class="material-icons">chevron_left</i></button>
+                    <div class="servicos-carrossel-track" id="servicos-track">
+                        <div class="servico-card"><i class="material-icons">security</i><h3>CONTROLADOR DE ACESSO</h3><p>Controle rigoroso de entrada e saída, monitoramento contínuo e segurança preventiva para o seu patrimônio.</p></div>
+                        <div class="servico-card"><i class="material-icons">cleaning_services</i><h3>AUXILIAR DE LIMPEZA</h3><p>Limpeza e higienização profissional, mantendo ambientes corporativos impecáveis.</p></div>
+                        <div class="servico-card"><i class="material-icons">support_agent</i><h3>PORTARIA E RECEPÇÃO</h3><p>Atendimento cordial, triagem de visitantes e gerenciamento de correspondências com máxima eficiência.</p></div>
+                        <div class="servico-card"><i class="material-icons">home_work</i><h3>ZELADORIA</h3><p>Manutenção e supervisão geral do condomínio, garantindo o bom funcionamento de todas as áreas comuns.</p></div>
+                        <div class="servico-card"><i class="material-icons">recycling</i><h3>COLETORES</h3><p>Gerenciamento de resíduos, coleta seletiva e descarte consciente para manter o ambiente limpo e organizado.</p></div>
+                        <div class="servico-card"><i class="material-icons">park</i><h3>JARDINEIROS</h3><p>Manutenção de áreas verdes, poda, plantio e conservação paisagística para valorizar o seu espaço.</p></div>
+                        <div class="servico-card"><i class="material-icons">inventory_2</i><h3>ESTOQUISTAS</h3><p>Organização, controle de inventário, recebimento e gestão eficiente do armazenamento de materiais.</p></div>
+                        <div class="servico-card"><i class="material-icons">medical_services</i><h3>ENFERMAGEM</h3><p>Assistência em saúde, cuidados preventivos, suporte clínico e atendimento humanizado para empresas e clínicas.</p></div>
+                        <div class="servico-card"><i class="material-icons">biotech</i><h3>BIOMÉDICO E ANALISTA</h3><p>Profissionais altamente capacitados para análises clínicas, diagnósticos e gestão laboratorial de excelência.</p></div>
+                        <div class="servico-card"><i class="material-icons">science</i><h3>TÉCNICO DE LABORATÓRIO</h3><p>Suporte técnico rigoroso na coleta, manuseio de amostras, preparo de reagentes e assistência em exames.</p></div>
+                        <div class="servico-card"><i class="material-icons">supervisor_account</i><h3>SUPERVISORES</h3><p>Liderança, fiscalização e acompanhamento contínuo de equipes para garantir a máxima qualidade operacional.</p></div>
+                        <div class="servico-card"><i class="material-icons">add_circle_outline</i><h3>ENTRE OUTROS...</h3><p>Disponibilizamos diversos outros profissionais qualificados. Montamos a equipe sob medida para a sua necessidade!</p></div>
+                    </div>
+                    <button class="carousel-btn next-btn" id="btn-next-servicos"><i class="material-icons">chevron_right</i></button>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section id="servicos" class="section fade-in">
-            <h2>NOSSOS SERVIÇOS</h2>
-            
-            <div class="servicos-carousel-wrapper">
-                <button class="carousel-btn prev-btn" id="btn-prev-servicos"><i class="material-icons">chevron_left</i></button>
+            <section id="parceiros" class="section fade-in">
+                <h2>NOSSOS PARCEIROS</h2>
+                <div class="parceiros-carrossel-container">
+                    <div class="parceiros-carrossel-track">
+                        <img src="https://gozgames.neocities.org/Logo-Villac_page-0001-removebg-preview.png" alt="Parceiro 1">
+                        <img src="https://santacasachavantes.org/wp-content/uploads/2023/08/LogoGrupo1-1.png" alt="Parceiro 2">
+                        <img src="https://gozgames.neocities.org/girassol.png" alt="Parceiro 3">
+                        <img src="https://www.saudeamericana.com.br/v2/wp-content/uploads/2024/10/ll-1.png" alt="Parceiro 4">
+                        <img src="https://gozgames.neocities.org/BackgroundEraser_20260213_155634660.png" alt="Parceiro 5">
+                        <img src="https://gozgames.neocities.org/Logo-Villac_page-0001-removebg-preview.png" alt="Parceiro 1">
+                        <img src="https://santacasachavantes.org/wp-content/uploads/2023/08/LogoGrupo1-1.png" alt="Parceiro 2">
+                        <img src="https://gozgames.neocities.org/girassol.png" alt="Parceiro 3">
+                        <img src="https://www.saudeamericana.com.br/v2/wp-content/uploads/2024/10/ll-1.png" alt="Parceiro 4">
+                        <img src="https://gozgames.neocities.org/BackgroundEraser_20260213_155634660.png" alt="Parceiro 5">
+                    </div>
+                </div>
+            </section>
+        </div> <div id="page-orcamento" class="page-view isolated-page">
+            <div class="isolated-card fade-in">
+                <h2><i class="material-icons icon-title">request_quote</i> Solicitar Orçamento</h2>
+                <p style="color: #666; margin-bottom: 30px; font-size: 1.1rem;">Preencha os dados abaixo e entraremos em contato rapidamente com a melhor proposta para o seu negócio.</p>
                 
-                <div class="servicos-carrossel-track" id="servicos-track">
-                    <div class="servico-card">
-                        <i class="material-icons">security</i>
-                        <h3>CONTROLADOR DE ACESSO</h3>
-                        <p>Controle rigoroso de entrada e saída, monitoramento contínuo e segurança preventiva para o seu patrimônio.</p>
-                    </div>
-                    <div class="servico-card">
-                        <i class="material-icons">cleaning_services</i>
-                        <h3>AUXILIAR DE LIMPEZA</h3>
-                        <p>Limpeza e higienização profissional, mantendo ambientes corporativos impecáveis.</p>
-                    </div>
-                    <div class="servico-card">
-                        <i class="material-icons">support_agent</i>
-                        <h3>PORTARIA E RECEPÇÃO</h3>
-                        <p>Atendimento cordial, triagem de visitantes e gerenciamento de correspondências com máxima eficiência.</p>
-                    </div>
-                    <div class="servico-card">
-                        <i class="material-icons">home_work</i>
-                        <h3>ZELADORIA</h3>
-                        <p>Manutenção e supervisão geral do condomínio, garantindo o bom funcionamento de todas as áreas comuns.</p>
-                    </div>
-                    <div class="servico-card">
-                        <i class="material-icons">recycling</i>
-                        <h3>COLETORES</h3>
-                        <p>Gerenciamento de resíduos, coleta seletiva e descarte consciente para manter o ambiente limpo e organizado.</p>
-                    </div>
-                    <div class="servico-card">
-                        <i class="material-icons">park</i>
-                        <h3>JARDINEIROS</h3>
-                        <p>Manutenção de áreas verdes, poda, plantio e conservação paisagística para valorizar o seu espaço.</p>
-                    </div>
-                    <div class="servico-card">
-                        <i class="material-icons">inventory_2</i>
-                        <h3>ESTOQUISTAS</h3>
-                        <p>Organização, controle de inventário, recebimento e gestão eficiente do armazenamento de materiais.</p>
-                    </div>
-                    <div class="servico-card">
-                        <i class="material-icons">medical_services</i>
-                        <h3>ENFERMAGEM</h3>
-                        <p>Assistência em saúde, cuidados preventivos, suporte clínico e atendimento humanizado para empresas e clínicas.</p>
-                    </div>
-                    <div class="servico-card">
-                        <i class="material-icons">biotech</i>
-                        <h3>BIOMÉDICO E ANALISTA</h3>
-                        <p>Profissionais altamente capacitados para análises clínicas, diagnósticos e gestão laboratorial de excelência.</p>
-                    </div>
-                    <div class="servico-card">
-                        <i class="material-icons">science</i>
-                        <h3>TÉCNICO DE LABORATÓRIO</h3>
-                        <p>Suporte técnico rigoroso na coleta, manuseio de amostras, preparo de reagentes e assistência em exames.</p>
-                    </div>
-                    <div class="servico-card">
-                        <i class="material-icons">supervisor_account</i>
-                        <h3>SUPERVISORES</h3>
-                        <p>Liderança, fiscalização e acompanhamento contínuo de equipes para garantir a máxima qualidade operacional.</p>
-                    </div>
-                    <div class="servico-card">
-                        <i class="material-icons">add_circle_outline</i>
-                        <h3>ENTRE OUTROS...</h3>
-                        <p>Disponibilizamos diversos outros profissionais qualificados. Montamos a equipe sob medida para a sua necessidade!</p>
-                    </div>
-                </div>
-                
-                <button class="carousel-btn next-btn" id="btn-next-servicos"><i class="material-icons">chevron_right</i></button>
-            </div>
-        </section>
-
-        <section id="parceiros" class="section fade-in">
-            <h2>NOSSOS PARCEIROS</h2>
-            <div class="parceiros-carrossel-container">
-                <div class="parceiros-carrossel-track">
-                    <img src="https://gozgames.neocities.org/Logo-Villac_page-0001-removebg-preview.png" alt="Parceiro 1">
-                    <img src="https://santacasachavantes.org/wp-content/uploads/2023/08/LogoGrupo1-1.png" alt="Parceiro 2">
-                    <img src="https://gozgames.neocities.org/girassol.png" alt="Parceiro 3">
-                    <img src="https://www.saudeamericana.com.br/v2/wp-content/uploads/2024/10/ll-1.png" alt="Parceiro 4">
-                    <img src="https://gozgames.neocities.org/BackgroundEraser_20260213_155634660.png" alt="Parceiro 5">
-                    <img src="https://gozgames.neocities.org/Logo-Villac_page-0001-removebg-preview.png" alt="Parceiro 1">
-                    <img src="https://santacasachavantes.org/wp-content/uploads/2023/08/LogoGrupo1-1.png" alt="Parceiro 2">
-                    <img src="https://gozgames.neocities.org/girassol.png" alt="Parceiro 3">
-                    <img src="https://www.saudeamericana.com.br/v2/wp-content/uploads/2024/10/ll-1.png" alt="Parceiro 4">
-                    <img src="https://gozgames.neocities.org/BackgroundEraser_20260213_155634660.png" alt="Parceiro 5">
-                </div>
-            </div>
-        </section>
-
-        <section id="contato" class="section fade-in">
-            <h2>SOLICITAR ORÇAMENTO</h2>
-            <div class="contact-content">
-                <div class="form-container" style="flex: 2;">
-                    <form id="orcamento-form" style="display: flex; flex-direction: column; gap: 20px;">
-                        <input type="text" id="form-nome" name="nome" placeholder="Seu Nome/Empresa" required>
+                <div class="form-container">
+                    <form id="orcamento-form">
+                        <input type="text" id="form-nome" name="nome" placeholder="Seu Nome / Nome da Empresa" required>
                         <input type="email" id="form-email" name="email" placeholder="E-mail para contato" required>
+                        
                         <select id="form-servico" name="servico" required>
                             <option value="" disabled selected>Selecione o Serviço de Interesse</option>
                             <option value="Controlador de Acesso">Controlador de Acesso</option>
@@ -351,43 +305,25 @@
                             <option value="Supervisores">Supervisores</option>
                             <option value="Outros Profissionais">Outros Profissionais</option>
                         </select>
-                        <textarea id="form-mensagem" name="mensagem" placeholder="Detalhes do seu pedido..." rows="5"></textarea>
                         
-                        <button type="button" class="btn-solicitar-full" onclick="enviarOrçamento()">Enviar Pedido</button>
+                        <textarea id="form-mensagem" name="mensagem" placeholder="Detalhes do seu pedido (metragem, quantidade de profissionais, etc.)..." rows="5"></textarea>
+                        
+                        <button type="button" class="btn-solicitar-full" onclick="enviarOrçamento()"><i class="material-icons" style="vertical-align: middle; margin-right: 5px;">send</i> Enviar Pedido de Orçamento</button>
                     </form>
                 </div>
-                
-                <div class="contact-info">
-                    <a href="mailto:atendimento@gruposoulbr.com" class="contact-link">
-                        <i class="material-icons">email</i> atendimento@gruposoulbr.com
-                    </a>
-                    
-                    <a href="https://wa.me/5519997370190" target="_blank" class="contact-link">
-                        <svg class="icon-wpp-contato" viewBox="0 0 24 24" width="24" height="24" fill="var(--primary-blue)">
-                            <path d="M12.031 0C5.392 0 0 5.392 0 12.031c0 2.115.55 4.175 1.594 5.99L.04 24l6.115-1.562a11.96 11.96 0 005.876 1.528h.005c6.638 0 12.031-5.392 12.031-12.031S18.669 0 12.031 0zm0 21.962h-.004a9.92 9.92 0 01-5.068-1.385l-.364-.216-3.766.96.985-3.674-.237-.378a9.932 9.932 0 01-1.517-5.238c0-5.485 4.468-9.953 9.958-9.953s9.952 4.468 9.952 9.953-4.467 9.953-9.952 9.953zm5.458-7.442c-.299-.15-1.77-.875-2.044-.976-.275-.099-.475-.15-.675.15-.2.3-.775.975-.95 1.175-.175.2-.35.225-.65.075-1.25-.625-2.225-1.125-3.075-2.4-.225-.325.25-.3.675-1.15.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.25-.6-.5-.525-.675-.525h-.575c-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5s1.075 2.9 1.225 3.1c.15.2 2.1 3.225 5.1 4.525.725.3 1.275.475 1.725.625.725.225 1.375.2 1.9.125.575-.075 1.77-.725 2.025-1.425.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z"/>
-                        </svg> 
-                        (19) 99737-0190
-                    </a>
-                    
-                    <a href="https://www.google.com/maps/search/?api=1&query=R.+Antonio+Lealdini,+162,+Mogi+Guaçu+-+SP" target="_blank" class="contact-link">
-                        <i class="material-icons">location_on</i> R. Antonio Lealdini, 162, Mogi Guaçu/SP
-                    </a>
-                </div>
             </div>
-        </section>
-
-        <section id="trabalhe-conosco" class="section fade-in" style="background-color: var(--white);">
-            <h2>TRABALHE CONOSCO</h2>
-            <p style="max-width: 600px; margin: 0 auto 40px auto; color: #555;">Faça parte da equipe Grupo Soul. Preencha os dados abaixo, selecione a vaga de interesse e anexe seu currículo em formato PDF.</p>
-            
-            <div class="contact-content" style="justify-content: center;">
-                <div class="form-container" style="max-width: 600px;">
+        </div> <div id="page-trabalhe" class="page-view isolated-page">
+            <div class="isolated-card fade-in">
+                <h2><i class="material-icons icon-title">badge</i> Trabalhe Conosco</h2>
+                <p style="color: #666; margin-bottom: 30px; font-size: 1.1rem;">Faça parte da equipe Grupo Soul! Preencha os dados, escolha sua área e anexe seu currículo atualizado em PDF.</p>
+                
+                <div class="form-container">
                     <form id="form-curriculo">
                         <input type="text" id="cand-nome" placeholder="Seu Nome Completo" required>
                         <input type="email" id="cand-email" placeholder="Seu E-mail" required>
                         
                         <select id="cand-vaga" required>
-                            <option value="" disabled selected>Área de Interesse</option>
+                            <option value="" disabled selected>Qual a sua Área de Interesse?</option>
                             <option value="Controlador de Acesso">Controlador de Acesso</option>
                             <option value="Auxiliar de Limpeza">Auxiliar de Limpeza</option>
                             <option value="Portaria e Recepção">Portaria e Recepção</option>
@@ -405,55 +341,93 @@
                         <div class="file-upload-wrapper">
                             <input type="file" id="cand-arquivo" class="file-upload-input" accept=".pdf" required>
                             <div class="file-upload-custom" id="file-upload-display">
-                                <i class="material-icons">attach_file</i>
-                                <span id="file-upload-text">Anexar Currículo (Apenas PDF)</span>
+                                <i class="material-icons">cloud_upload</i>
+                                <span id="file-upload-text">Clique ou arraste para anexar o Currículo (Apenas .PDF)</span>
                             </div>
                         </div>
                         
-                        <button type="submit" id="btn-enviar-cv" class="btn-solicitar-full">Enviar Currículo</button>
+                        <button type="submit" id="btn-enviar-cv" class="btn-solicitar-full"><i class="material-icons" style="vertical-align: middle; margin-right: 5px;">upload_file</i> Enviar Currículo</button>
                         <p id="msg-retorno" style="margin-top: 15px; font-weight: bold; text-align: center; font-size: 1.1rem;"></p>
                     </form>
                 </div>
             </div>
-        </section>
-        
-    </main>
+        </div> </main>
 
     <a href="https://wa.me/5519997370190?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20serviços%20da%20Grupo%20Soul." target="_blank" class="btn-whatsapp" title="Fale conosco pelo WhatsApp">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
     </a>
 
     <footer>
-        <img src="https://gozgames.neocities.org/Logo%20horizontal%20-%20fundo%20azul.png" alt="Logo Grupo Soul" class="logo-footer">
-        <p>© 2026 Grupo Soul. Todos os direitos reservados.</p>
+        <div class="footer-content">
+            <img src="https://gozgames.neocities.org/Logo%20horizontal%20-%20fundo%20azul.png" alt="Logo Grupo Soul" class="logo-footer" onclick="goToHomeSection('home')" style="cursor:pointer;">
+            <p>Facilidade e Segurança para Cidades, Empresas e Condomínios.</p>
+            
+            <div class="social-buttons">
+                <a href="https://wa.me/5519997370190" target="_blank" class="social-btn btn-wpp">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="white"><path d="M12.031 0C5.392 0 0 5.392 0 12.031c0 2.115.55 4.175 1.594 5.99L.04 24l6.115-1.562a11.96 11.96 0 005.876 1.528h.005c6.638 0 12.031-5.392 12.031-12.031S18.669 0 12.031 0zm0 21.962h-.004a9.92 9.92 0 01-5.068-1.385l-.364-.216-3.766.96.985-3.674-.237-.378a9.932 9.932 0 01-1.517-5.238c0-5.485 4.468-9.953 9.958-9.953s9.952 4.468 9.952 9.953-4.467 9.953-9.952 9.953zm5.458-7.442c-.299-.15-1.77-.875-2.044-.976-.275-.099-.475-.15-.675.15-.2.3-.775.975-.95 1.175-.175.2-.35.225-.65.075-1.25-.625-2.225-1.125-3.075-2.4-.225-.325.25-.3.675-1.15.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.25-.6-.5-.525-.675-.525h-.575c-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5s1.075 2.9 1.225 3.1c.15.2 2.1 3.225 5.1 4.525.725.3 1.275.475 1.725.625.725.225 1.375.2 1.9.125.575-.075 1.77-.725 2.025-1.425.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z"/></svg> 
+                    (19) 99737-0190
+                </a>
+                
+                <a href="mailto:atendimento@gruposoulbr.com" class="social-btn btn-email">
+                    <i class="material-icons">email</i>
+                    atendimento@gruposoulbr.com
+                </a>
+                
+                <a href="#" target="_blank" class="social-btn btn-insta" title="Siga nosso Instagram">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    @gruposoulbr
+                </a>
+            </div>
+        </div>
         
-        <p class="developer-credit">
-            Desenvolvido por <a href="https://goscripts.com.br/" target="_blank">GoScripts</a>
-        </p>
+        <div class="footer-line"></div>
+        
+        <p>© 2026 Grupo Soul. Todos os direitos reservados.</p>
+        <p class="developer-credit">Desenvolvido por <a href="https://goscripts.com.br/" target="_blank">GoScripts</a></p>
     </footer>
 
     <script>
+        // --- FUNÇÃO DE ABAS (PÁGINAS ISOLADAS) ---
+        function showPage(pageId) {
+            // Esconde todas as páginas
+            document.querySelectorAll('.page-view').forEach(page => {
+                page.classList.remove('active-page');
+            });
+            // Mostra apenas a página selecionada
+            document.getElementById(pageId).classList.add('active-page');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Fecha o menu mobile (se estiver aberto)
+            const navMenu = document.getElementById('nav-menu');
+            if (navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                document.getElementById('mobile-menu-btn').textContent = 'menu';
+            }
+        }
+
+        // Função para ir para a Home e rolar até a seção específica
+        function goToHomeSection(sectionId) {
+            showPage('page-home'); // Garante que a tela inicial esteja visível
+            setTimeout(() => {
+                const section = document.getElementById(sectionId);
+                if(section) {
+                    const offset = 70; // Altura do header fixo
+                    const elementPosition = section.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - offset;
+                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                }
+            }, 100);
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             
             // --- MENU SANDUÍCHE ---
             const menuBtn = document.getElementById('mobile-menu-btn');
             const navMenu = document.getElementById('nav-menu');
-            const navLinks = document.querySelectorAll('.nav-links a');
 
             menuBtn.addEventListener('click', () => {
                 navMenu.classList.toggle('active');
-                if (navMenu.classList.contains('active')) {
-                    menuBtn.textContent = 'close'; 
-                } else {
-                    menuBtn.textContent = 'menu'; 
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    navMenu.classList.remove('active');
-                    menuBtn.textContent = 'menu';
-                });
+                menuBtn.textContent = navMenu.classList.contains('active') ? 'close' : 'menu'; 
             });
 
             // --- EFEITO DE SCROLL NO HERO ---
@@ -467,15 +441,15 @@
                 const heroHeight = hero.offsetHeight;
 
                 window.addEventListener('scroll', () => {
+                    if (!document.getElementById('page-home').classList.contains('active-page')) return; // Só anima se tiver na home
+                    
                     const scrollY = window.scrollY;
-
                     if (scrollY <= heroHeight + 100) {
                         const scaleBg = 1 + (scrollY * imageZoomSpeed);
                         heroBg.style.transform = `scale(${scaleBg})`;
 
                         const scaleText = 1 + (scrollY * textScaleSpeed);
                         let opacityText = 1 - (scrollY / (heroHeight - 50)); 
-                        
                         if (opacityText < 0) opacityText = 0; 
 
                         heroContent.style.transform = `scale(${scaleText}) translateY(${scrollY * 0.2}px)`;
@@ -514,7 +488,6 @@
                     icone.style.fontSize = `${Math.random() * 30 + 30}px`; 
                     icone.style.animationDuration = `${Math.random() * 10 + 15}s`; 
                     icone.style.animationDelay = `-${Math.random() * 15}s`; 
-                    
                     bgAnimado.appendChild(icone);
                 }
             }
@@ -527,7 +500,6 @@
 
             if (servicosTrack && btnPrevServicos && btnNextServicos) {
                 const scrollAmount = 350; 
-
                 const moveNext = () => {
                     if (servicosTrack.scrollLeft + servicosTrack.clientWidth >= servicosTrack.scrollWidth - 10) {
                         servicosTrack.scrollTo({ left: 0, behavior: 'smooth' });
@@ -541,29 +513,15 @@
                     autoScrollServicos = setInterval(moveNext, 3000); 
                 };
 
-                const stopCarrossel = () => {
-                    clearInterval(autoScrollServicos);
-                };
+                const stopCarrossel = () => { clearInterval(autoScrollServicos); };
 
                 startCarrossel();
-
-                btnNextServicos.addEventListener('click', () => {
-                    stopCarrossel();
-                    moveNext();
-                });
-
-                btnPrevServicos.addEventListener('click', () => {
-                    stopCarrossel();
-                    servicosTrack.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-                });
-
+                btnNextServicos.addEventListener('click', () => { stopCarrossel(); moveNext(); });
+                btnPrevServicos.addEventListener('click', () => { stopCarrossel(); servicosTrack.scrollBy({ left: -scrollAmount, behavior: 'smooth' }); });
                 servicosTrack.addEventListener('mousedown', stopCarrossel);
                 servicosTrack.addEventListener('touchstart', stopCarrossel);
-
                 document.addEventListener('click', (e) => {
-                    if (servicosSec && !servicosSec.contains(e.target)) {
-                        startCarrossel();
-                    }
+                    if (servicosSec && !servicosSec.contains(e.target)) startCarrossel();
                 });
             }
 
@@ -576,18 +534,16 @@
                 inputFile.addEventListener('change', function() {
                     if (this.files && this.files.length > 0) {
                         const fileName = this.files[0].name;
-                        fileText.textContent = fileName;
                         fileDisplay.classList.add('file-selected');
                         fileDisplay.innerHTML = `<i class="material-icons">check_circle</i><span id="file-upload-text">${fileName}</span>`;
                     } else {
-                        fileText.textContent = "Anexar Currículo (Apenas PDF)";
                         fileDisplay.classList.remove('file-selected');
-                        fileDisplay.innerHTML = `<i class="material-icons">attach_file</i><span id="file-upload-text">Anexar Currículo (Apenas PDF)</span>`;
+                        fileDisplay.innerHTML = `<i class="material-icons">cloud_upload</i><span id="file-upload-text">Clique ou arraste para anexar o Currículo (Apenas .PDF)</span>`;
                     }
                 });
             }
 
-            // --- SCRIPT DE ENVIO DO CURRÍCULO ---
+            // --- SCRIPT DE ENVIO DO CURRÍCULO VIA GOOGLE APPS SCRIPT ---
             const formCurriculo = document.getElementById('form-curriculo');
             if (formCurriculo) {
                 formCurriculo.addEventListener('submit', function(e) {
@@ -595,7 +551,7 @@
                     
                     const btnEnviar = document.getElementById('btn-enviar-cv');
                     const msgRetorno = document.getElementById('msg-retorno');
-                    btnEnviar.textContent = 'Enviando... Aguarde.';
+                    btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 5px;">hourglass_empty</i> Enviando... Aguarde.';
                     btnEnviar.disabled = true;
 
                     const nome = document.getElementById('cand-nome').value;
@@ -605,7 +561,7 @@
 
                     if (!file) {
                         alert("Por favor, anexe um currículo.");
-                        btnEnviar.textContent = 'Enviar Currículo';
+                        btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 5px;">upload_file</i> Enviar Currículo';
                         btnEnviar.disabled = false;
                         return;
                     }
@@ -628,32 +584,28 @@
                         fetch(scriptURL, {
                             method: 'POST',
                             redirect: 'follow', 
-                            headers: {
-                                "Content-Type": "text/plain;charset=utf-8", 
-                            },
+                            headers: { "Content-Type": "text/plain;charset=utf-8" },
                             body: JSON.stringify(payload)
                         })
                         .then(response => response.json())
                         .then(data => {
                             if(data.status === "success") {
-                                msgRetorno.style.color = "green";
+                                msgRetorno.style.color = "#1da851";
                                 msgRetorno.textContent = "Currículo enviado com sucesso! Cheque seu e-mail.";
                                 formCurriculo.reset();
-                                // Reseta o visual do input de arquivo
                                 fileDisplay.classList.remove('file-selected');
-                                fileDisplay.innerHTML = `<i class="material-icons">attach_file</i><span id="file-upload-text">Anexar Currículo (Apenas PDF)</span>`;
+                                fileDisplay.innerHTML = `<i class="material-icons">cloud_upload</i><span id="file-upload-text">Clique ou arraste para anexar o Currículo (Apenas .PDF)</span>`;
                             } else {
-                                msgRetorno.style.color = "red";
+                                msgRetorno.style.color = "#ea4335";
                                 msgRetorno.textContent = "Erro ao enviar. Tente novamente mais tarde.";
                             }
                         })
                         .catch(error => {
-                            msgRetorno.style.color = "red";
+                            msgRetorno.style.color = "#ea4335";
                             msgRetorno.textContent = "Erro na conexão. Tente novamente.";
-                            console.error('Erro!', error.message);
                         })
                         .finally(() => {
-                            btnEnviar.textContent = 'Enviar Currículo';
+                            btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 5px;">upload_file</i> Enviar Currículo';
                             btnEnviar.disabled = false;
                         });
                     };
