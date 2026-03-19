@@ -239,6 +239,7 @@
                 <li><a href="#quem-somos">Quem Somos</a></li>
                 <li><a href="#servicos">Serviços</a></li>
                 <li><a href="#parceiros">Parceiros</a></li>
+                <li><a href="#trabalhe-conosco">Trabalhe Conosco</a></li>
                 <li><a href="#contato" class="btn-solicitar">Solicitar Orçamento</a></li>
             </ul>
         </nav>
@@ -428,6 +429,32 @@
                 </div>
             </div>
         </section>
+
+        <section id="trabalhe-conosco" class="section fade-in">
+            <h2>TRABALHE CONOSCO</h2>
+            <p>Faça parte da equipe Grupo Soul. Anexe seu currículo abaixo.</p>
+            
+            <div class="contact-content" style="justify-content: center;">
+                <form id="form-curriculo" style="max-width: 600px; width: 100%;">
+                    <input type="text" id="cand-nome" placeholder="Seu Nome Completo" required style="width: 100%; padding: 15px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 20px; font-family: inherit;">
+                    <input type="email" id="cand-email" placeholder="Seu E-mail" required style="width: 100%; padding: 15px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 20px; font-family: inherit;">
+                    
+                    <select id="cand-vaga" required style="width: 100%; padding: 15px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 20px; font-family: inherit;">
+                        <option value="" disabled selected>Área de Interesse</option>
+                        <option value="Controlador de Acesso">Controlador de Acesso</option>
+                        <option value="Limpeza">Auxiliar de Limpeza</option>
+                        <option value="Portaria">Portaria e Recepção</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                    
+                    <label for="cand-arquivo" style="display:block; text-align: left; font-weight: bold; margin-bottom: 5px;">Anexar Currículo (PDF):</label>
+                    <input type="file" id="cand-arquivo" accept=".pdf" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 20px; background-color: white;">
+                    
+                    <button type="submit" id="btn-enviar-cv" class="btn-solicitar-full" style="width: 100%;">Enviar Currículo</button>
+                    <p id="msg-retorno" style="margin-top: 15px; font-weight: bold; text-align: center;"></p>
+                </form>
+            </div>
+        </section>
     </main>
 
     <a href="https://wa.me/5519997370190?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20serviços%20da%20Grupo%20Soul." target="_blank" class="btn-whatsapp" title="Fale conosco pelo WhatsApp">
@@ -606,6 +633,72 @@
             const urlMailto = `mailto:${emailDestino}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpoEmail)}`;
             window.location.href = urlMailto;
         }
+
+        // --- ADICIONE O SCRIPT DO CURRÍCULO AQUI, ANTES DE FECHAR O SCRIPT ---
+        document.getElementById('form-curriculo').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            
+            const btnEnviar = document.getElementById('btn-enviar-cv');
+            const msgRetorno = document.getElementById('msg-retorno');
+            btnEnviar.textContent = 'Enviando... Aguarde.';
+            btnEnviar.disabled = true;
+
+            const nome = document.getElementById('cand-nome').value;
+            const email = document.getElementById('cand-email').value;
+            const vaga = document.getElementById('cand-vaga').value;
+            const arquivoInput = document.getElementById('cand-arquivo');
+            const file = arquivoInput.files[0];
+
+            if (!file) {
+                alert("Por favor, anexe um currículo.");
+                btnEnviar.textContent = 'Enviar Currículo';
+                btnEnviar.disabled = false;
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const base64String = event.target.result.split(',')[1];
+                
+                const payload = {
+                    nome: nome,
+                    email: email,
+                    vaga: vaga,
+                    fileName: file.name,
+                    mimeType: file.type,
+                    fileBase64: base64String
+                };
+
+                const scriptURL = "https://script.google.com/macros/s/AKfycbwBRUNWmmRZ0DbLogcLZBLUYm0yrHqzbW5xOB-jL6z55loKmzj8uqiBrvMjdyKHDAOXiQ/exec";
+
+                fetch(scriptURL, {
+                    method: 'POST',
+                    body: JSON.stringify(payload)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.status === "success") {
+                        msgRetorno.style.color = "green";
+                        msgRetorno.textContent = "Currículo enviado com sucesso! Cheque seu e-mail.";
+                        document.getElementById('form-curriculo').reset();
+                    } else {
+                        msgRetorno.style.color = "red";
+                        msgRetorno.textContent = "Erro ao enviar. Tente novamente mais tarde.";
+                    }
+                })
+                .catch(error => {
+                    msgRetorno.style.color = "red";
+                    msgRetorno.textContent = "Erro na conexão. Tente novamente.";
+                    console.error('Erro!', error.message);
+                })
+                .finally(() => {
+                    btnEnviar.textContent = 'Enviar Currículo';
+                    btnEnviar.disabled = false;
+                });
+            };
+            
+            reader.readAsDataURL(file);
+        });
     </script>
 </body>
 </html>
