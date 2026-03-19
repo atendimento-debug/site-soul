@@ -1,0 +1,93 @@
+<section id="trabalhe-conosco" class="section fade-in">
+    <h2>TRABALHE CONOSCO</h2>
+    <p>Faça parte da equipe Grupo Soul. Anexe seu currículo abaixo.</p>
+    
+    <div class="contact-content" style="justify-content: center;">
+        <form id="form-curriculo" style="max-width: 600px; width: 100%;">
+            <input type="text" id="cand-nome" placeholder="Seu Nome Completo" required>
+            <input type="email" id="cand-email" placeholder="Seu E-mail" required>
+            <select id="cand-vaga" required>
+                <option value="" disabled selected>Área de Interesse</option>
+                <option value="Controlador de Acesso">Controlador de Acesso</option>
+                <option value="Limpeza">Auxiliar de Limpeza</option>
+                <option value="Portaria">Portaria e Recepção</option>
+                <option value="Outros">Outros</option>
+            </select>
+            
+            <label for="cand-arquivo" style="text-align: left; font-weight: bold; margin-top: 10px;">Anexar Currículo (PDF):</label>
+            <input type="file" id="cand-arquivo" accept=".pdf" required style="border: none; padding: 0;">
+            
+            <button type="submit" id="btn-enviar-cv" class="btn-solicitar-full">Enviar Currículo</button>
+            <p id="msg-retorno" style="margin-top: 15px; font-weight: bold;"></p>
+        </form>
+    </div>
+</section>
+
+<script>
+document.getElementById('form-curriculo').addEventListener('submit', function(e) {
+    e.preventDefault(); // Impede a página de recarregar
+    
+    const btnEnviar = document.getElementById('btn-enviar-cv');
+    const msgRetorno = document.getElementById('msg-retorno');
+    btnEnviar.textContent = 'Enviando... Aguarde.';
+    btnEnviar.disabled = true;
+
+    const nome = document.getElementById('cand-nome').value;
+    const email = document.getElementById('cand-email').value;
+    const vaga = document.getElementById('cand-vaga').value;
+    const arquivoInput = document.getElementById('cand-arquivo');
+    const file = arquivoInput.files[0];
+
+    if (!file) {
+        alert("Por favor, anexe um currículo.");
+        btnEnviar.textContent = 'Enviar Currículo';
+        btnEnviar.disabled = false;
+        return;
+    }
+
+    // Lógica para transformar o arquivo em Base64
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        const base64String = event.target.result.split(',')[1];
+        
+        const payload = {
+            nome: nome,
+            email: email,
+            vaga: vaga,
+            fileName: file.name,
+            mimeType: file.type,
+            fileBase64: base64String
+        };
+
+        // COLOQUE AQUI A URL DO SEU GOOGLE APPS SCRIPT
+        const scriptURL = "https://script.google.com/macros/s/AKfycbwBRUNWmmRZ0DbLogcLZBLUYm0yrHqzbW5xOB-jL6z55loKmzj8uqiBrvMjdyKHDAOXiQ/execI";
+
+        fetch(scriptURL, {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.status === "success") {
+                msgRetorno.style.color = "green";
+                msgRetorno.textContent = "Currículo enviado com sucesso! Cheque seu e-mail.";
+                document.getElementById('form-curriculo').reset();
+            } else {
+                msgRetorno.style.color = "red";
+                msgRetorno.textContent = "Erro ao enviar. Tente novamente mais tarde.";
+            }
+        })
+        .catch(error => {
+            msgRetorno.style.color = "red";
+            msgRetorno.textContent = "Erro na conexão. Tente novamente.";
+            console.error('Erro!', error.message);
+        })
+        .finally(() => {
+            btnEnviar.textContent = 'Enviar Currículo';
+            btnEnviar.disabled = false;
+        });
+    };
+    
+    reader.readAsDataURL(file);
+});
+</script>
