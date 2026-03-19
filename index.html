@@ -642,10 +642,14 @@
                             fileBase64: base64String
                         };
 
-                        const scriptURL = "https://script.google.com/macros/s/AKfycbwBRUNWmmRZ0DbLogcLZBLUYm0yrHqzbW5xOB-jL6z55loKmzj8uqiBrvMjdyKHDAOXiQ/exec";
+                        const scriptURL = "https://script.google.com/macros/s/AKfycbxbIeXQvl1_6h1k38Y7RWNOi1YAPwvRehmqn_hVw7YwrwAgWPxAVnpavdmz4qQdymDVQg/exec";
 
                         fetch(scriptURL, {
                             method: 'POST',
+                            redirect: 'follow', 
+                            headers: {
+                                "Content-Type": "text/plain;charset=utf-8", 
+                            },
                             body: JSON.stringify(payload)
                         })
                         .then(response => response.json())
