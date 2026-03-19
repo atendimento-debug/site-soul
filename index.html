@@ -124,9 +124,17 @@
         .isolated-card .icon-title { font-size: 3rem; color: var(--accent-blue); background: #f0f6ff; padding: 15px; border-radius: 50%; }
         
         .form-container { width: 100%; display: flex; flex-direction: column; gap: 20px; margin-top: 30px; text-align: left; }
-        .form-container input[type="text"], .form-container input[type="email"], .form-container select, .form-container textarea { width: 100%; padding: 16px; border: 2px solid #eef2f6; border-radius: 10px; font-family: inherit; font-size: 1rem; color: #333; transition: border-color 0.3s ease, background-color 0.3s ease; background-color: #fafbfc; }
-        .form-container input:focus, .form-container select:focus, .form-container textarea:focus { outline: none; border-color: var(--primary-blue); background-color: #fff; }
+        .form-container input[type="text"], .form-container input[type="email"], .form-container textarea { width: 100%; padding: 16px; border: 2px solid #eef2f6; border-radius: 10px; font-family: inherit; font-size: 1rem; color: #333; transition: border-color 0.3s ease, background-color 0.3s ease; background-color: #fafbfc; }
+        .form-container input:focus, .form-container textarea:focus { outline: none; border-color: var(--primary-blue); background-color: #fff; }
         
+        /* Checkboxes Style */
+        .checkbox-container { width: 100%; padding: 20px; border: 2px solid #eef2f6; border-radius: 10px; background-color: #fafbfc; text-align: left; }
+        .checkbox-container-title { margin-bottom: 15px; font-weight: 600; color: var(--primary-blue); display: block; font-size: 1.05rem; }
+        .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+        .checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 0.95rem; color: #444; cursor: pointer; transition: color 0.3s ease; }
+        .checkbox-label:hover { color: var(--primary-blue); }
+        .checkbox-label input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-color: var(--primary-blue); flex-shrink: 0; }
+
         .btn-solicitar-full { background-color: var(--primary-blue); color: var(--white); padding: 18px; font-size: 1.2rem; font-weight: bold; border: none; border-radius: 10px; cursor: pointer; transition: background-color 0.3s ease, transform 0.1s ease; width: 100%; box-shadow: 0 5px 15px rgba(0, 75, 147, 0.2); }
         .btn-solicitar-full:hover { background-color: var(--hover-blue); transform: translateY(-2px); }
         .btn-solicitar-full:active { transform: scale(0.98); }
@@ -177,6 +185,7 @@
             .isolated-card h2 { font-size: 1.8rem; flex-direction: column; gap: 5px; }
             .social-buttons { flex-direction: column; width: 100%; }
             .social-btn { width: 100%; justify-content: center; }
+            .checkbox-grid { grid-template-columns: 1fr; } /* Em telas menores, 1 coluna */
         }
     </style>
 </head>
@@ -301,22 +310,24 @@
                             <input type="text" id="orc-nome" placeholder="Seu Nome / Nome da Empresa" required>
                             <input type="email" id="orc-email" placeholder="E-mail para contato" required>
                             
-                            <select id="orc-servico" required>
-                                <option value="" disabled selected>Selecione o Serviço de Interesse</option>
-                                <option value="Controlador de Acesso">Controlador de Acesso</option>
-                                <option value="Auxiliar de Limpeza">Auxiliar de Limpeza</option>
-                                <option value="Portaria e Recepção">Portaria e Recepção</option>
-                                <option value="Zeladoria">Zeladoria</option>
-                                <option value="Coletor de Resíduos">Coletor de Resíduos</option>
-                                <option value="Jardinagem">Jardinagem</option>
-                                <option value="Estoquista">Estoquista</option>
-                                <option value="Enfermagem">Enfermagem</option>
-                                <option value="Apoio Laboratorial / Biomédico">Apoio Laboratorial / Biomédico</option>
-                                <option value="Supervisores">Supervisores</option>
-                                <option value="Gestão de RH">Gestão de RH</option>
-                                <option value="Financeiro">Financeiro</option>
-                                <option value="Outros Profissionais">Outros Profissionais</option>
-                            </select>
+                            <div class="checkbox-container">
+                                <span class="checkbox-container-title">Selecione os Serviços de Interesse:</span>
+                                <div class="checkbox-grid">
+                                    <label class="checkbox-label"><input type="checkbox" name="orc-servico" value="Controlador de Acesso"> Controlador de Acesso</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="orc-servico" value="Auxiliar de Limpeza"> Auxiliar de Limpeza</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="orc-servico" value="Portaria e Recepção"> Portaria e Recepção</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="orc-servico" value="Zeladoria"> Zeladoria</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="orc-servico" value="Coletor de Resíduos"> Coletor de Resíduos</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="orc-servico" value="Jardinagem"> Jardinagem</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="orc-servico" value="Estoquista"> Estoquista</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="orc-servico" value="Enfermagem"> Enfermagem</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="orc-servico" value="Apoio Laboratorial / Biomédico"> Laboratório / Biomédico</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="orc-servico" value="Supervisores"> Supervisores</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="orc-servico" value="Gestão de RH"> Gestão de RH</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="orc-servico" value="Financeiro"> Financeiro</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="orc-servico" value="Outros"> Outros Profissionais</label>
+                                </div>
+                            </div>
                             
                             <textarea id="orc-mensagem" placeholder="Detalhes do seu pedido (metragem, quantidade de profissionais, etc.)..." rows="5"></textarea>
                             
@@ -339,23 +350,25 @@
                             <input type="text" id="cand-nome" placeholder="Seu Nome Completo" required>
                             <input type="email" id="cand-email" placeholder="Seu E-mail" required>
                             
-                            <select id="cand-vaga" required>
-                                <option value="" disabled selected>Qual a sua Área de Interesse?</option>
-                                <option value="Controlador de Acesso">Controlador de Acesso</option>
-                                <option value="Auxiliar de Limpeza">Auxiliar de Limpeza</option>
-                                <option value="Portaria e Recepção">Portaria e Recepção</option>
-                                <option value="Zeladoria">Zeladoria</option>
-                                <option value="Coletor de Resíduos">Coletor de Resíduos</option>
-                                <option value="Jardineiro">Jardineiro</option>
-                                <option value="Estoquista">Estoquista</option>
-                                <option value="Enfermagem">Enfermagem</option>
-                                <option value="Biomédico e Analista">Biomédico e Analista</option>
-                                <option value="Técnico de Laboratório">Técnico de Laboratório</option>
-                                <option value="Supervisores">Supervisores</option>
-                                <option value="Gestão de RH">Gestão de RH</option>
-                                <option value="Financeiro">Financeiro</option>
-                                <option value="Outros">Outros Profissionais</option>
-                            </select>
+                            <div class="checkbox-container">
+                                <span class="checkbox-container-title">Qual a sua Área de Interesse? (Pode selecionar mais de uma)</span>
+                                <div class="checkbox-grid">
+                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Controlador de Acesso"> Controlador de Acesso</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Auxiliar de Limpeza"> Auxiliar de Limpeza</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Portaria e Recepção"> Portaria e Recepção</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Zeladoria"> Zeladoria</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Coletor de Resíduos"> Coletor de Resíduos</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Jardineiro"> Jardineiro</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Estoquista"> Estoquista</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Enfermagem"> Enfermagem</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Biomédico e Analista"> Biomédico e Analista</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Técnico de Laboratório"> Téc. de Laboratório</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Supervisores"> Supervisores</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Gestão de RH"> Gestão de RH</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Financeiro"> Financeiro</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Outros"> Outros Profissionais</label>
+                                </div>
+                            </div>
                             
                             <div class="file-upload-wrapper">
                                 <input type="file" id="cand-arquivo" class="file-upload-input" accept=".pdf" required>
@@ -583,6 +596,16 @@
                     
                     const btnEnviar = document.getElementById('btn-enviar-orcamento');
                     const msgRetorno = document.getElementById('msg-retorno-orcamento');
+                    
+                    // Pegar todos os serviços marcados
+                    const checkboxes = document.querySelectorAll('input[name="orc-servico"]:checked');
+                    if (checkboxes.length === 0) {
+                        alert("Por favor, selecione pelo menos um serviço de interesse.");
+                        return;
+                    }
+                    
+                    const servicosSelecionados = Array.from(checkboxes).map(cb => cb.value).join(', ');
+
                     btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 5px;">hourglass_empty</i> Enviando Pedido...';
                     btnEnviar.disabled = true;
 
@@ -590,7 +613,7 @@
                         formType: "orcamento", // Sinalizador para o App Script
                         nome: document.getElementById('orc-nome').value,
                         email: document.getElementById('orc-email').value,
-                        servico: document.getElementById('orc-servico').value,
+                        servico: servicosSelecionados, // Agora envia todos separados por vírgula
                         mensagem: document.getElementById('orc-mensagem').value
                     };
 
@@ -632,16 +655,24 @@
                     
                     const btnEnviar = document.getElementById('btn-enviar-cv');
                     const msgRetorno = document.getElementById('msg-retorno');
-                    btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 5px;">hourglass_empty</i> Enviando... Aguarde.';
-                    btnEnviar.disabled = true;
+                    
+                    // Pegar todas as vagas marcadas
+                    const checkboxes = document.querySelectorAll('input[name="cand-vaga"]:checked');
+                    if (checkboxes.length === 0) {
+                        alert("Por favor, selecione pelo menos uma área de interesse.");
+                        return;
+                    }
+
+                    const vagasSelecionadas = Array.from(checkboxes).map(cb => cb.value).join(', ');
 
                     const file = inputFile.files[0];
                     if (!file) {
                         alert("Por favor, anexe um currículo.");
-                        btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 5px;">upload_file</i> Enviar Currículo';
-                        btnEnviar.disabled = false;
                         return;
                     }
+
+                    btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 5px;">hourglass_empty</i> Enviando... Aguarde.';
+                    btnEnviar.disabled = true;
 
                     const reader = new FileReader();
                     reader.onload = function(event) {
@@ -651,7 +682,7 @@
                             formType: "curriculo", // Sinalizador para o App Script
                             nome: document.getElementById('cand-nome').value,
                             email: document.getElementById('cand-email').value,
-                            vaga: document.getElementById('cand-vaga').value,
+                            vaga: vagasSelecionadas, // Agora envia todas separadas por vírgula
                             fileName: file.name,
                             mimeType: file.type,
                             fileBase64: base64String
