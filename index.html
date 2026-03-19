@@ -25,48 +25,47 @@
 
         /* --- Header e Navbar --- */
         header { background-color: var(--primary-blue); padding: 10px 0; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-       /* --- Ajuste no Navbar (fora do media query) --- */
-.navbar {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    position: relative; /* ADICIONE ISSO: Referência para o menu mobile */
-}
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            position: relative;
+        }
 
-/* --- Ajustes dentro do Media Query (max-width: 768px) --- */
-@media (max-width: 768px) {
-    header {
-        padding: 10px 0; /* Diminuí um pouco para não ficar tão alto */
-        width: 100%;
-        left: 0;
-    }
+        /* --- Ajustes dentro do Media Query (max-width: 768px) --- */
+        @media (max-width: 768px) {
+            header {
+                padding: 10px 0; 
+                width: 100%;
+                left: 0;
+            }
 
-    .logo {
-        height: 40px; /* Logo um pouco menor no mobile ajuda no espaço */
-    }
+            .logo {
+                height: 40px; 
+            }
 
-    .nav-links {
-        position: fixed; /* Mude de absolute para fixed para evitar quebrar o scroll */
-        top: 60px; /* Ajuste conforme a altura do seu header */
-        left: -100%;
-        width: 100%;
-        height: calc(100vh - 60px); /* Ocupa a tela toda menos o header */
-        background-color: var(--primary-blue);
-        flex-direction: column;
-        padding: 40px 0;
-        transition: 0.4s;
-        z-index: 999;
-    }
+            .nav-links {
+                position: fixed; 
+                top: 60px; 
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 60px); 
+                background-color: var(--primary-blue);
+                flex-direction: column;
+                padding: 40px 0;
+                transition: 0.4s;
+                z-index: 999;
+            }
 
-    /* Impede o "balanço" lateral do site */
-    html, body {
-        max-width: 100%;
-        overflow-x: hidden;
-    }
-}
+            html, body {
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+        }
+        
         .logo { height: 50px; position: relative; z-index: 1001; }
         .nav-links { display: flex; gap: 20px; color: var(--white); font-weight: 500; align-items: center; transition: 0.3s; }
         .nav-links a:not(.btn-solicitar):hover { color: var(--accent-blue); }
@@ -455,6 +454,7 @@
                 </form>
             </div>
         </section>
+        
     </main>
 
     <a href="https://wa.me/5519997370190?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20serviços%20da%20Grupo%20Soul." target="_blank" class="btn-whatsapp" title="Fale conosco pelo WhatsApp">
@@ -523,18 +523,16 @@
             }
 
             // --- ANIMAÇÃO DE ENTRADA (VAI E VEM) PARA AS SEÇÕES ---
-            // Adicionado logica para "sumir" quando sair da tela (repetir animação)
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
                     } else {
-                        entry.target.classList.remove('is-visible'); // Remove para animar novamente
+                        entry.target.classList.remove('is-visible');
                     }
                 });
             }, { threshold: 0.15 });
 
-            // Observando TODAS as classes de animação criadas
             document.querySelectorAll('.fade-in, .reveal-left, .reveal-right, .reveal-up').forEach(el => observer.observe(el));
 
             // --- EFEITO ÍCONES FLUTUANTES (SÓ NA SEÇÃO SERVIÇOS) ---
@@ -606,9 +604,79 @@
                     }
                 });
             }
-        });
 
-        // --- FUNÇÃO PARA ABRIR O GMAIL DO FORMULÁRIO (VIA APP) ---
+            // --- NOVO: SCRIPT DE ENVIO DO CURRÍCULO ---
+            const formCurriculo = document.getElementById('form-curriculo');
+            if (formCurriculo) {
+                formCurriculo.addEventListener('submit', function(e) {
+                    e.preventDefault(); 
+                    
+                    const btnEnviar = document.getElementById('btn-enviar-cv');
+                    const msgRetorno = document.getElementById('msg-retorno');
+                    btnEnviar.textContent = 'Enviando... Aguarde.';
+                    btnEnviar.disabled = true;
+
+                    const nome = document.getElementById('cand-nome').value;
+                    const email = document.getElementById('cand-email').value;
+                    const vaga = document.getElementById('cand-vaga').value;
+                    const arquivoInput = document.getElementById('cand-arquivo');
+                    const file = arquivoInput.files[0];
+
+                    if (!file) {
+                        alert("Por favor, anexe um currículo.");
+                        btnEnviar.textContent = 'Enviar Currículo';
+                        btnEnviar.disabled = false;
+                        return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const base64String = event.target.result.split(',')[1];
+                        
+                        const payload = {
+                            nome: nome,
+                            email: email,
+                            vaga: vaga,
+                            fileName: file.name,
+                            mimeType: file.type,
+                            fileBase64: base64String
+                        };
+
+                        const scriptURL = "https://script.google.com/macros/s/AKfycbwBRUNWmmRZ0DbLogcLZBLUYm0yrHqzbW5xOB-jL6z55loKmzj8uqiBrvMjdyKHDAOXiQ/exec";
+
+                        fetch(scriptURL, {
+                            method: 'POST',
+                            body: JSON.stringify(payload)
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if(data.status === "success") {
+                                msgRetorno.style.color = "green";
+                                msgRetorno.textContent = "Currículo enviado com sucesso! Cheque seu e-mail.";
+                                formCurriculo.reset();
+                            } else {
+                                msgRetorno.style.color = "red";
+                                msgRetorno.textContent = "Erro ao enviar. Tente novamente mais tarde.";
+                            }
+                        })
+                        .catch(error => {
+                            msgRetorno.style.color = "red";
+                            msgRetorno.textContent = "Erro na conexão. Tente novamente.";
+                            console.error('Erro!', error.message);
+                        })
+                        .finally(() => {
+                            btnEnviar.textContent = 'Enviar Currículo';
+                            btnEnviar.disabled = false;
+                        });
+                    };
+                    
+                    reader.readAsDataURL(file);
+                });
+            }
+
+        }); // FIM DO DOMContentLoaded (Importante para carregar os botões antes de executar)
+
+        // --- FUNÇÃO PARA ABRIR O GMAIL DO FORMULÁRIO DE ORÇAMENTO ---
         function enviarOrçamento() {
             const nome = document.getElementById('form-nome').value;
             const emailCliente = document.getElementById('form-email').value;
@@ -633,72 +701,6 @@
             const urlMailto = `mailto:${emailDestino}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpoEmail)}`;
             window.location.href = urlMailto;
         }
-
-        // --- ADICIONE O SCRIPT DO CURRÍCULO AQUI, ANTES DE FECHAR O SCRIPT ---
-        document.getElementById('form-curriculo').addEventListener('submit', function(e) {
-            e.preventDefault(); 
-            
-            const btnEnviar = document.getElementById('btn-enviar-cv');
-            const msgRetorno = document.getElementById('msg-retorno');
-            btnEnviar.textContent = 'Enviando... Aguarde.';
-            btnEnviar.disabled = true;
-
-            const nome = document.getElementById('cand-nome').value;
-            const email = document.getElementById('cand-email').value;
-            const vaga = document.getElementById('cand-vaga').value;
-            const arquivoInput = document.getElementById('cand-arquivo');
-            const file = arquivoInput.files[0];
-
-            if (!file) {
-                alert("Por favor, anexe um currículo.");
-                btnEnviar.textContent = 'Enviar Currículo';
-                btnEnviar.disabled = false;
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const base64String = event.target.result.split(',')[1];
-                
-                const payload = {
-                    nome: nome,
-                    email: email,
-                    vaga: vaga,
-                    fileName: file.name,
-                    mimeType: file.type,
-                    fileBase64: base64String
-                };
-
-                const scriptURL = "https://script.google.com/macros/s/AKfycbwBRUNWmmRZ0DbLogcLZBLUYm0yrHqzbW5xOB-jL6z55loKmzj8uqiBrvMjdyKHDAOXiQ/exec";
-
-                fetch(scriptURL, {
-                    method: 'POST',
-                    body: JSON.stringify(payload)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if(data.status === "success") {
-                        msgRetorno.style.color = "green";
-                        msgRetorno.textContent = "Currículo enviado com sucesso! Cheque seu e-mail.";
-                        document.getElementById('form-curriculo').reset();
-                    } else {
-                        msgRetorno.style.color = "red";
-                        msgRetorno.textContent = "Erro ao enviar. Tente novamente mais tarde.";
-                    }
-                })
-                .catch(error => {
-                    msgRetorno.style.color = "red";
-                    msgRetorno.textContent = "Erro na conexão. Tente novamente.";
-                    console.error('Erro!', error.message);
-                })
-                .finally(() => {
-                    btnEnviar.textContent = 'Enviar Currículo';
-                    btnEnviar.disabled = false;
-                });
-            };
-            
-            reader.readAsDataURL(file);
-        });
     </script>
 </body>
 </html>
