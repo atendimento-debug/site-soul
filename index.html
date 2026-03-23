@@ -21,23 +21,15 @@
             --accent-blue: #89b8ff;
             --background-grey: #f8f9fa;
             --white: #ffffff;
+            --success-green: #1da851;
+            --error-red: #ea4335;
         }
 
         /* --- Barra de Rolagem Customizada --- */
-        ::-webkit-scrollbar {
-            width: 12px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background-color: var(--primary-blue); /* Azul do header */
-            border-radius: 10px;
-            border: 3px solid #f1f1f1; /* Cria uma margenzinha para não ficar grudado */
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background-color: var(--hover-blue);
-        }
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background-color: var(--primary-blue); border-radius: 10px; border: 3px solid #f1f1f1; }
+        ::-webkit-scrollbar-thumb:hover { background-color: var(--hover-blue); }
 
         /* --- Header e Navbar --- */
         header { background-color: var(--primary-blue); padding: 10px 0; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
@@ -57,34 +49,14 @@
             .menu-toggle { display: block; }
             html, body { max-width: 100%; overflow-x: hidden; }
 
-            /* Fundo do menu mobile com efeito de vidro (Glassmorphism) */
             .nav-links { 
-                position: fixed; 
-                top: 60px; 
-                left: -100%; 
-                width: 100%; 
-                height: calc(100vh - 60px); 
-                background-color: rgba(0, 75, 147, 0.95); /* Azul com leve transparência */
-                backdrop-filter: blur(10px); /* Efeito de desfoque */
-                flex-direction: column; 
-                padding: 30px 20px; 
-                transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-                z-index: 999; 
-                justify-content: flex-start;
-                gap: 5px;
+                position: fixed; top: 60px; left: -100%; width: 100%; height: calc(100vh - 60px); 
+                background-color: rgba(0, 75, 147, 0.95); backdrop-filter: blur(10px); 
+                flex-direction: column; padding: 30px 20px; transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+                z-index: 999; justify-content: flex-start; gap: 5px;
             }
-
             .nav-links.active { left: 0; }
-
-            /* Estilo dos links no mobile */
-            .nav-links li {
-                width: 100%;
-                opacity: 0; 
-                transform: translateY(20px);
-                transition: all 0.4s ease;
-            }
-
-            /* Animação em cascata (aparecem um por um) quando o menu abre */
+            .nav-links li { width: 100%; opacity: 0; transform: translateY(20px); transition: all 0.4s ease; }
             .nav-links.active li { opacity: 1; transform: translateY(0); }
             .nav-links.active li:nth-child(1) { transition-delay: 0.1s; }
             .nav-links.active li:nth-child(2) { transition-delay: 0.2s; }
@@ -93,30 +65,10 @@
             .nav-links.active li:nth-child(5) { transition-delay: 0.5s; }
             .nav-links.active li:nth-child(6) { transition-delay: 0.6s; }
 
-            /* Design do texto dos links */
-            .nav-links a {
-                display: block;
-                padding: 15px 0;
-                font-size: 1.2rem;
-                text-align: center;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Linha sutil separando */
-                letter-spacing: 1px;
-            }
-
-            .nav-links a:hover {
-                color: var(--accent-blue);
-                transform: scale(1.05); /* Leve zoom ao tocar */
-            }
-
-            /* Botão solicitar orçamento no mobile */
-            .nav-links .btn-solicitar {
-                margin-top: 20px;
-                width: 100%;
-                border-bottom: none; /* Tira a linha de baixo do botão */
-                box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            }
+            .nav-links a { display: block; padding: 15px 0; font-size: 1.2rem; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.1); letter-spacing: 1px; }
+            .nav-links a:hover { color: var(--accent-blue); transform: scale(1.05); }
+            .nav-links .btn-solicitar { margin-top: 20px; width: 100%; border-bottom: none; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
             
-            /* Ajustes que já estavam aí para os cartões isolados */
             .isolated-card { padding: 30px 20px; }
             .isolated-card h2 { font-size: 1.8rem; flex-direction: column; gap: 5px; }
             .social-buttons { flex-direction: column; width: 100%; }
@@ -197,9 +149,7 @@
 
         /* --- ESTILO DAS PÁGINAS ISOLADAS (Formulários) --- */
         .isolated-page { background-color: var(--background-grey); padding: 80px 20px; min-height: calc(100vh - 70px); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; }
-        
         .isolated-card { background-color: var(--white); max-width: 800px; width: 100%; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); padding: 50px; text-align: center; position: relative; z-index: 1; }
-        
         .isolated-card h2 { font-size: 2.2rem; color: var(--primary-blue); margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 15px; border: none; width: 100%; }
         .isolated-card h2::after { display: none; } 
         .isolated-card .icon-title { font-size: 3rem; color: var(--accent-blue); background: #f0f6ff; padding: 15px; border-radius: 50%; }
@@ -226,20 +176,16 @@
         .file-upload-input { position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; z-index: 2; }
         .file-upload-custom { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 20px; border: 2px dashed #b9d2f6; border-radius: 10px; background-color: #f8fbff; color: var(--primary-blue); font-size: 1.1rem; font-weight: 500; transition: all 0.3s ease; }
         .file-upload-wrapper:hover .file-upload-custom { border-color: var(--primary-blue); background-color: #eef5ff; }
-        .file-upload-custom.file-selected { border-style: solid; border-color: #25d366; background-color: #eafff1; color: #1da851; }
+        .file-upload-custom.file-selected { border-style: solid; border-color: var(--success-green); background-color: #eafff1; color: var(--success-green); }
 
         /* --- NOVO RODAPÉ (FOOTER) PROFISSIONAL --- */
         footer { background-color: var(--primary-blue); color: var(--white); padding: 50px 20px 30px 20px; text-align: center; }
         .footer-content { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 25px; }
         .logo-footer { height: 50px; cursor: pointer; }
-        
         .social-buttons { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
-        
-        /* Botões minimalistas e elegantes */
         .social-btn { display: flex; align-items: center; gap: 8px; padding: 12px 25px; border: 2px solid var(--white); border-radius: 30px; color: var(--white); font-weight: bold; text-decoration: none; font-size: 1rem; background: transparent; transition: all 0.3s ease; }
         .social-btn:hover { background-color: var(--white); color: var(--primary-blue); transform: translateY(-3px); }
         .social-btn svg, .social-btn i { fill: currentColor; transition: fill 0.3s ease; }
-        
         .footer-line { width: 100%; height: 1px; background-color: rgba(255,255,255,0.2); margin: 30px 0; }
         .developer-credit { font-size: 0.9rem; color: #ccc; }
         .developer-credit a { color: var(--accent-blue); font-weight: bold; transition: color 0.3s ease; }
@@ -261,13 +207,83 @@
         .btn-whatsapp:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(0,0,0,0.4); animation: none; }
         @keyframes pulse-whatsapp { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
 
-        @media (max-width: 768px) {
-            .isolated-card { padding: 30px 20px; }
-            .isolated-card h2 { font-size: 1.8rem; flex-direction: column; gap: 5px; }
-            .social-buttons { flex-direction: column; width: 100%; }
-            .social-btn { width: 100%; justify-content: center; }
-            .checkbox-grid { grid-template-columns: 1fr; } 
+        /* --- NOTIFICAÇÃO TOAST (POP-UP) --- */
+        #toast-container {
+            position: fixed;
+            top: 80px; /* Logo abaixo do header */
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
+        .toast {
+            background-color: var(--white);
+            color: #333;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            transform: translateX(120%);
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border-left: 5px solid transparent;
+        }
+        .toast.show { transform: translateX(0); }
+        .toast.success { border-left-color: var(--success-green); }
+        .toast.success i { color: var(--success-green); }
+        .toast.error { border-left-color: var(--error-red); }
+        .toast.error i { color: var(--error-red); }
+        
+        @media (max-width: 768px) {
+            #toast-container {
+                top: auto;
+                bottom: 100px;
+                right: 50%;
+                transform: translateX(50%);
+                width: 90%;
+            }
+            .toast { transform: translateY(120%); }
+            .toast.show { transform: translateY(0); }
+        }
+
+        /* --- MODAL POLÍTICA DE PRIVACIDADE --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 10001;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        .modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+        .modal-content {
+            background-color: var(--white);
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            border-radius: 15px;
+            padding: 30px;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .modal-content h3 { color: var(--primary-blue); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .modal-content p { color: #555; font-size: 0.95rem; margin-bottom: 10px; text-align: justify; }
+        .modal-close-btn {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: none; border: none;
+            font-size: 1.5rem; color: #999;
+            cursor: pointer; transition: color 0.3s ease;
+        }
+        .modal-close-btn:hover { color: var(--error-red); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
     </style>
 </head>
 <body>
@@ -414,7 +430,6 @@
                             <textarea id="orc-mensagem" placeholder="Detalhes do seu pedido (metragem, quantidade de profissionais, etc.)..." rows="5"></textarea>
                             
                             <button type="submit" id="btn-enviar-orcamento" class="btn-solicitar-full"><i class="material-icons" style="vertical-align: middle; margin-right: 5px;">send</i> Enviar Pedido de Orçamento</button>
-                            <p id="msg-retorno-orcamento" style="margin-top: 15px; font-weight: bold; text-align: center; font-size: 1.1rem;"></p>
                         </form>
                     </div>
                 </div>
@@ -464,14 +479,13 @@
                             </div>
 
                             <div style="margin-top: 15px; margin-bottom: 20px; text-align: left;">
-                                <label class="checkbox-label" style="font-size: 0.95rem;">
-                                    <input type="checkbox" required> 
-                                    Autorizo o armazenamento do meu currículo e dados para futuros processos seletivos do Grupo Soul, conforme a LGPD.
+                                <label class="checkbox-label" style="font-size: 0.95rem; align-items: flex-start;">
+                                    <input type="checkbox" required style="margin-top: 5px;"> 
+                                    <span>Autorizo o armazenamento do meu currículo e dados para futuros processos seletivos do Grupo Soul. <br> <a href="#" onclick="openModal(event)" style="color: var(--primary-blue); text-decoration: underline; font-weight: bold;">Leia nossa Política de Privacidade</a>.</span>
                                 </label>
                             </div>
                             
                             <button type="submit" id="btn-enviar-cv" class="btn-solicitar-full"><i class="material-icons" style="vertical-align: middle; margin-right: 5px;">upload_file</i> Enviar Currículo</button>
-                            <p id="msg-retorno" style="margin-top: 15px; font-weight: bold; text-align: center; font-size: 1.1rem;"></p>
                         </form>
                     </div>
                 </div>
@@ -479,6 +493,21 @@
         </div> 
 
     </main>
+
+    <div id="toast-container"></div>
+
+    <div class="modal-overlay" id="lgpd-modal">
+        <div class="modal-content">
+            <button class="modal-close-btn" onclick="closeModal()"><i class="material-icons">close</i></button>
+            <h3><i class="material-icons">security</i> Política de Privacidade (LGPD)</h3>
+            <p>O <strong>Grupo Soul Segurança e Facilities</strong> valoriza a sua privacidade e garante a segurança dos seus dados pessoais, em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018).</p>
+            <p><strong>1. Uso dos Dados:</strong> Os dados e o currículo enviados através deste formulário serão utilizados única e exclusivamente para finalidades de recrutamento e seleção de candidatos para as vagas de emprego do Grupo Soul.</p>
+            <p><strong>2. Armazenamento:</strong> Seu currículo será armazenado em nosso banco de dados seguro por um período máximo de 12 (doze) meses, para que possamos contatá-lo caso surjam novas oportunidades compatíveis com o seu perfil.</p>
+            <p><strong>3. Compartilhamento:</strong> Suas informações serão acessadas apenas pela nossa equipe de Recursos Humanos e gestores diretos das vagas. Não vendemos ou compartilhamos seus dados com empresas terceiras.</p>
+            <p><strong>4. Seus Direitos:</strong> A qualquer momento, você pode solicitar a exclusão, correção ou atualização do seu currículo do nosso banco de dados, bastando enviar um e-mail para <em>atendimento@gruposoulbr.com</em>.</p>
+            <p>Ao marcar a caixa de consentimento, você concorda ativamente com estes termos.</p>
+        </div>
+    </div>
 
     <a href="https://wa.me/5519997370190?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20serviços%20da%20Grupo%20Soul." target="_blank" class="btn-whatsapp" title="Fale conosco pelo WhatsApp">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
@@ -522,6 +551,41 @@
         // AQUI VAI A URL DO SEU APPSCRIPT (Não esqueça de colocar a nova URL gerada)
         const scriptURL = "https://script.google.com/macros/s/AKfycbxbIeXQvl1_6h1k38Y7RWNOi1YAPwvRehmqn_hVw7YwrwAgWPxAVnpavdmz4qQdymDVQg/exec";
 
+        // --- SISTEMA DE TOAST (NOTIFICAÇÕES) ---
+        function showToast(message, type) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            const icon = type === 'success' ? 'check_circle' : 'error';
+            toast.innerHTML = `<i class="material-icons">${icon}</i> <span>${message}</span>`;
+            
+            container.appendChild(toast);
+            
+            // Anima a entrada
+            setTimeout(() => { toast.classList.add('show'); }, 10);
+            
+            // Some após 5 segundos
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => { toast.remove(); }, 400); // Tempo da animação css
+            }, 5000);
+        }
+
+        // --- SISTEMA DE MODAL (LGPD) ---
+        function openModal(event) {
+            event.preventDefault(); // Impede a página de pular pro topo
+            document.getElementById('lgpd-modal').classList.add('active');
+        }
+        function closeModal() {
+            document.getElementById('lgpd-modal').classList.remove('active');
+        }
+        // Fechar clicando fora da janelinha
+        document.getElementById('lgpd-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+
         // --- FUNÇÃO DE ABAS (PÁGINAS ISOLADAS) ---
         function showPage(pageId) {
             document.querySelectorAll('.page-view').forEach(page => {
@@ -558,7 +622,6 @@
 
             const bgAnimado = document.createElement('div');
             bgAnimado.className = 'bg-animado';
-            // Insere o fundo como o primeiro elemento para ficar atrás do conteúdo
             container.insertBefore(bgAnimado, container.firstChild);
 
             for (let i = 0; i < 20; i++) {
@@ -626,26 +689,9 @@
             document.querySelectorAll('.fade-in, .reveal-left, .reveal-right, .reveal-up').forEach(el => observer.observe(el));
 
             // --- INICIALIZAR EFEITOS DE FUNDO NAS SEÇÕES ---
-            
-            // 1. Fundo da aba Serviços
-            criarEfeitoFlutuante('servicos', [
-                'security', 'cleaning_services', 'shield', 'vpn_key', 'build', 'apartment', 
-                'health_and_safety', 'recycling', 'park', 'inventory_2', 'medical_services', 
-                'biotech', 'science', 'supervisor_account', 'manage_accounts', 'account_balance_wallet'
-            ]);
-
-            // 2. Fundo da aba Orçamento (Ícones de negócios/dinheiro)
-            criarEfeitoFlutuante('bg-orcamento', [
-                'request_quote', 'attach_money', 'calculate', 'business_center', 
-                'assignment', 'mail', 'chat', 'receipt_long'
-            ]);
-
-            // 3. Fundo da aba Trabalhe Conosco (Ícones de emprego/pessoas)
-            criarEfeitoFlutuante('bg-trabalhe', [
-                'badge', 'work', 'assignment_ind', 'school', 
-                'description', 'person_add', 'groups', 'engineering'
-            ]);
-
+            criarEfeitoFlutuante('servicos', ['security', 'cleaning_services', 'shield', 'vpn_key', 'build', 'apartment', 'health_and_safety', 'recycling', 'park', 'inventory_2', 'medical_services', 'biotech', 'science', 'supervisor_account', 'manage_accounts', 'account_balance_wallet']);
+            criarEfeitoFlutuante('bg-orcamento', ['request_quote', 'attach_money', 'calculate', 'business_center', 'assignment', 'mail', 'chat', 'receipt_long']);
+            criarEfeitoFlutuante('bg-trabalhe', ['badge', 'work', 'assignment_ind', 'school', 'description', 'person_add', 'groups', 'engineering']);
 
             // --- CARROSSEL DE SERVIÇOS ---
             const servicosTrack = document.getElementById('servicos-track');
@@ -663,11 +709,7 @@
                     }
                 };
 
-                const startCarrossel = () => {
-                    clearInterval(autoScrollServicos);
-                    autoScrollServicos = setInterval(moveNext, 3000); 
-                };
-
+                const startCarrossel = () => { clearInterval(autoScrollServicos); autoScrollServicos = setInterval(moveNext, 3000); };
                 const stopCarrossel = () => { clearInterval(autoScrollServicos); };
 
                 startCarrossel();
@@ -706,11 +748,10 @@
                     e.preventDefault(); 
                     
                     const btnEnviar = document.getElementById('btn-enviar-orcamento');
-                    const msgRetorno = document.getElementById('msg-retorno-orcamento');
                     
                     const checkboxes = document.querySelectorAll('input[name="orc-servico"]:checked');
                     if (checkboxes.length === 0) {
-                        alert("Por favor, selecione pelo menos um serviço de interesse.");
+                        showToast("Selecione pelo menos um serviço de interesse.", "error");
                         return;
                     }
                     
@@ -723,7 +764,7 @@
                         formType: "orcamento", 
                         nome: document.getElementById('orc-nome').value,
                         email: document.getElementById('orc-email').value,
-                        telefone: document.getElementById('orc-telefone').value, // <-- NOVO
+                        telefone: document.getElementById('orc-telefone').value, 
                         servico: servicosSelecionados, 
                         mensagem: document.getElementById('orc-mensagem').value
                     };
@@ -737,17 +778,14 @@
                     .then(response => response.json())
                     .then(data => {
                         if(data.status === "success") {
-                            msgRetorno.style.color = "#1da851";
-                            msgRetorno.textContent = "Pedido de orçamento enviado com sucesso! Cheque seu e-mail.";
+                            showToast("Pedido enviado com sucesso! Cheque seu e-mail.", "success");
                             formOrcamento.reset();
                         } else {
-                            msgRetorno.style.color = "#ea4335";
-                            msgRetorno.textContent = "Erro ao enviar. Tente novamente mais tarde.";
+                            showToast(data.message || "Erro ao enviar. Tente novamente.", "error");
                         }
                     })
                     .catch(error => {
-                        msgRetorno.style.color = "#ea4335";
-                        msgRetorno.textContent = "Erro na conexão. Tente novamente.";
+                        showToast("Erro na conexão. Tente novamente.", "error");
                     })
                     .finally(() => {
                         btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 5px;">send</i> Enviar Pedido de Orçamento';
@@ -765,11 +803,10 @@
                     e.preventDefault(); 
                     
                     const btnEnviar = document.getElementById('btn-enviar-cv');
-                    const msgRetorno = document.getElementById('msg-retorno');
                     
                     const checkboxes = document.querySelectorAll('input[name="cand-vaga"]:checked');
                     if (checkboxes.length === 0) {
-                        alert("Por favor, selecione pelo menos uma área de interesse.");
+                        showToast("Selecione pelo menos uma área de interesse.", "error");
                         return;
                     }
 
@@ -777,7 +814,7 @@
 
                     const file = inputFile.files[0];
                     if (!file) {
-                        alert("Por favor, anexe um currículo.");
+                        showToast("Por favor, anexe um currículo.", "error");
                         return;
                     }
 
@@ -792,9 +829,9 @@
                             formType: "curriculo", 
                             nome: document.getElementById('cand-nome').value,
                             email: document.getElementById('cand-email').value,
-                            telefone: document.getElementById('cand-telefone').value, // <-- NOVO
-                            cidade: document.getElementById('cand-cidade').value,     // <-- NOVO
-                            experiencia: document.getElementById('cand-experiencia').value, // <-- NOVO
+                            telefone: document.getElementById('cand-telefone').value, 
+                            cidade: document.getElementById('cand-cidade').value,     
+                            experiencia: document.getElementById('cand-experiencia').value, 
                             vaga: vagasSelecionadas, 
                             fileName: file.name,
                             mimeType: file.type,
@@ -810,19 +847,16 @@
                         .then(response => response.json())
                         .then(data => {
                             if(data.status === "success") {
-                                msgRetorno.style.color = "#1da851";
-                                msgRetorno.textContent = "Currículo enviado com sucesso! Cheque seu e-mail.";
+                                showToast("Currículo enviado com sucesso!", "success");
                                 formCurriculo.reset();
                                 fileDisplay.classList.remove('file-selected');
                                 fileDisplay.innerHTML = `<i class="material-icons">cloud_upload</i><span id="file-upload-text">Clique ou arraste para anexar o Currículo (.PDF)</span>`;
                             } else {
-                                msgRetorno.style.color = "#ea4335";
-                                msgRetorno.textContent = "Erro ao enviar. Tente novamente mais tarde.";
+                                showToast(data.message || "Erro ao enviar. Tente novamente.", "error");
                             }
                         })
                         .catch(error => {
-                            msgRetorno.style.color = "#ea4335";
-                            msgRetorno.textContent = "Erro na conexão. Tente novamente.";
+                            showToast("Erro na conexão. Tente novamente.", "error");
                         })
                         .finally(() => {
                             btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 5px;">upload_file</i> Enviar Currículo';
