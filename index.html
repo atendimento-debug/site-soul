@@ -155,8 +155,11 @@
         .isolated-card .icon-title { font-size: 3rem; color: var(--accent-blue); background: #f0f6ff; padding: 15px; border-radius: 50%; }
         
         .form-container { width: 100%; display: flex; flex-direction: column; gap: 20px; margin-top: 30px; text-align: left; }
-        .form-container input[type="text"], .form-container input[type="email"], .form-container input[type="tel"], .form-container textarea { width: 100%; padding: 16px; border: 2px solid #eef2f6; border-radius: 10px; font-family: inherit; font-size: 1rem; color: #333; transition: border-color 0.3s ease, background-color 0.3s ease; background-color: #fafbfc; }
-        .form-container input:focus, .form-container textarea:focus { outline: none; border-color: var(--primary-blue); background-color: #fff; }
+        .form-container input[type="text"], .form-container input[type="email"], .form-container input[type="tel"], .form-container textarea, .form-container select { width: 100%; padding: 16px; border: 2px solid #eef2f6; border-radius: 10px; font-family: inherit; font-size: 1rem; color: #333; transition: border-color 0.3s ease, background-color 0.3s ease; background-color: #fafbfc; }
+.form-container input:focus, .form-container textarea:focus, .form-container select:focus { outline: none; border-color: var(--primary-blue); background-color: #fff; }
+/* Estilo extra para alinhar os dois selects lado a lado */
+.linha-estado-cidade { display: flex; gap: 15px; width: 100%; }
+@media (max-width: 768px) { .linha-estado-cidade { flex-direction: column; } }
         
         /* Checkboxes Style */
         .checkbox-container { width: 100%; padding: 20px; border: 2px solid #eef2f6; border-radius: 10px; background-color: #fafbfc; text-align: left; }
@@ -447,7 +450,14 @@
                             <input type="text" id="cand-nome" placeholder="Seu Nome Completo" required>
                             <input type="email" id="cand-email" placeholder="Seu E-mail" required>
                             <input type="tel" id="cand-telefone" placeholder="Seu Telefone / WhatsApp" required>
-                            <input type="text" id="cand-cidade" placeholder="Sua Cidade e Estado (Ex: Mogi Guaçu - SP)" required>
+                           <div class="linha-estado-cidade">
+    <select id="cand-estado" required style="flex: 1;">
+        <option value="" disabled selected>Estado</option>
+        </select>
+    <select id="cand-cidade" required disabled style="flex: 2;">
+        <option value="" disabled selected>Selecione um estado primeiro</option>
+        </select>
+</div>
                             <input type="text" id="cand-experiencia" placeholder="Resumo da experiência ou Link do LinkedIn (Opcional)">
                             
                             <div class="checkbox-container">
@@ -740,6 +750,46 @@
             }
 
             // ========================================================
+// SISTEMA DE ESTADO E CIDADE (API IBGE)
+// ========================================================
+const selectEstado = document.getElementById('cand-estado');
+const selectCidade = document.getElementById('cand-cidade');
+
+if(selectEstado && selectCidade) {
+    // 1. Carregar os Estados assim que a página abre
+    fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome')
+        .then(res => res.json())
+        .then(estados => {
+            estados.forEach(estado => {
+                const option = document.createElement('option');
+                option.value = estado.sigla; // Salva a sigla (SP, RJ, MG)
+                option.textContent = estado.nome; // Mostra o nome completo
+                selectEstado.appendChild(option);
+            });
+        });
+
+    // 2. Quando o usuário escolher o Estado, carregar as Cidades correspondentes
+    selectEstado.addEventListener('change', (e) => {
+        const uf = e.target.value;
+        selectCidade.innerHTML = '<option value="" disabled selected>Carregando cidades...</option>';
+        selectCidade.disabled = true;
+
+        fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios?orderBy=nome`)
+            .then(res => res.json())
+            .then(cidades => {
+                selectCidade.innerHTML = '<option value="" disabled selected>Selecione a Cidade</option>';
+                cidades.forEach(cidade => {
+                    const option = document.createElement('option');
+                    option.value = cidade.nome;
+                    option.textContent = cidade.nome;
+                    selectCidade.appendChild(option);
+                });
+                selectCidade.disabled = false; // Libera o campo de cidade
+            });
+    });
+}
+
+            // ========================================================
             // SCRIPT DE ENVIO: ORÇAMENTO
             // ========================================================
             const formOrcamento = document.getElementById('orcamento-form');
@@ -830,7 +880,7 @@
                             nome: document.getElementById('cand-nome').value,
                             email: document.getElementById('cand-email').value,
                             telefone: document.getElementById('cand-telefone').value, 
-                            cidade: document.getElementById('cand-cidade').value,     
+                            cidade: `${document.getElementById('cand-cidade').value} - ${document.getElementById('cand-estado').value}`,    
                             experiencia: document.getElementById('cand-experiencia').value, 
                             vaga: vagasSelecionadas, 
                             fileName: file.name,
