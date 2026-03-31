@@ -161,13 +161,25 @@
 .linha-estado-cidade { display: flex; gap: 15px; width: 100%; }
 @media (max-width: 768px) { .linha-estado-cidade { flex-direction: column; } }
         
-        /* Checkboxes Style */
+        /* --- Checkboxes Style (Novo Visual "Chips" Moderno) --- */
         .checkbox-container { width: 100%; padding: 20px; border: 2px solid #eef2f6; border-radius: 10px; background-color: #fafbfc; text-align: left; }
         .checkbox-container-title { margin-bottom: 15px; font-weight: 600; color: var(--primary-blue); display: block; font-size: 1.05rem; }
-        .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
-        .checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 0.95rem; color: #444; cursor: pointer; transition: color 0.3s ease; }
-        .checkbox-label:hover { color: var(--primary-blue); }
-        .checkbox-label input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-color: var(--primary-blue); flex-shrink: 0; }
+        .checkbox-grid { display: flex; flex-wrap: wrap; gap: 10px; } 
+        .checkbox-label { 
+            display: inline-flex; align-items: center; padding: 10px 18px; 
+            background-color: var(--white); border: 2px solid #eef2f6; border-radius: 30px; 
+            font-size: 0.95rem; color: #555; cursor: pointer; transition: all 0.3s ease; user-select: none;
+        }
+        .checkbox-label:hover { border-color: var(--accent-blue); background-color: #f0f6ff; color: var(--primary-blue); }
+        .checkbox-label input[type="checkbox"] { display: none; /* Esconde o quadradinho feio padrão */ }
+        
+        /* Mágica: Estilo de quando a pessoa clica/seleciona a opção */
+        .checkbox-label:has(input[type="checkbox"]:checked) {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border-color: var(--primary-blue);
+            box-shadow: 0 4px 10px rgba(0, 75, 147, 0.2);
+        }
 
         .btn-solicitar-full { background-color: var(--primary-blue); color: var(--white); padding: 18px; font-size: 1.2rem; font-weight: bold; border: none; border-radius: 10px; cursor: pointer; transition: background-color 0.3s ease, transform 0.1s ease; width: 100%; box-shadow: 0 5px 15px rgba(0, 75, 147, 0.2); }
         .btn-solicitar-full:hover { background-color: var(--hover-blue); transform: translateY(-2px); }
@@ -804,6 +816,12 @@ if(selectEstado && selectCidade) {
                         showToast("Selecione pelo menos um serviço de interesse.", "error");
                         return;
                     }
+
+                    const emailInput = document.getElementById('orc-email').value;
+                    if (!isEmailValido(emailInput)) {
+                        showToast("Por favor, digite um endereço de e-mail válido.", "error");
+                        return;
+                    }
                     
                     const servicosSelecionados = Array.from(checkboxes).map(cb => cb.value).join(', ');
 
@@ -868,6 +886,12 @@ if(selectEstado && selectCidade) {
                         return;
                     }
 
+                    const emailInput = document.getElementById('cand-email').value;
+                    if (!isEmailValido(emailInput)) {
+                        showToast("Por favor, digite um endereço de e-mail válido.", "error");
+                        return;
+                    }
+
                     btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 5px;">hourglass_empty</i> Enviando... Aguarde.';
                     btnEnviar.disabled = true;
 
@@ -918,7 +942,39 @@ if(selectEstado && selectCidade) {
                 });
             }
 
-        }); // FIM DO DOMContentLoaded
+        // ========================================================
+            // MÁSCARA DE TELEFONE (PADRÃO BRASIL)
+            // ========================================================
+            function mascaraTelefone(event) {
+                let input = event.target;
+                let val = input.value.replace(/\D/g, ''); // Tira letras, deixa só números
+                let formatado = '';
+
+                if (val.length > 11) val = val.substring(0, 11); // Limita a 11 dígitos no total
+
+                if (val.length > 0) {
+                    formatado = '(' + val.substring(0, 2);
+                    if (val.length > 2) {
+                        formatado += ') ' + val.substring(2, val.length > 7 ? 7 : val.length);
+                        if (val.length > 7) {
+                            formatado += '-' + val.substring(7, 11);
+                        }
+                    }
+                }
+                input.value = formatado;
+            }
+
+            // Aplica a máscara em todos os campos do tipo "tel"
+            const camposTelefone = document.querySelectorAll('input[type="tel"]');
+            camposTelefone.forEach(tel => tel.addEventListener('input', mascaraTelefone));
+
+            // Função para checar se o E-mail tem formato real
+            function isEmailValido(email) {
+                const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return regex.test(email);
+            }
+
+        }); // <-- FIM DO DOMContentLoaded AGORA FICA AQUI NO FINAL DE TUDO!
     </script>
 </body>
 </html>
