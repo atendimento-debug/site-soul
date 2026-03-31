@@ -48,21 +48,26 @@
             .logo { height: 40px; }
             .menu-toggle { display: block; }
             html, body { max-width: 100%; overflow-x: hidden; }
-            /* --- AJUSTES DO CARROSSEL DE SERVIÇOS NO CELULAR --- */
+           /* --- AJUSTES DO CARROSSEL DE SERVIÇOS NO CELULAR --- */
+            #servicos.section { padding-left: 0; padding-right: 0; } /* Tira as margens da tela para o carrossel poder ir até as bordas */
+            #servicos h2 { margin-left: 20px; margin-right: 20px; } /* Mantém o título alinhado com o site */
+            
             .servicos-carousel-wrapper { 
-                padding: 0 45px; /* Reduz um pouco o espaço das setas nas laterais */
+                padding: 0; 
             }
             .servicos-carrossel-track {
-                gap: 15px; /* Reduz o espaço em branco entre um card e outro */
+                padding: 20px 20px 40px 20px; /* Cria uma margem segura interna */
+                gap: 15px; 
+                scroll-padding-left: 20px; /* Ajuda a centralizar perfeitamente ao soltar o dedo */
             }
             .servico-card { 
-                min-width: 100%; /* Faz o card se espremer para caber certinho na tela */
-                padding: 30px 20px; /* Reduz o respiro interno do card para os textos não vazarem */
-                scroll-snap-align: center; /* A MÁGICA: Crava o card exatamente no centro da tela ao rolar */
+                min-width: 82vw; /* O card ocupa 82% da tela. A mágica acontece aqui! */
+                max-width: 82vw;
+                padding: 30px 20px; 
+                scroll-snap-align: center; 
             }
             .carousel-btn {
-                width: 40px; /* Deixa as setas um tiquinho menores no celular */
-                height: 40px;
+                display: none; /* ESCONDE AS SETAS NO CELULAR! Usuário arrasta com o dedo. */
             }
             .prev-btn { left: 0; }
             .next-btn { right: 0; }
