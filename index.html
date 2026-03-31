@@ -48,6 +48,24 @@
             .logo { height: 40px; }
             .menu-toggle { display: block; }
             html, body { max-width: 100%; overflow-x: hidden; }
+            /* --- AJUSTES DO CARROSSEL DE SERVIÇOS NO CELULAR --- */
+            .servicos-carousel-wrapper { 
+                padding: 0 45px; /* Reduz um pouco o espaço das setas nas laterais */
+            }
+            .servicos-carrossel-track {
+                gap: 15px; /* Reduz o espaço em branco entre um card e outro */
+            }
+            .servico-card { 
+                min-width: 100%; /* Faz o card se espremer para caber certinho na tela */
+                padding: 30px 20px; /* Reduz o respiro interno do card para os textos não vazarem */
+                scroll-snap-align: center; /* A MÁGICA: Crava o card exatamente no centro da tela ao rolar */
+            }
+            .carousel-btn {
+                width: 40px; /* Deixa as setas um tiquinho menores no celular */
+                height: 40px;
+            }
+            .prev-btn { left: 0; }
+            .next-btn { right: 0; }
 
             .nav-links { 
                 position: fixed; top: 60px; left: -100%; width: 100%; height: calc(100vh - 60px); 
@@ -125,24 +143,8 @@
         .icone-flutuante { position: absolute; color: var(--primary-blue); opacity: 0.1; top: -50px; animation: flutuar linear infinite; }
         @keyframes flutuar { 0% { transform: translateY(0) rotate(0deg); opacity: 0; } 10% { opacity: 0.1; } 90% { opacity: 0.1; } 100% { transform: translateY(1200px) rotate(360deg); opacity: 0; } }
         
-        /* --- AJUSTES DO CARROSSEL DE SERVIÇOS NO CELULAR --- */
-            .servicos-carousel-wrapper { 
-                padding: 0 45px; /* Reduz um pouco o espaço das setas nas laterais */
-            }
-            .servicos-carrossel-track {
-                gap: 15px; /* Reduz o espaço em branco entre um card e outro */
-            }
-            .servico-card { 
-                min-width: 100%; /* Faz o card se espremer para caber certinho na tela */
-                padding: 30px 20px; /* Reduz o respiro interno do card para os textos não vazarem */
-                scroll-snap-align: center; /* A MÁGICA: Crava o card exatamente no centro da tela ao rolar */
-            }
-            .carousel-btn {
-                width: 40px; /* Deixa as setas um tiquinho menores no celular */
-                height: 40px;
-            }
-            .prev-btn { left: 0; }
-            .next-btn { right: 0; }
+        .servicos-carousel-wrapper { position: relative; max-width: 100%; padding: 0 50px; z-index: 1; }
+        .servicos-carrossel-track { display: flex; gap: 30px; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; padding: 20px 10px 40px 10px; align-items: start; -ms-overflow-style: none; scrollbar-width: none; }
         .servicos-carrossel-track::-webkit-scrollbar { display: none; }
 
         .servico-card { background-color: var(--white); padding: 40px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; min-width: 320px; max-width: 400px; flex: 0 0 auto; scroll-snap-align: start; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
