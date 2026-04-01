@@ -163,13 +163,6 @@
         .prev-btn { left: 0; }
         .next-btn { right: 0; }
 
-        /* --- Parceiros --- */
-        .parceiros-carrossel-container { overflow: hidden; padding: 50px 0; background-color: var(--white); }
-        .parceiros-carrossel-track { display: flex; width: max-content; animation: scroll_parceiros 30s linear infinite; align-items: center; }
-        .parceiros-carrossel-track img { height: 60px; width: auto; margin: 0 50px; }
-        .parceiros-carrossel-track img[src^="https://gozgames.neocities.org/BackgroundEraser"] { height: 130px; }
-        @keyframes scroll_parceiros { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
         /* --- ESTILO DAS PÁGINAS ISOLADAS (Formulários) --- */
         .isolated-page { background-color: var(--background-grey); padding: 80px 20px; min-height: calc(100vh - 70px); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; }
         .isolated-card { background-color: var(--white); max-width: 800px; width: 100%; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); padding: 50px; text-align: center; position: relative; z-index: 1; }
@@ -340,7 +333,6 @@
                 <li><a onclick="goToHomeSection('home')">Home</a></li>
                 <li><a onclick="goToHomeSection('quem-somos')">Quem Somos</a></li>
                 <li><a onclick="goToHomeSection('servicos')">Serviços</a></li>
-                <li><a onclick="goToHomeSection('parceiros')">Parceiros</a></li>
                 <li><a onclick="showPage('page-trabalhe')">Trabalhe Conosco</a></li>
                 <li><a onclick="showPage('page-orcamento')" class="btn-solicitar">Solicitar Orçamento</a></li>
             </ul>
@@ -421,21 +413,7 @@
                 </div>
             </section>
 
-            <section id="parceiros" class="section fade-in">
-                <h2>NOSSOS PARCEIROS</h2>
-                <div class="parceiros-carrossel-container">
-                    <div class="parceiros-carrossel-track">
-                        <img src="https://gozgames.neocities.org/Logo-Villac_page-0001-removebg-preview.png" alt="Parceiro 1">
-                        <img src="https://santacasachavantes.org/wp-content/uploads/2023/08/LogoGrupo1-1.png" alt="Parceiro 2">
-                        <img src="https://gozgames.neocities.org/girassol.png" alt="Parceiro 3">
-                        <img src="https://gozgames.neocities.org/BackgroundEraser_20260213_155634660.png" alt="Parceiro 5">
-                        <img src="https://gozgames.neocities.org/Logo-Villac_page-0001-removebg-preview.png" alt="Parceiro 1">
-                        <img src="https://santacasachavantes.org/wp-content/uploads/2023/08/LogoGrupo1-1.png" alt="Parceiro 2">
-                        <img src="https://gozgames.neocities.org/girassol.png" alt="Parceiro 3">
-                        <img src="https://gozgames.neocities.org/BackgroundEraser_20260213_155634660.png" alt="Parceiro 5">
-                    </div>
-                </div>
-            </section>
+            
         </div> 
 
         <div id="page-orcamento" class="page-view">
