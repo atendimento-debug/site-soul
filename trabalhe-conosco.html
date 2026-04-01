@@ -48,6 +48,29 @@
             .logo { height: 40px; }
             .menu-toggle { display: block; }
             html, body { max-width: 100%; overflow-x: hidden; }
+           /* --- AJUSTES DO CARROSSEL DE SERVIÇOS NO CELULAR --- */
+            #servicos.section { padding-left: 0; padding-right: 0; } /* Tira as margens da tela para o carrossel poder ir até as bordas */
+            #servicos h2 { margin-left: 20px; margin-right: 20px; } /* Mantém o título alinhado com o site */
+            
+            .servicos-carousel-wrapper { 
+                padding: 0; 
+            }
+            .servicos-carrossel-track {
+                padding: 20px 20px 40px 20px; /* Cria uma margem segura interna */
+                gap: 15px; 
+                scroll-padding-left: 20px; /* Ajuda a centralizar perfeitamente ao soltar o dedo */
+            }
+            .servico-card { 
+                min-width: 82vw; /* O card ocupa 82% da tela. A mágica acontece aqui! */
+                max-width: 82vw;
+                padding: 30px 20px; 
+                scroll-snap-align: center; 
+            }
+            .carousel-btn {
+                display: none; /* ESCONDE AS SETAS NO CELULAR! Usuário arrasta com o dedo. */
+            }
+            .prev-btn { left: 0; }
+            .next-btn { right: 0; }
 
             .nav-links { 
                 position: fixed; top: 60px; left: -100%; width: 100%; height: calc(100vh - 60px); 
@@ -139,13 +162,6 @@
         .carousel-btn:hover { background-color: var(--accent-blue); color: var(--primary-blue); transform: translateY(-50%) scale(1.1); }
         .prev-btn { left: 0; }
         .next-btn { right: 0; }
-
-        /* --- Parceiros --- */
-        .parceiros-carrossel-container { overflow: hidden; padding: 50px 0; background-color: var(--white); }
-        .parceiros-carrossel-track { display: flex; width: max-content; animation: scroll_parceiros 30s linear infinite; align-items: center; }
-        .parceiros-carrossel-track img { height: 60px; width: auto; margin: 0 50px; }
-        .parceiros-carrossel-track img[src^="https://gozgames.neocities.org/BackgroundEraser"] { height: 130px; }
-        @keyframes scroll_parceiros { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* --- ESTILO DAS PÁGINAS ISOLADAS (Formulários) --- */
         .isolated-page { background-color: var(--background-grey); padding: 80px 20px; min-height: calc(100vh - 70px); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; }
@@ -317,7 +333,6 @@
                 <li><a onclick="goToHomeSection('home')">Home</a></li>
                 <li><a onclick="goToHomeSection('quem-somos')">Quem Somos</a></li>
                 <li><a onclick="goToHomeSection('servicos')">Serviços</a></li>
-                <li><a onclick="goToHomeSection('parceiros')">Parceiros</a></li>
                 <li><a onclick="showPage('page-trabalhe')">Trabalhe Conosco</a></li>
                 <li><a onclick="showPage('page-orcamento')" class="btn-solicitar">Solicitar Orçamento</a></li>
             </ul>
@@ -398,21 +413,7 @@
                 </div>
             </section>
 
-            <section id="parceiros" class="section fade-in">
-                <h2>NOSSOS PARCEIROS</h2>
-                <div class="parceiros-carrossel-container">
-                    <div class="parceiros-carrossel-track">
-                        <img src="https://gozgames.neocities.org/Logo-Villac_page-0001-removebg-preview.png" alt="Parceiro 1">
-                        <img src="https://santacasachavantes.org/wp-content/uploads/2023/08/LogoGrupo1-1.png" alt="Parceiro 2">
-                        <img src="https://gozgames.neocities.org/girassol.png" alt="Parceiro 3">
-                        <img src="https://gozgames.neocities.org/BackgroundEraser_20260213_155634660.png" alt="Parceiro 5">
-                        <img src="https://gozgames.neocities.org/Logo-Villac_page-0001-removebg-preview.png" alt="Parceiro 1">
-                        <img src="https://santacasachavantes.org/wp-content/uploads/2023/08/LogoGrupo1-1.png" alt="Parceiro 2">
-                        <img src="https://gozgames.neocities.org/girassol.png" alt="Parceiro 3">
-                        <img src="https://gozgames.neocities.org/BackgroundEraser_20260213_155634660.png" alt="Parceiro 5">
-                    </div>
-                </div>
-            </section>
+            
         </div> 
 
         <div id="page-orcamento" class="page-view">
