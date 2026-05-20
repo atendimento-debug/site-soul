@@ -893,7 +893,23 @@
                     btnEnviar.disabled = true;
 
                     try {
-                        // 1. Limpa o nome do arquivo para não quebrar URL e sobe pro Storage
+                        // 👇 1. MÁGICA ANTI-SPAM: Pergunta pro banco se tá bloqueado ANTES de subir o PDF 👇
+                        const telefoneInput = document.getElementById('cand-telefone').value;
+                        const { data: isSpam, error: rpcError } = await supabaseClient.rpc('verificar_spam_candidato', {
+                            p_email: emailInput,
+                            p_telefone: telefoneInput
+                        });
+
+                        if (rpcError) throw rpcError;
+
+                        if (isSpam) {
+                            showToast("Você já enviou um currículo nas últimas 24 horas. Aguarde para enviar novamente.", "error");
+                            btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 5px;">upload_file</i> Enviar Currículo';
+                            btnEnviar.disabled = false;
+                            return; // Para tudo aqui! O arquivo NÃO sobe pro Storage.
+                        }
+
+                        // 👇 2. Se passou no teste, sobe o arquivo pro Storage 👇
                         const cleanName = file.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9.]/g, '_');
                         const caminhoStorage = `Banco_Curriculos/${Date.now()}_${cleanName}`;
 
@@ -903,14 +919,14 @@
 
                         if (uploadError) throw uploadError;
 
-                        // 2. Pega o Link Público do Currículo gerado pelo Supabase
+                        // Pega o Link Público do Currículo gerado pelo Supabase
                         const { data: publicUrlData } = supabaseClient.storage.from('documentos').getPublicUrl(caminhoStorage);
 
-                        // 3. Salva os dados na tabela do Banco de Currículos
+                        // 👇 3. Salva os dados na tabela do Banco de Currículos 👇
                         const { error: dbError } = await supabaseClient.from('banco_curriculos').insert([{
                             nome: document.getElementById('cand-nome').value,
                             email: emailInput,
-                            telefone: document.getElementById('cand-telefone').value,
+                            telefone: telefoneInput,
                             cidade_estado: `${document.getElementById('cand-cidade').value} - ${document.getElementById('cand-estado').value}`,
                             vagas_interesse: vagasSelecionadas,
                             experiencia_resumo: document.getElementById('cand-experiencia').value,
@@ -926,9 +942,9 @@
                         fileDisplay.innerHTML = `<i class="material-icons">cloud_upload</i><span id="file-upload-text">Clique ou arraste para anexar o Currículo (.PDF)</span>`;
 
                     } catch (error) {
-    console.error("Erro na conexão:", error);
-    showToast(error.message || "Erro na conexão. Tente novamente.", "error");
-} finally {
+                        console.error("Erro no envio:", error);
+                        showToast(error.message || "Erro na conexão. Tente novamente.", "error");
+                    } finally {
                         btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 5px;">upload_file</i> Enviar Currículo';
                         btnEnviar.disabled = false;
                     }
