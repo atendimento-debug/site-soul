@@ -6,6 +6,8 @@
     <title>Soul Facilities</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="icon" type="image/png" href="https://gozgames.neocities.org/Si%CC%81mbolo%20-%20fundo%20azul.png">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     
     <style>
         /* --- Reset e Fontes --- */
@@ -575,8 +577,12 @@
     </footer>
 
     <script>
-        // AQUI VAI A URL DO SEU APPSCRIPT (Não esqueça de colocar a nova URL gerada)
-        const scriptURL = "https://script.google.com/macros/s/AKfycbxbIeXQvl1_6h1k38Y7RWNOi1YAPwvRehmqn_hVw7YwrwAgWPxAVnpavdmz4qQdymDVQg/exec";
+       // ========================================================
+        // INICIALIZAÇÃO DO SUPABASE
+        // ========================================================
+        const SUPABASE_URL = 'https://kefvwdxebzgedugqeimz.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_sWWZGDqK5Wy_n2ngT2xxWA_NX4gSNTo';
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // --- SISTEMA DE TOAST (NOTIFICAÇÕES) ---
         function showToast(message, type) {
@@ -588,30 +594,25 @@
             toast.innerHTML = `<i class="material-icons">${icon}</i> <span>${message}</span>`;
             
             container.appendChild(toast);
-            
-            // Anima a entrada
             setTimeout(() => { toast.classList.add('show'); }, 10);
             
-            // Some após 5 segundos
             setTimeout(() => {
                 toast.classList.remove('show');
-                setTimeout(() => { toast.remove(); }, 400); // Tempo da animação css
+                setTimeout(() => { toast.remove(); }, 400); 
             }, 5000);
         }
 
         // --- SISTEMA DE MODAL (LGPD) ---
         function openModal(event) {
-            event.preventDefault(); // Impede a página de pular pro topo
+            event.preventDefault(); 
             document.getElementById('lgpd-modal').classList.add('active');
         }
         function closeModal() {
             document.getElementById('lgpd-modal').classList.remove('active');
         }
-        // Fechar clicando fora da janelinha
         document.getElementById('lgpd-modal').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
         });
-
 
         // --- FUNÇÃO DE ABAS (PÁGINAS ISOLADAS) ---
         function showPage(pageId) {
@@ -628,7 +629,6 @@
             }
         }
 
-        // Função especial para voltar para a Home e rolar até a seção
         function goToHomeSection(sectionId) {
             showPage('page-home'); 
             setTimeout(() => {
@@ -642,7 +642,6 @@
             }, 50);
         }
 
-        // --- FUNÇÃO REUTILIZÁVEL PARA FUNDO ANIMADO (ÍCONES FLUTUANTES) ---
         function criarEfeitoFlutuante(containerId, iconesArray) {
             const container = document.getElementById(containerId);
             if (!container) return;
@@ -715,7 +714,6 @@
 
             document.querySelectorAll('.fade-in, .reveal-left, .reveal-right, .reveal-up').forEach(el => observer.observe(el));
 
-            // --- INICIALIZAR EFEITOS DE FUNDO NAS SEÇÕES ---
             criarEfeitoFlutuante('servicos', ['security', 'cleaning_services', 'shield', 'vpn_key', 'build', 'apartment', 'health_and_safety', 'recycling', 'park', 'inventory_2', 'medical_services', 'biotech', 'science', 'supervisor_account', 'manage_accounts', 'account_balance_wallet']);
             criarEfeitoFlutuante('bg-orcamento', ['request_quote', 'attach_money', 'calculate', 'business_center', 'assignment', 'mail', 'chat', 'receipt_long']);
             criarEfeitoFlutuante('bg-trabalhe', ['badge', 'work', 'assignment_ind', 'school', 'description', 'person_add', 'groups', 'engineering']);
@@ -756,9 +754,15 @@
             if(inputFile) {
                 inputFile.addEventListener('change', function() {
                     if (this.files && this.files.length > 0) {
-                        const fileName = this.files[0].name;
+                        const file = this.files[0];
+                        // Trava para arquivos maiores que 5MB (Para não pesar o banco)
+                        if (file.size > 5 * 1024 * 1024) {
+                            showToast("O arquivo é muito grande. Máximo 5MB.", "error");
+                            this.value = '';
+                            return;
+                        }
                         fileDisplay.classList.add('file-selected');
-                        fileDisplay.innerHTML = `<i class="material-icons">check_circle</i><span id="file-upload-text">${fileName}</span>`;
+                        fileDisplay.innerHTML = `<i class="material-icons">check_circle</i><span id="file-upload-text">${file.name}</span>`;
                     } else {
                         fileDisplay.classList.remove('file-selected');
                         fileDisplay.innerHTML = `<i class="material-icons">cloud_upload</i><span id="file-upload-text">Clique ou arraste para anexar o Currículo (.PDF)</span>`;
@@ -767,51 +771,49 @@
             }
 
             // ========================================================
-// SISTEMA DE ESTADO E CIDADE (API IBGE)
-// ========================================================
-const selectEstado = document.getElementById('cand-estado');
-const selectCidade = document.getElementById('cand-cidade');
+            // SISTEMA DE ESTADO E CIDADE (API IBGE)
+            // ========================================================
+            const selectEstado = document.getElementById('cand-estado');
+            const selectCidade = document.getElementById('cand-cidade');
 
-if(selectEstado && selectCidade) {
-    // 1. Carregar os Estados assim que a página abre
-    fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome')
-        .then(res => res.json())
-        .then(estados => {
-            estados.forEach(estado => {
-                const option = document.createElement('option');
-                option.value = estado.sigla; // Salva a sigla (SP, RJ, MG)
-                option.textContent = estado.nome; // Mostra o nome completo
-                selectEstado.appendChild(option);
-            });
-        });
+            if(selectEstado && selectCidade) {
+                fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome')
+                    .then(res => res.json())
+                    .then(estados => {
+                        estados.forEach(estado => {
+                            const option = document.createElement('option');
+                            option.value = estado.sigla;
+                            option.textContent = estado.nome;
+                            selectEstado.appendChild(option);
+                        });
+                    });
 
-    // 2. Quando o usuário escolher o Estado, carregar as Cidades correspondentes
-    selectEstado.addEventListener('change', (e) => {
-        const uf = e.target.value;
-        selectCidade.innerHTML = '<option value="" disabled selected>Carregando cidades...</option>';
-        selectCidade.disabled = true;
+                selectEstado.addEventListener('change', (e) => {
+                    const uf = e.target.value;
+                    selectCidade.innerHTML = '<option value="" disabled selected>Carregando cidades...</option>';
+                    selectCidade.disabled = true;
 
-        fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios?orderBy=nome`)
-            .then(res => res.json())
-            .then(cidades => {
-                selectCidade.innerHTML = '<option value="" disabled selected>Selecione a Cidade</option>';
-                cidades.forEach(cidade => {
-                    const option = document.createElement('option');
-                    option.value = cidade.nome;
-                    option.textContent = cidade.nome;
-                    selectCidade.appendChild(option);
+                    fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios?orderBy=nome`)
+                        .then(res => res.json())
+                        .then(cidades => {
+                            selectCidade.innerHTML = '<option value="" disabled selected>Selecione a Cidade</option>';
+                            cidades.forEach(cidade => {
+                                const option = document.createElement('option');
+                                option.value = cidade.nome;
+                                option.textContent = cidade.nome;
+                                selectCidade.appendChild(option);
+                            });
+                            selectCidade.disabled = false;
+                        });
                 });
-                selectCidade.disabled = false; // Libera o campo de cidade
-            });
-    });
-}
+            }
 
             // ========================================================
-            // SCRIPT DE ENVIO: ORÇAMENTO
+            // SCRIPT DE ENVIO: ORÇAMENTO (CONECTADO AO SUPABASE)
             // ========================================================
             const formOrcamento = document.getElementById('orcamento-form');
             if (formOrcamento) {
-                formOrcamento.addEventListener('submit', function(e) {
+                formOrcamento.addEventListener('submit', async function(e) {
                     e.preventDefault(); 
                     
                     const btnEnviar = document.getElementById('btn-enviar-orcamento');
@@ -833,46 +835,36 @@ if(selectEstado && selectCidade) {
                     btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 5px;">hourglass_empty</i> Enviando Pedido...';
                     btnEnviar.disabled = true;
 
-                    const payload = {
-                        formType: "orcamento", 
-                        nome: document.getElementById('orc-nome').value,
-                        email: document.getElementById('orc-email').value,
-                        telefone: document.getElementById('orc-telefone').value, 
-                        servico: servicosSelecionados, 
-                        mensagem: document.getElementById('orc-mensagem').value
-                    };
+                    try {
+                        const { error } = await supabaseClient.from('orcamentos_site').insert([{
+                            nome: document.getElementById('orc-nome').value,
+                            email: emailInput,
+                            telefone: document.getElementById('orc-telefone').value,
+                            servicos_interesse: servicosSelecionados,
+                            mensagem: document.getElementById('orc-mensagem').value,
+                            status: 'Novo' // Para o RH saber que ninguém atendeu ainda
+                        }]);
 
-                    fetch(scriptURL, {
-                        method: 'POST',
-                        redirect: 'follow', 
-                        headers: { "Content-Type": "text/plain;charset=utf-8" },
-                        body: JSON.stringify(payload)
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if(data.status === "success") {
-                            showToast("Pedido enviado com sucesso! Cheque seu e-mail.", "success");
-                            formOrcamento.reset();
-                        } else {
-                            showToast(data.message || "Erro ao enviar. Tente novamente.", "error");
-                        }
-                    })
-                    .catch(error => {
+                        if (error) throw error;
+
+                        showToast("Pedido de Orçamento enviado com sucesso!", "success");
+                        formOrcamento.reset();
+                    } catch (error) {
+                        console.error("Erro no Supabase:", error);
                         showToast("Erro na conexão. Tente novamente.", "error");
-                    })
-                    .finally(() => {
+                    } finally {
                         btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 5px;">send</i> Enviar Pedido de Orçamento';
                         btnEnviar.disabled = false;
-                    });
+                    }
                 });
             }
 
             // ========================================================
-            // SCRIPT DE ENVIO: CURRÍCULO
+            // SCRIPT DE ENVIO: CURRÍCULO (CONECTADO AO SUPABASE)
             // ========================================================
             const formCurriculo = document.getElementById('form-curriculo');
             if (formCurriculo) {
-                formCurriculo.addEventListener('submit', function(e) {
+                formCurriculo.addEventListener('submit', async function(e) {
                     e.preventDefault(); 
                     
                     const btnEnviar = document.getElementById('btn-enviar-cv');
@@ -900,62 +892,58 @@ if(selectEstado && selectCidade) {
                     btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 5px;">hourglass_empty</i> Enviando... Aguarde.';
                     btnEnviar.disabled = true;
 
-                    const reader = new FileReader();
-                    reader.onload = function(event) {
-                        const base64String = event.target.result.split(',')[1];
-                        
-                        const payload = {
-                            formType: "curriculo", 
-                            nome: document.getElementById('cand-nome').value,
-                            email: document.getElementById('cand-email').value,
-                            telefone: document.getElementById('cand-telefone').value, 
-                            cidade: `${document.getElementById('cand-cidade').value} - ${document.getElementById('cand-estado').value}`,    
-                            experiencia: document.getElementById('cand-experiencia').value, 
-                            vaga: vagasSelecionadas, 
-                            fileName: file.name,
-                            mimeType: file.type,
-                            fileBase64: base64String
-                        };
+                    try {
+                        // 1. Limpa o nome do arquivo para não quebrar URL e sobe pro Storage
+                        const cleanName = file.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9.]/g, '_');
+                        const caminhoStorage = `Banco_Curriculos/${Date.now()}_${cleanName}`;
 
-                        fetch(scriptURL, {
-                            method: 'POST',
-                            redirect: 'follow', 
-                            headers: { "Content-Type": "text/plain;charset=utf-8" },
-                            body: JSON.stringify(payload)
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if(data.status === "success") {
-                                showToast("Currículo enviado com sucesso!", "success");
-                                formCurriculo.reset();
-                                fileDisplay.classList.remove('file-selected');
-                                fileDisplay.innerHTML = `<i class="material-icons">cloud_upload</i><span id="file-upload-text">Clique ou arraste para anexar o Currículo (.PDF)</span>`;
-                            } else {
-                                showToast(data.message || "Erro ao enviar. Tente novamente.", "error");
-                            }
-                        })
-                        .catch(error => {
-                            showToast("Erro na conexão. Tente novamente.", "error");
-                        })
-                        .finally(() => {
-                            btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 5px;">upload_file</i> Enviar Currículo';
-                            btnEnviar.disabled = false;
-                        });
-                    };
-                    
-                    reader.readAsDataURL(file);
+                        const { data: uploadData, error: uploadError } = await supabaseClient.storage
+                            .from('documentos') 
+                            .upload(caminhoStorage, file);
+
+                        if (uploadError) throw uploadError;
+
+                        // 2. Pega o Link Público do Currículo gerado pelo Supabase
+                        const { data: publicUrlData } = supabaseClient.storage.from('documentos').getPublicUrl(caminhoStorage);
+
+                        // 3. Salva os dados na tabela do Banco de Currículos
+                        const { error: dbError } = await supabaseClient.from('banco_curriculos').insert([{
+                            nome: document.getElementById('cand-nome').value,
+                            email: emailInput,
+                            telefone: document.getElementById('cand-telefone').value,
+                            cidade_estado: `${document.getElementById('cand-cidade').value} - ${document.getElementById('cand-estado').value}`,
+                            vagas_interesse: vagasSelecionadas,
+                            experiencia_resumo: document.getElementById('cand-experiencia').value,
+                            curriculo_url: publicUrlData.publicUrl,
+                            status: 'Novo'
+                        }]);
+
+                        if (dbError) throw dbError;
+
+                        showToast("Currículo enviado com sucesso!", "success");
+                        formCurriculo.reset();
+                        fileDisplay.classList.remove('file-selected');
+                        fileDisplay.innerHTML = `<i class="material-icons">cloud_upload</i><span id="file-upload-text">Clique ou arraste para anexar o Currículo (.PDF)</span>`;
+
+                    } catch (error) {
+                        console.error("Erro no envio:", error);
+                        showToast("Erro na conexão. Tente novamente.", "error");
+                    } finally {
+                        btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 5px;">upload_file</i> Enviar Currículo';
+                        btnEnviar.disabled = false;
+                    }
                 });
             }
 
-        // ========================================================
-            // MÁSCARA DE TELEFONE (PADRÃO BRASIL)
+            // ========================================================
+            // MÁSCARA DE TELEFONE E VALIDAÇÕES
             // ========================================================
             function mascaraTelefone(event) {
                 let input = event.target;
-                let val = input.value.replace(/\D/g, ''); // Tira letras, deixa só números
+                let val = input.value.replace(/\D/g, ''); 
                 let formatado = '';
 
-                if (val.length > 11) val = val.substring(0, 11); // Limita a 11 dígitos no total
+                if (val.length > 11) val = val.substring(0, 11); 
 
                 if (val.length > 0) {
                     formatado = '(' + val.substring(0, 2);
@@ -969,17 +957,15 @@ if(selectEstado && selectCidade) {
                 input.value = formatado;
             }
 
-            // Aplica a máscara em todos os campos do tipo "tel"
             const camposTelefone = document.querySelectorAll('input[type="tel"]');
             camposTelefone.forEach(tel => tel.addEventListener('input', mascaraTelefone));
 
-            // Função para checar se o E-mail tem formato real
             function isEmailValido(email) {
                 const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 return regex.test(email);
             }
 
-        }); // <-- FIM DO DOMContentLoaded AGORA FICA AQUI NO FINAL DE TUDO!
+        }); // <-- FIM DO DOMContentLoaded
     </script>
 </body>
 </html>
