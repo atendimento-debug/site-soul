@@ -850,9 +850,9 @@
                         showToast("Pedido de Orçamento enviado com sucesso!", "success");
                         formOrcamento.reset();
                     } catch (error) {
-                        console.error("Erro no Supabase:", error);
-                        showToast("Erro na conexão. Tente novamente.", "error");
-                    } finally {
+    console.error("Erro na conexão:", error);
+    showToast(error.message || "Erro na conexão. Tente novamente.", "error");
+} finally {
                         btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 5px;">send</i> Enviar Pedido de Orçamento';
                         btnEnviar.disabled = false;
                     }
@@ -926,9 +926,9 @@
                         fileDisplay.innerHTML = `<i class="material-icons">cloud_upload</i><span id="file-upload-text">Clique ou arraste para anexar o Currículo (.PDF)</span>`;
 
                     } catch (error) {
-                        console.error("Erro no envio:", error);
-                        showToast("Erro na conexão. Tente novamente.", "error");
-                    } finally {
+    console.error("Erro na conexão:", error);
+    showToast(error.message || "Erro na conexão. Tente novamente.", "error");
+} finally {
                         btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 5px;">upload_file</i> Enviar Currículo';
                         btnEnviar.disabled = false;
                     }
