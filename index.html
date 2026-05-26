@@ -291,16 +291,16 @@
 
     <header>
         <nav class="navbar">
-            <img src="https://gozgames.neocities.org/Logo%20horizontal%20-%20fundo%20azul.png" alt="Logo Grupo Soul" class="logo" onclick="goToHomeSection('home')">
+            <a href="#/"><img src="https://gozgames.neocities.org/Logo%20horizontal%20-%20fundo%20azul.png" alt="Logo Grupo Soul" class="logo"></a>
             
             <i class="material-icons menu-toggle" id="mobile-menu-btn">menu</i>
 
             <ul class="nav-links" id="nav-menu">
-                <li><a onclick="goToHomeSection('home')">Home</a></li>
-                <li><a onclick="goToHomeSection('quem-somos')">Quem Somos</a></li>
-                <li><a onclick="goToHomeSection('servicos')">Serviços</a></li>
-                <li><a onclick="showPage('page-trabalhe')">Trabalhe Conosco</a></li>
-                <li><a onclick="showPage('page-orcamento')" class="btn-solicitar">Solicitar Orçamento</a></li>
+                <li><a href="#/">Home</a></li>
+                <li><a href="#/quem-somos">Quem Somos</a></li>
+                <li><a href="#/servicos">Serviços</a></li>
+                <li><a href="#/trabalhe">Trabalhe Conosco</a></li>
+                <li><a href="#/orcamento" class="btn-solicitar">Solicitar Orçamento</a></li>
             </ul>
         </nav>
     </header>
@@ -523,9 +523,12 @@
         </div>
     </div>
 
-    <footer>
+   <footer>
         <div class="footer-content">
-            <img src="https://gozgames.neocities.org/Logo%20horizontal%20-%20fundo%20azul.png" alt="Logo Grupo Soul" class="logo-footer" onclick="goToHomeSection('home')">
+            <a href="#/">
+                <img src="https://gozgames.neocities.org/Logo%20horizontal%20-%20fundo%20azul.png" alt="Logo Grupo Soul" class="logo-footer">
+            </a>
+            
             <p style="margin: 0; color: #cbd5e1;">Facilidade e Segurança para Cidades, Empresas e Condomínios.</p>
             
             <div class="social-buttons">
@@ -585,34 +588,58 @@
             if (e.target === this) closeModal();
         });
 
-        // --- FUNÇÃO DE ABAS (PÁGINAS ISOLADAS) ---
-        function showPage(pageId) {
+        // --- SISTEMA DE ROTEAMENTO (NAVEGAÇÃO POR LINK DIRETO / ABAS) ---
+        function handleRoute() {
+            // Pega o caminho da URL (ex: #/trabalhe). Se não tiver, o padrão é #/
+            const hash = window.location.hash || '#/'; 
+            
+            // 1. Esconde todas as páginas e remove a classe ativa
             document.querySelectorAll('.page-view').forEach(page => {
                 page.classList.remove('active-page');
             });
-            document.getElementById(pageId).classList.add('active-page');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
 
+            // 2. Fecha o menu mobile se estiver aberto
             const navMenu = document.getElementById('nav-menu');
-            if (navMenu.classList.contains('active')) {
+            if (navMenu && navMenu.classList.contains('active')) {
                 navMenu.classList.remove('active');
                 document.getElementById('mobile-menu-btn').textContent = 'menu';
             }
+
+            // 3. Verifica qual página deve ser exibida baseada no link
+            if (hash === '#/trabalhe') {
+                document.getElementById('page-trabalhe').classList.add('active-page');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+            } else if (hash === '#/orcamento') {
+                document.getElementById('page-orcamento').classList.add('active-page');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+            } else {
+                // Se for Home, Quem Somos ou Serviços, a página principal deve estar ativa
+                document.getElementById('page-home').classList.add('active-page');
+                
+                // Aguarda um pequeno instante para a página renderizar e faz a rolagem até a seção
+                setTimeout(() => {
+                    let sectionId = 'home'; // Padrão
+                    if (hash === '#/quem-somos') sectionId = 'quem-somos';
+                    if (hash === '#/servicos') sectionId = 'servicos';
+                    
+                    const section = document.getElementById(sectionId);
+                    if (section) {
+                        const offset = 90; // Compensa a altura do menu fixo
+                        const elementPosition = section.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - offset;
+                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                    } else {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                }, 50);
+            }
         }
 
-        function goToHomeSection(sectionId) {
-            showPage('page-home'); 
-            setTimeout(() => {
-                const section = document.getElementById(sectionId);
-                if(section) {
-                    const offset = 90; 
-                    const elementPosition = section.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - offset;
-                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-                }
-            }, 50);
-        }
-
+        // Escuta quando o usuário clica no botão Voltar/Avançar do navegador ou clica num link do menu
+        window.addEventListener('hashchange', handleRoute);
+        
         function criarEfeitoFlutuante(containerId, iconesArray) {
             const container = document.getElementById(containerId);
             if (!container) return;
@@ -634,6 +661,9 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+
+            // Ativa o roteamento logo que a página carrega!
+            handleRoute();
             
             // --- MENU SANDUÍCHE ---
             const menuBtn = document.getElementById('mobile-menu-btn');
