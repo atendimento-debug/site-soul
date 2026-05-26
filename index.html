@@ -4,6 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Soul Facilities</title>
+
+    <meta name="description" content="Grupo Soul Segurança e Facilities. Soluções ágeis e eficazes em terceirização de mão de obra e segurança eletrônica para empresas e condomínios.">
+    <meta name="keywords" content="Facilities, Segurança Eletrônica, Terceirização, Limpeza, Portaria, Gestão de RH, Condomínios">
+    <meta name="author" content="Grupo Soul">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://seusite.com.br/">
+    <meta property="og:title" content="Soul Segurança e Facilities">
+    <meta property="og:description" content="Facilidade e Segurança para Cidades, Empresas e Condomínios.">
+    <meta property="og:image" content="https://gozgames.neocities.org/Logo%20horizontal%20-%20fundo%20azul.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Soul Segurança e Facilities">
+    <meta name="twitter:description" content="Facilidade e Segurança para Cidades, Empresas e Condomínios.">
+    <meta name="twitter:image" content="https://gozgames.neocities.org/Logo%20horizontal%20-%20fundo%20azul.png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -285,9 +300,59 @@
             margin-top: 15px;
         }
 
+        /* --- ACESSIBILIDADE --- */
+        .accessibility-panel { position: fixed; left: 0; top: 50%; transform: translateY(-50%); background: var(--white); box-shadow: 2px 0 15px rgba(0,0,0,0.1); border-radius: 0 10px 10px 0; z-index: 10002; display: flex; flex-direction: column; overflow: hidden; border: 1px solid #e2e8f0; border-left: none; }
+        .acc-btn { border: none; background: transparent; padding: 12px; cursor: pointer; color: var(--primary-blue); border-bottom: 1px solid #f1f5f9; transition: 0.3s; display: flex; align-items: center; justify-content: center; }
+        .acc-btn:hover { background: var(--background-grey); color: var(--accent-blue); }
+        .acc-btn:last-child { border-bottom: none; }
+        
+        /* Classes ativadas pelo JS */
+        body.high-contrast { background-color: #121212 !important; color: #ffffff !important; }
+        body.high-contrast header, body.high-contrast footer, body.high-contrast .navbar, body.high-contrast .nav-links { background-color: #000000 !important; color: #ffffff !important; }
+        body.high-contrast .servico-card, body.high-contrast .mvv-card, body.high-contrast .isolated-card, body.high-contrast .checkbox-label { background-color: #1e1e1e !important; color: #ffffff !important; border-color: #333 !important; box-shadow: none !important; }
+        body.high-contrast h1, body.high-contrast h2, body.high-contrast h3, body.high-contrast p, body.high-contrast span { color: #ffffff !important; }
+        body.high-contrast .hero-overlay { background: rgba(0,0,0,0.8); }
+
+        body.large-text { font-size: 110%; }
+
+        /* --- BANNER DE COOKIES (LGPD) --- */
+        .cookie-banner { position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--white); box-shadow: 0 -5px 25px rgba(0,0,0,0.15); padding: 20px 40px; z-index: 10005; display: flex; justify-content: space-between; align-items: center; gap: 20px; transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); border-top: 3px solid var(--primary-blue); }
+        .cookie-banner.show { transform: translateY(0); }
+        .cookie-text { font-size: 0.95rem; color: #475569; flex: 1; max-width: 900px; line-height: 1.6; }
+        .cookie-btn { background-color: var(--primary-blue); color: var(--white); border: none; padding: 12px 35px; border-radius: 30px; font-weight: 700; cursor: pointer; transition: 0.3s; white-space: nowrap; box-shadow: 0 4px 15px rgba(10, 61, 115, 0.2); }
+        .cookie-btn:hover { background-color: var(--hover-blue); transform: translateY(-2px); }
+        
+        @media (max-width: 768px) {
+            .cookie-banner { flex-direction: column; text-align: center; padding: 20px; }
+            .cookie-btn { width: 100%; }
+            .accessibility-panel { top: 65%; }
+        }
+
     </style>
 </head>
 <body>
+
+    <div class="accessibility-panel">
+        <button class="acc-btn" onclick="toggleContrast()" title="Alto Contraste"><i class="material-icons">contrast</i></button>
+        <button class="acc-btn" onclick="toggleFontSize()" title="Aumentar Fonte"><i class="material-icons">text_increase</i></button>
+    </div>
+
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-text">
+            <strong><i class="material-icons" style="vertical-align: middle; font-size: 1.2rem; color: var(--primary-blue);">cookie</i> Respeitamos sua privacidade.</strong><br>
+            Utilizamos cookies essenciais para melhorar sua experiência, analisar o tráfego do site e personalizar nosso atendimento. Ao continuar navegando, você concorda com a nossa <a href="#" onclick="openModal(event)" style="color: var(--primary-blue); text-decoration: underline; font-weight: 600;">Política de Privacidade (LGPD)</a>.
+        </div>
+        <button class="cookie-btn" onclick="acceptCookies()">Entendi e Aceito</button>
+    </div>
+
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
 
     <header>
         <nav class="navbar">
@@ -660,10 +725,40 @@
             }
         }
 
+        // --- FUNÇÕES DE ACESSIBILIDADE ---
+        function toggleContrast() {
+            document.body.classList.toggle('high-contrast');
+            // Salva a preferência do usuário no navegador
+            localStorage.setItem('soul_high_contrast', document.body.classList.contains('high-contrast'));
+        }
+
+        function toggleFontSize() {
+            document.body.classList.toggle('large-text');
+            // Salva a preferência do usuário no navegador
+            localStorage.setItem('soul_large_text', document.body.classList.contains('large-text'));
+        }
+
+        // --- FUNÇÃO DE ACEITAR COOKIES ---
+        function acceptCookies() {
+            localStorage.setItem('soul_cookies_accepted', 'true');
+            document.getElementById('cookieBanner').classList.remove('show');
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
 
             // Ativa o roteamento logo que a página carrega!
             handleRoute();
+
+            // Restaura configurações de acessibilidade salvas
+            if (localStorage.getItem('soul_high_contrast') === 'true') document.body.classList.add('high-contrast');
+            if (localStorage.getItem('soul_large_text') === 'true') document.body.classList.add('large-text');
+
+            // Mostra o banner de cookies apenas se o usuário ainda não tiver aceito
+            if (!localStorage.getItem('soul_cookies_accepted')) {
+                setTimeout(() => {
+                    document.getElementById('cookieBanner').classList.add('show');
+                }, 1500); // Aparece após 1.5 segundos suavemente
+            }
             
             // --- MENU SANDUÍCHE ---
             const menuBtn = document.getElementById('mobile-menu-btn');
