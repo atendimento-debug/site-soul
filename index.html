@@ -300,20 +300,37 @@
             margin-top: 15px;
         }
 
-        /* --- ACESSIBILIDADE --- */
+       /* --- ACESSIBILIDADE --- */
         .accessibility-panel { position: fixed; left: 0; top: 50%; transform: translateY(-50%); background: var(--white); box-shadow: 2px 0 15px rgba(0,0,0,0.1); border-radius: 0 10px 10px 0; z-index: 10002; display: flex; flex-direction: column; overflow: hidden; border: 1px solid #e2e8f0; border-left: none; }
         .acc-btn { border: none; background: transparent; padding: 12px; cursor: pointer; color: var(--primary-blue); border-bottom: 1px solid #f1f5f9; transition: 0.3s; display: flex; align-items: center; justify-content: center; }
         .acc-btn:hover { background: var(--background-grey); color: var(--accent-blue); }
         .acc-btn:last-child { border-bottom: none; }
         
-        /* Classes ativadas pelo JS */
+        /* --- CLASSES ATIVADAS PELO JS (ALTO CONTRASTE) --- */
         body.high-contrast { background-color: #121212 !important; color: #ffffff !important; }
         body.high-contrast header, body.high-contrast footer, body.high-contrast .navbar, body.high-contrast .nav-links { background-color: #000000 !important; color: #ffffff !important; }
-        body.high-contrast .servico-card, body.high-contrast .mvv-card, body.high-contrast .isolated-card, body.high-contrast .checkbox-label { background-color: #1e1e1e !important; color: #ffffff !important; border-color: #333 !important; box-shadow: none !important; }
-        body.high-contrast h1, body.high-contrast h2, body.high-contrast h3, body.high-contrast p, body.high-contrast span { color: #ffffff !important; }
-        body.high-contrast .hero-overlay { background: rgba(0,0,0,0.8); }
+        
+        /* Corrige o fundo branco nas páginas e na seção de serviços */
+        body.high-contrast #servicos, body.high-contrast .isolated-page, body.high-contrast .checkbox-container { background-color: #121212 !important; border-color: #333 !important; }
+        
+        /* Escurece os Cards e Botões */
+        body.high-contrast .servico-card, body.high-contrast .mvv-card, body.high-contrast .isolated-card, body.high-contrast .checkbox-label, body.high-contrast .checkbox-label-normal, body.high-contrast .carousel-btn { background-color: #1e1e1e !important; color: #ffffff !important; border-color: #444 !important; box-shadow: none !important; }
+        body.high-contrast .carousel-btn:hover { background-color: #333 !important; }
+        
+        /* Força a cor branca em todos os textos */
+        body.high-contrast h1, body.high-contrast h2, body.high-contrast h3, body.high-contrast p, body.high-contrast span, body.high-contrast label { color: #ffffff !important; }
+        body.high-contrast .hero-overlay { background: rgba(0,0,0,0.8) !important; }
+        
+        /* Corrige os Inputs, Selects e Área de Upload */
+        body.high-contrast input[type="text"], body.high-contrast input[type="email"], body.high-contrast input[type="tel"], body.high-contrast textarea, body.high-contrast select, body.high-contrast .file-upload-custom { background-color: #2a2a2a !important; color: #ffffff !important; border-color: #555 !important; }
+        body.high-contrast input::placeholder, body.high-contrast textarea::placeholder { color: #aaaaaa !important; }
+        
+        /* Mantém os ícones visíveis e bonitos no dark mode */
+        body.high-contrast i.material-icons, body.high-contrast .file-upload-custom i { color: #4FA8FF !important; }
+        body.high-contrast .toast { background-color: #1e1e1e !important; border-color: #444 !important; color: #fff !important; }
 
-        body.large-text { font-size: 110%; }
+        /* Fonte Grande na raiz do site para afetar os "rems" */
+html.large-text { font-size: 115% !important; }
 
         /* --- BANNER DE COOKIES (LGPD) --- */
         .cookie-banner { position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--white); box-shadow: 0 -5px 25px rgba(0,0,0,0.15); padding: 20px 40px; z-index: 10005; display: flex; justify-content: space-between; align-items: center; gap: 20px; transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); border-top: 3px solid var(--primary-blue); }
@@ -733,9 +750,9 @@
         }
 
         function toggleFontSize() {
-            document.body.classList.toggle('large-text');
+            document.documentElement.classList.toggle('large-text');
             // Salva a preferência do usuário no navegador
-            localStorage.setItem('soul_large_text', document.body.classList.contains('large-text'));
+            localStorage.setItem('soul_large_text', document.documentElement.classList.contains('large-text'));
         }
 
         // --- FUNÇÃO DE ACEITAR COOKIES ---
@@ -751,7 +768,7 @@
 
             // Restaura configurações de acessibilidade salvas
             if (localStorage.getItem('soul_high_contrast') === 'true') document.body.classList.add('high-contrast');
-            if (localStorage.getItem('soul_large_text') === 'true') document.body.classList.add('large-text');
+            if (localStorage.getItem('soul_large_text') === 'true') document.documentElement.classList.add('large-text');
 
             // Mostra o banner de cookies apenas se o usuário ainda não tiver aceito
             if (!localStorage.getItem('soul_cookies_accepted')) {
