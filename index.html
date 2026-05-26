@@ -27,6 +27,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="icon" type="image/png" href="https://gozgames.neocities.org/Si%CC%81mbolo%20-%20fundo%20azul.png">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     
     <style>
         /* --- Reset e Fontes --- */
@@ -624,6 +625,8 @@ html.large-text { font-size: 115% !important; }
                             </div>
                             
                             <textarea id="orc-mensagem" placeholder="Detalhes do seu pedido (metragem, quantidade de profissionais, escopo do trabalho, etc.)..." rows="5"></textarea>
+
+                            <div class="g-recaptcha" data-sitekey="6LcOOP4sAAAAADlQmccoOxJ1aCGvIv4oh_aAOzqj" style="margin-bottom: 20px;"></div>
                             
                             <button type="submit" id="btn-enviar-orcamento" class="btn-solicitar-full"><i class="material-icons" style="vertical-align: middle; margin-right: 8px;">send</i> Enviar Pedido de Orçamento</button>
                         </form>
@@ -694,6 +697,8 @@ html.large-text { font-size: 115% !important; }
         <span>Autorizo o armazenamento do meu currículo e dados para futuros processos seletivos do Grupo Soul. <br> <a href="#" onclick="openModal(event)" style="color: var(--primary-blue); text-decoration: underline; font-weight: bold;">Leia nossa Política de Privacidade (LGPD)</a>.</span>
     </label>
 </div>
+
+                            <div class="g-recaptcha" data-sitekey="6LcOOP4sAAAAADlQmccoOxJ1aCGvIv4oh_aAOzqj" style="margin-bottom: 20px;"></div>
                             
                             <button type="submit" id="btn-enviar-cv" class="btn-solicitar-full"><i class="material-icons" style="vertical-align: middle; margin-right: 8px;">upload_file</i> Enviar Currículo</button>
                         </form>
@@ -1085,10 +1090,18 @@ html.large-text { font-size: 115% !important; }
             // ========================================================
             const formOrcamento = document.getElementById('orcamento-form');
             if (formOrcamento) {
-                formOrcamento.addEventListener('submit', async function(e) {
-                    e.preventDefault(); 
-                    
-                    const btnEnviar = document.getElementById('btn-enviar-orcamento');
+               formOrcamento.addEventListener('submit', async function(e) {
+    e.preventDefault(); 
+    
+    // --- NOVA VALIDAÇÃO DO RECAPTCHA ---
+    const recaptchaResponse = e.target.querySelector('.g-recaptcha-response').value;
+    if (!recaptchaResponse) {
+        showToast("Por favor, confirme que você não é um robô.", "error");
+        return;
+    }
+    // -----------------------------------
+    
+    const btnEnviar = document.getElementById('btn-enviar-orcamento');
                     
                     const checkboxes = document.querySelectorAll('input[name="orc-servico"]:checked');
                     if (checkboxes.length === 0) {
@@ -1146,9 +1159,17 @@ html.large-text { font-size: 115% !important; }
             const formCurriculo = document.getElementById('form-curriculo');
             if (formCurriculo) {
                 formCurriculo.addEventListener('submit', async function(e) {
-                    e.preventDefault(); 
-                    
-                    const btnEnviar = document.getElementById('btn-enviar-cv');
+    e.preventDefault(); 
+    
+    // --- NOVA VALIDAÇÃO DO RECAPTCHA ---
+    const recaptchaResponse = e.target.querySelector('.g-recaptcha-response').value;
+    if (!recaptchaResponse) {
+        showToast("Por favor, confirme que você não é um robô.", "error");
+        return;
+    }
+    // -----------------------------------
+    
+    const btnEnviar = document.getElementById('btn-enviar-cv');
                     
                     const checkboxes = document.querySelectorAll('input[name="cand-vaga"]:checked');
                     if (checkboxes.length === 0) {
