@@ -359,6 +359,86 @@ html.large-text { font-size: 115% !important; }
         /* Corrige a cor do link ativo se o Modo Alto Contraste estiver ligado */
         body.high-contrast .nav-links a.active-link:not(.btn-solicitar) { color: #4FA8FF !important; }
 
+        /* Caixinha do checkbox da LGPD e a janela Modal no modo escuro */
+        body.high-contrast .checkbox-label-normal, 
+        body.high-contrast .modal-content { 
+            background-color: #121212 !important; /* Fundo preto/escuro */
+            color: #ffffff !important; 
+            border: 2px solid #0A3D73 !important; /* Borda azul escura corporativa */
+            box-shadow: none !important; 
+        }
+
+        /* Garante que o link "Leia nossa Política..." fique azul claro legível no tema escuro */
+        body.high-contrast .checkbox-label-normal a,
+        body.high-contrast .modal-content a {
+            color: #4FA8FF !important;
+        }
+
+        /* Botão de fechar (X) do Modal no modo escuro */
+        body.high-contrast .modal-close-btn {
+            background-color: #2a2a2a !important;
+            color: #ffffff !important;
+        }
+        body.high-contrast .modal-close-btn:hover {
+            background-color: #fee2e2 !important;
+            color: #ef4444 !important;
+        }
+
+
+        /* =========================================================
+           HOVERS E SELEÇÕES NO MODO ALTO CONTRASTE (DARK MODE) 
+           ========================================================= */
+        
+        /* 1. Checkboxes (Cargos/Serviços) - Mouse em cima e Selecionado */
+        body.high-contrast .checkbox-label:hover {
+            background-color: #2a2a2a !important;
+            border-color: #4FA8FF !important;
+            color: #4FA8FF !important;
+        }
+        body.high-contrast .checkbox-label:has(input[type="checkbox"]:checked) {
+            background-color: #0A3D73 !important; /* Fundo azul corporativo */
+            border-color: #4FA8FF !important;     /* Borda azul clara acesa */
+            color: #ffffff !important;
+            box-shadow: 0 4px 15px rgba(79, 168, 255, 0.2) !important;
+        }
+
+        /* 2. Área de Upload de Arquivo (PDF) - Mouse em cima e Arquivo Anexado */
+        body.high-contrast .file-upload-wrapper:hover .file-upload-custom {
+            background-color: #2a2a2a !important;
+            border-color: #4FA8FF !important;
+            color: #4FA8FF !important;
+        }
+        body.high-contrast .file-upload-custom.file-selected {
+            background-color: rgba(16, 185, 129, 0.1) !important; /* Fundo verde bem suave */
+            border-color: #10b981 !important; /* Borda verde de sucesso */
+            color: #10b981 !important;
+        }
+        body.high-contrast .file-upload-custom.file-selected i {
+            color: #10b981 !important;
+        }
+
+        /* 3. Efeitos nos Cards (Serviços, Missão/Visão e Valores) */
+        body.high-contrast .servico-card:hover, 
+        body.high-contrast .mvv-card:hover,
+        body.high-contrast .valores-list li:hover {
+            border-color: #4FA8FF !important;
+            background-color: #252525 !important;
+        }
+
+        /* 4. Links do Menu e Botões do Rodapé */
+        body.high-contrast .nav-links a:not(.active-link):not(.btn-solicitar):hover {
+            color: #4FA8FF !important;
+        }
+        body.high-contrast .btn-solicitar:hover {
+            background-color: #ffffff !important;
+            color: #000000 !important;
+        }
+        body.high-contrast .social-btn:hover {
+            background-color: #2a2a2a !important;
+            border-color: #4FA8FF !important;
+            color: #4FA8FF !important;
+        }
+
     </style>
 </head>
 <body>
