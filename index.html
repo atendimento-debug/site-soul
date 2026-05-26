@@ -345,6 +345,20 @@ html.large-text { font-size: 115% !important; }
             .accessibility-panel { top: 65%; }
         }
 
+        /* --- MENU ATIVO (PÁGINA ATUAL) --- */
+        .nav-links a.active-link:not(.btn-solicitar) { color: var(--accent-blue); }
+        .nav-links a.active-link:not(.btn-solicitar)::after { width: 100%; }
+        
+        /* Se a pessoa estiver na aba de orçamento, o botão principal também fica marcado */
+        .nav-links a.btn-solicitar.active-link { 
+            background-color: var(--white); 
+            color: var(--primary-blue); 
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2); 
+        }
+        
+        /* Corrige a cor do link ativo se o Modo Alto Contraste estiver ligado */
+        body.high-contrast .nav-links a.active-link:not(.btn-solicitar) { color: #4FA8FF !important; }
+
     </style>
 </head>
 <body>
@@ -687,7 +701,16 @@ html.large-text { font-size: 115% !important; }
                 document.getElementById('mobile-menu-btn').textContent = 'menu';
             }
 
-            // 3. Verifica qual página deve ser exibida baseada no link
+            // 3. Destaca o link atual no menu de navegação (O EFEITO AZUL)
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active-link');
+                // Se o href do link for igual ao hash da URL, ele ganha a marcação
+                if (link.getAttribute('href') === hash) {
+                    link.classList.add('active-link');
+                }
+            });
+
+            // 4. Verifica qual página deve ser exibida baseada no link
             if (hash === '#/trabalhe') {
                 document.getElementById('page-trabalhe').classList.add('active-page');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
