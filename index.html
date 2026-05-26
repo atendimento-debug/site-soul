@@ -439,6 +439,26 @@ html.large-text { font-size: 115% !important; }
             color: #4FA8FF !important;
         }
 
+        /* =========================================================
+           CORREÇÃO DOS CARDS "NOSSOS VALORES" 
+           ========================================================= */
+           
+        /* 1. Corrige o Tema Escuro: Deixa o card escuro por padrão e arruma o título */
+        body.high-contrast .valores-list li { 
+            background-color: #1e1e1e !important; 
+            color: #cbd5e1 !important; 
+            border-color: #444 !important; 
+            box-shadow: none !important; 
+        }
+        body.high-contrast .valores-list li strong {
+            color: #4FA8FF !important; /* Deixa o título do valor (ex: Respeito) azul claro */
+        }
+
+        /* 2. Melhora o Tema Claro: Adiciona uma leve mudança de fundo ao passar o mouse */
+        .valores-list li:hover {
+            background-color: #f8fafc; /* Muda de branco puro para um tom "gelo" bem elegante */
+        }
+
     </style>
 </head>
 <body>
