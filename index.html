@@ -28,6 +28,15 @@
     <link rel="icon" type="image/png" href="https://gozgames.neocities.org/Si%CC%81mbolo%20-%20fundo%20azul.png">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QXWXH99K0M"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-QXWXH99K0M');
+    </script>
     
     <style>
         /* --- Reset e Fontes --- */
@@ -794,6 +803,15 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
             // Pega o caminho da URL (ex: #/trabalhe). Se não tiver, o padrão é #/
             const hash = window.location.hash || '#/'; 
             
+            // 👇 CÓDIGO DO GOOGLE ANALYTICS PARA RASTREAR AS ABAS 👇
+            if (typeof gtag === 'function') {
+                gtag('event', 'page_view', {
+                    page_path: hash, 
+                    page_location: window.location.href
+                });
+            }
+            // 👆 FIM DO CÓDIGO DO ANALYTICS 👆
+
             // 1. Esconde todas as páginas e remove a classe ativa
             document.querySelectorAll('.page-view').forEach(page => {
                 page.classList.remove('active-page');
