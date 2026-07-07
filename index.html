@@ -109,6 +109,7 @@
             .nav-links.active li:nth-child(3) { transition-delay: 0.3s; }
             .nav-links.active li:nth-child(4) { transition-delay: 0.4s; }
             .nav-links.active li:nth-child(5) { transition-delay: 0.5s; }
+            .nav-links.active li:nth-child(6) { transition-delay: 0.6s; }
 
             .nav-links a { display: block; padding: 15px 0; font-size: 1.2rem; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); letter-spacing: 1px; }
             .nav-links a:not(.btn-solicitar)::after { display: none; }
@@ -247,6 +248,73 @@
         .file-upload-custom.file-selected { border-style: solid; border-color: var(--success-green); background-color: #ecfdf5; color: var(--success-green); }
         .file-upload-custom.file-selected i { color: var(--success-green); transform: none; }
 
+        /* --- VAGAS ABERTAS STYLES --- */
+        .vaga-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            border-left: 4px solid var(--accent-blue);
+        }
+        .vaga-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(10, 61, 115, 0.1);
+            border-color: var(--accent-blue);
+        }
+        .vaga-title {
+            color: var(--primary-blue);
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+        .vaga-meta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        .vaga-meta-tag {
+            background: #f1f5f9;
+            color: #475569;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .vaga-desc {
+            color: #64748b;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .btn-me-interesso {
+            background: rgba(79, 168, 255, 0.1);
+            color: var(--accent-blue);
+            border: 1px solid var(--accent-blue);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-me-interesso:hover {
+            background: var(--accent-blue);
+            color: #fff;
+        }
+
         /* --- RODAPÉ (FOOTER) PROFISSIONAL --- */
         footer { background-color: #052140; color: var(--white); padding: 60px 20px 30px 20px; text-align: center; }
         .footer-content { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 25px; }
@@ -324,8 +392,10 @@
         body.high-contrast #servicos, body.high-contrast .isolated-page, body.high-contrast .checkbox-container { background-color: #121212 !important; border-color: #333 !important; }
         
         /* Escurece os Cards e Botões */
-        body.high-contrast .servico-card, body.high-contrast .mvv-card, body.high-contrast .isolated-card, body.high-contrast .checkbox-label, body.high-contrast .checkbox-label-normal, body.high-contrast .carousel-btn { background-color: #1e1e1e !important; color: #ffffff !important; border-color: #444 !important; box-shadow: none !important; }
+        body.high-contrast .servico-card, body.high-contrast .mvv-card, body.high-contrast .isolated-card, body.high-contrast .checkbox-label, body.high-contrast .checkbox-label-normal, body.high-contrast .carousel-btn, body.high-contrast .vaga-card { background-color: #1e1e1e !important; color: #ffffff !important; border-color: #444 !important; box-shadow: none !important; }
         body.high-contrast .carousel-btn:hover { background-color: #333 !important; }
+        body.high-contrast .btn-me-interesso { background-color: #333 !important; color: #4FA8FF !important; border-color: #4FA8FF !important; }
+        body.high-contrast .btn-me-interesso:hover { background-color: #4FA8FF !important; color: #000 !important; }
         
         /* Força a cor branca em todos os textos */
         body.high-contrast h1, body.high-contrast h2, body.high-contrast h3, body.high-contrast p, body.high-contrast span, body.high-contrast label { color: #ffffff !important; }
@@ -340,7 +410,7 @@
         body.high-contrast .toast { background-color: #1e1e1e !important; border-color: #444 !important; color: #fff !important; }
 
         /* Fonte Grande na raiz do site para afetar os "rems" */
-html.large-text { font-size: 115% !important; }
+        html.large-text { font-size: 115% !important; }
 
         /* --- BANNER DE COOKIES (LGPD) --- */
         .cookie-banner { position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--white); box-shadow: 0 -5px 25px rgba(0,0,0,0.15); padding: 20px 40px; z-index: 10005; display: flex; justify-content: space-between; align-items: center; gap: 20px; transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); border-top: 3px solid var(--primary-blue); }
@@ -372,9 +442,9 @@ html.large-text { font-size: 115% !important; }
         /* Caixinha do checkbox da LGPD e a janela Modal no modo escuro */
         body.high-contrast .checkbox-label-normal, 
         body.high-contrast .modal-content { 
-            background-color: #121212 !important; /* Fundo preto/escuro */
+            background-color: #121212 !important; 
             color: #ffffff !important; 
-            border: 2px solid #0A3D73 !important; /* Borda azul escura corporativa */
+            border: 2px solid #0A3D73 !important; 
             box-shadow: none !important; 
         }
 
@@ -399,35 +469,32 @@ html.large-text { font-size: 115% !important; }
            HOVERS E SELEÇÕES NO MODO ALTO CONTRASTE (DARK MODE) 
            ========================================================= */
         
-        /* 1. Checkboxes (Cargos/Serviços) - Mouse em cima e Selecionado */
         body.high-contrast .checkbox-label:hover {
             background-color: #2a2a2a !important;
             border-color: #4FA8FF !important;
             color: #4FA8FF !important;
         }
         body.high-contrast .checkbox-label:has(input[type="checkbox"]:checked) {
-            background-color: #0A3D73 !important; /* Fundo azul corporativo */
-            border-color: #4FA8FF !important;     /* Borda azul clara acesa */
+            background-color: #0A3D73 !important;
+            border-color: #4FA8FF !important;      
             color: #ffffff !important;
             box-shadow: 0 4px 15px rgba(79, 168, 255, 0.2) !important;
         }
 
-        /* 2. Área de Upload de Arquivo (PDF) - Mouse em cima e Arquivo Anexado */
         body.high-contrast .file-upload-wrapper:hover .file-upload-custom {
             background-color: #2a2a2a !important;
             border-color: #4FA8FF !important;
             color: #4FA8FF !important;
         }
         body.high-contrast .file-upload-custom.file-selected {
-            background-color: rgba(16, 185, 129, 0.1) !important; /* Fundo verde bem suave */
-            border-color: #10b981 !important; /* Borda verde de sucesso */
+            background-color: rgba(16, 185, 129, 0.1) !important; 
+            border-color: #10b981 !important; 
             color: #10b981 !important;
         }
         body.high-contrast .file-upload-custom.file-selected i {
             color: #10b981 !important;
         }
 
-        /* 3. Efeitos nos Cards (Serviços, Missão/Visão e Valores) */
         body.high-contrast .servico-card:hover, 
         body.high-contrast .mvv-card:hover,
         body.high-contrast .valores-list li:hover {
@@ -435,7 +502,6 @@ html.large-text { font-size: 115% !important; }
             background-color: #252525 !important;
         }
 
-        /* 4. Links do Menu e Botões do Rodapé */
         body.high-contrast .nav-links a:not(.active-link):not(.btn-solicitar):hover {
             color: #4FA8FF !important;
         }
@@ -448,12 +514,7 @@ html.large-text { font-size: 115% !important; }
             border-color: #4FA8FF !important;
             color: #4FA8FF !important;
         }
-
-        /* =========================================================
-           CORREÇÃO DOS CARDS "NOSSOS VALORES" 
-           ========================================================= */
            
-        /* 1. Corrige o Tema Escuro: Deixa o card escuro por padrão e arruma o título */
         body.high-contrast .valores-list li { 
             background-color: #1e1e1e !important; 
             color: #cbd5e1 !important; 
@@ -461,12 +522,11 @@ html.large-text { font-size: 115% !important; }
             box-shadow: none !important; 
         }
         body.high-contrast .valores-list li strong {
-            color: #4FA8FF !important; /* Deixa o título do valor (ex: Respeito) azul claro */
+            color: #4FA8FF !important; 
         }
 
-        /* 2. Melhora o Tema Claro: Adiciona uma leve mudança de fundo ao passar o mouse */
         .valores-list li:hover {
-            background-color: #f8fafc; /* Muda de branco puro para um tom "gelo" bem elegante */
+            background-color: #f8fafc; 
         }
 
     </style>
@@ -505,7 +565,7 @@ html.large-text { font-size: 115% !important; }
                 <li><a href="#/">Home</a></li>
                 <li><a href="#/quem-somos">Quem Somos</a></li>
                 <li><a href="#/servicos">Serviços</a></li>
-                <li><a href="#/trabalhe">Trabalhe Conosco</a></li>
+                <li><a href="#/vagas">Vagas Abertas</a></li> <li><a href="#/trabalhe">Trabalhe Conosco</a></li>
                 <li><a href="#/orcamento" class="btn-solicitar">Solicitar Orçamento</a></li>
             </ul>
         </nav>
@@ -597,7 +657,7 @@ html.large-text { font-size: 115% !important; }
                         Preencha os dados abaixo e nossa equipe entrará em contato com a melhor proposta.<br><br>
                         Se preferir um atendimento mais rápido, fale direto pelo WhatsApp:<br>
                         <a href="https://wa.me/5519996210190?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento." target="_blank" style="display: inline-flex; align-items: center; gap: 10px; background: #25D366; color: white; padding: 12px 25px; border-radius: 30px; font-weight: 700; text-decoration: none; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); transition: 0.3s; margin-top: 15px;">
-                            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12.031 0C5.392 0 0 5.392 0 12.031c0 2.115.55 4.175 1.594 5.99L.04 24l6.115-1.562a11.96 11.96 0 005.876 1.528h.005c6.638 0 12.031-5.392 12.031-12.031S18.669 0 12.031 0zm0 21.962h-.004a9.92 9.92 0 01-5.068-1.385l-.364-.216-3.766.96.985-3.674-.237-.378a9.932 9.932 0 01-1.517-5.238c0-5.485 4.468-9.953 9.958-9.953s9.952 4.468 9.952 9.953-4.467 9.953-9.952 9.953zm5.458-7.442c-.299-.15-1.77-.875-2.044-.976-.275-.099-.475-.15-.675.15-.2.3-.775.975-.95 1.175-.175.2-.35.225-.65.075-1.25-.625-2.225-1.125-3.075-2.4-.225-.325.25-.3.675-1.15.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.25-.6-.5-.525-.675-.525h-.575c-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5s1.075 2.9 1.225 3.1c.15.2 2.1 3.225 5.1 4.525.725.3 1.275.475 1.725.625.725.225 1.375.2 1.9.125.575-.075 1.77-.725 2.025-1.425.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z"/></svg>
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12.031 0C5.392 0 0 5.392 0 12.031c0 2.115.55 4.175 1.594 5.99L.04 24l6.115-1.562a11.96 11.96 0 005.876 1.528h.005c6.638 0 12.031-5.392 12.031-12.031S18.669 0 12.031 0zm0 21.962h-.004a9.92 9.92 0 01-5.068-1.385l-.364-.216-3.766.96-.985-3.674-.237-.378a9.932 9.932 0 01-1.517-5.238c0-5.485 4.468-9.953 9.958-9.953s9.952 4.468 9.952 9.953-4.467 9.953-9.952 9.953zm5.458-7.442c-.299-.15-1.77-.875-2.044-.976-.275-.099-.475-.15-.675.15-.2.3-.775.975-.95 1.175-.175.2-.35.225-.65.075-1.25-.625-2.225-1.125-3.075-2.4-.225-.325.25-.3.675-1.15.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.25-.6-.5-.525-.675-.525h-.575c-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5s1.075 2.9 1.225 3.1c.15.2 2.1 3.225 5.1 4.525.725.3 1.275.475 1.725.625.725.225 1.375.2 1.9.125.575-.075 1.77-.725 2.025-1.425.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z"/></svg>
                             (19) 99621-0190
                         </a>
                     </p>
@@ -644,6 +704,18 @@ html.large-text { font-size: 115% !important; }
             </div>
         </div> 
 
+        <div id="page-vagas" class="page-view">
+            <div class="isolated-page" id="bg-vagas">
+                <div class="isolated-card fade-in" style="max-width: 1000px;">
+                    <h2><i class="material-icons icon-title">work</i> Vagas em Destaque</h2>
+                    <p style="color: #64748b; margin-bottom: 30px; font-size: 1.15rem; font-weight: 500;">Venha fazer parte do Grupo Soul! Confira nossas oportunidades em aberto na sua região.</p>
+                    
+                    <div id="lista-vagas-site" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; text-align: left;">
+                        <p style="text-align: center; width: 100%; color: #94a3b8;"><i class="material-icons" style="animation: spin 2s linear infinite;">sync</i> Carregando vagas...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="page-trabalhe" class="page-view">
             <div class="isolated-page" id="bg-trabalhe">
                 <div class="isolated-card fade-in">
@@ -800,40 +872,32 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
         // --- SISTEMA DE ROTEAMENTO (NAVEGAÇÃO POR LINK DIRETO / ABAS) ---
         function handleRoute() {
-            // Pega o caminho da URL (ex: #/trabalhe). Se não tiver, o padrão é #/
             const hash = window.location.hash || '#/'; 
             
-            // 👇 CÓDIGO DO GOOGLE ANALYTICS PARA RASTREAR AS ABAS 👇
             if (typeof gtag === 'function') {
                 gtag('event', 'page_view', {
                     page_path: hash, 
                     page_location: window.location.href
                 });
             }
-            // 👆 FIM DO CÓDIGO DO ANALYTICS 👆
 
-            // 1. Esconde todas as páginas e remove a classe ativa
             document.querySelectorAll('.page-view').forEach(page => {
                 page.classList.remove('active-page');
             });
 
-            // 2. Fecha o menu mobile se estiver aberto
             const navMenu = document.getElementById('nav-menu');
             if (navMenu && navMenu.classList.contains('active')) {
                 navMenu.classList.remove('active');
                 document.getElementById('mobile-menu-btn').textContent = 'menu';
             }
 
-            // 3. Destaca o link atual no menu de navegação (O EFEITO AZUL)
             document.querySelectorAll('.nav-links a').forEach(link => {
                 link.classList.remove('active-link');
-                // Se o href do link for igual ao hash da URL, ele ganha a marcação
                 if (link.getAttribute('href') === hash) {
                     link.classList.add('active-link');
                 }
             });
 
-            // 4. Verifica qual página deve ser exibida baseada no link
             if (hash === '#/trabalhe') {
                 document.getElementById('page-trabalhe').classList.add('active-page');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -841,20 +905,23 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
             } else if (hash === '#/orcamento') {
                 document.getElementById('page-orcamento').classList.add('active-page');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // 👇 ROTA DA NOVA PÁGINA DE VAGAS 👇
+            } else if (hash === '#/vagas') {
+                document.getElementById('page-vagas').classList.add('active-page');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 
             } else {
-                // Se for Home, Quem Somos ou Serviços, a página principal deve estar ativa
                 document.getElementById('page-home').classList.add('active-page');
                 
-                // Aguarda um pequeno instante para a página renderizar e faz a rolagem até a seção
                 setTimeout(() => {
-                    let sectionId = 'home'; // Padrão
+                    let sectionId = 'home'; 
                     if (hash === '#/quem-somos') sectionId = 'quem-somos';
                     if (hash === '#/servicos') sectionId = 'servicos';
                     
                     const section = document.getElementById(sectionId);
                     if (section) {
-                        const offset = 90; // Compensa a altura do menu fixo
+                        const offset = 90; 
                         const elementPosition = section.getBoundingClientRect().top;
                         const offsetPosition = elementPosition + window.pageYOffset - offset;
                         window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
@@ -865,7 +932,6 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
             }
         }
 
-        // Escuta quando o usuário clica no botão Voltar/Avançar do navegador ou clica num link do menu
         window.addEventListener('hashchange', handleRoute);
         
         function criarEfeitoFlutuante(containerId, iconesArray) {
@@ -891,36 +957,112 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
         // --- FUNÇÕES DE ACESSIBILIDADE ---
         function toggleContrast() {
             document.body.classList.toggle('high-contrast');
-            // Salva a preferência do usuário no navegador
             localStorage.setItem('soul_high_contrast', document.body.classList.contains('high-contrast'));
         }
 
         function toggleFontSize() {
             document.documentElement.classList.toggle('large-text');
-            // Salva a preferência do usuário no navegador
             localStorage.setItem('soul_large_text', document.documentElement.classList.contains('large-text'));
         }
 
-        // --- FUNÇÃO DE ACEITAR COOKIES ---
         function acceptCookies() {
             localStorage.setItem('soul_cookies_accepted', 'true');
             document.getElementById('cookieBanner').classList.remove('show');
         }
 
+        // 👇 NOVA FUNÇÃO: BUSCAR VAGAS DO SUPABASE 👇
+        async function carregarVagasSite() {
+            const container = document.getElementById('lista-vagas-site');
+            if(!container) return;
+
+            try {
+                // A chave pública do site só consegue dar SELECT graças ao RLS do Supabase
+                const { data, error } = await supabaseClient.from('vagas_site').select('*').eq('ativa', true).order('criado_em', { ascending: false });
+
+                if (error) throw error;
+
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; width: 100%; color: #64748b;">No momento não temos vagas abertas publicadas, mas envie seu currículo pelo menu "Trabalhe Conosco"!</p>';
+                    return;
+                }
+
+                let html = '';
+                data.forEach(vaga => {
+                    html += `
+                        <div class="vaga-card">
+                            <div>
+                                <h3 class="vaga-title">${vaga.titulo}</h3>
+                                <div class="vaga-meta">
+                                    <span class="vaga-meta-tag"><i class="material-icons" style="font-size: 16px;">location_on</i> ${vaga.cidade}</span>
+                                    <span class="vaga-meta-tag"><i class="material-icons" style="font-size: 16px;">business</i> ${vaga.unidade}</span>
+                                </div>
+                                <div class="vaga-desc">${vaga.descricao || 'Detalhes da vaga na entrevista.'}</div>
+                            </div>
+                            <div class="btn-me-interesso" onclick="selecionarVaga('${vaga.titulo}')">Me Interesso</div>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = html;
+
+            } catch (err) {
+                console.error("Erro ao buscar vagas:", err);
+                container.innerHTML = '<p style="text-align: center; width: 100%; color: var(--error-red);">Erro ao carregar as vagas. Tente novamente mais tarde.</p>';
+            }
+        }
+
+        // 👇 AÇÃO AO CLICAR EM "ME INTERESSO" 👇
+        window.selecionarVaga = function(tituloVaga) {
+            // Muda a rota pro Trabalhe Conosco
+            window.location.hash = '#/trabalhe';
+            
+            // Dá um tempinho pro formulário renderizar na tela
+            setTimeout(() => {
+                // 1. Limpa qualquer check que já estivesse lá
+                document.querySelectorAll('input[name="cand-vaga"]').forEach(cb => cb.checked = false);
+                
+                // 2. Procura se a vaga é padrão do formulário
+                const checkboxExato = document.querySelector(`input[name="cand-vaga"][value="${tituloVaga}"]`);
+                
+                if (checkboxExato) {
+                    // Achou! Só marca.
+                    checkboxExato.checked = true;
+                } else {
+                    // Não achou? Então a vaga é Diferente/Customizada pelo RH
+                    const chkOutros = document.getElementById('chk-cand-outros');
+                    if (chkOutros) {
+                        chkOutros.checked = true;
+                        // Dispara o evento pra caixa de texto abrir
+                        chkOutros.dispatchEvent(new Event('change'));
+                        
+                        const inputOutro = document.getElementById('cand-vaga-outra');
+                        if (inputOutro) {
+                            inputOutro.value = tituloVaga;
+                            // Dá um highlight visual pro cara ver que preencheu sozinho
+                            inputOutro.style.borderColor = "var(--success-green)";
+                            setTimeout(() => { inputOutro.style.borderColor = ""; }, 2000);
+                        }
+                    }
+                }
+                showToast(`Vaga selecionada: ${tituloVaga}`, "success");
+            }, 300);
+        };
+
+
         document.addEventListener('DOMContentLoaded', () => {
 
-            // Ativa o roteamento logo que a página carrega!
             handleRoute();
+            
+            // Chama o carregamento das vagas
+            carregarVagasSite();
 
-            // Restaura configurações de acessibilidade salvas
             if (localStorage.getItem('soul_high_contrast') === 'true') document.body.classList.add('high-contrast');
             if (localStorage.getItem('soul_large_text') === 'true') document.documentElement.classList.add('large-text');
 
-            // Mostra o banner de cookies apenas se o usuário ainda não tiver aceito
             if (!localStorage.getItem('soul_cookies_accepted')) {
                 setTimeout(() => {
                     document.getElementById('cookieBanner').classList.add('show');
-                }, 1500); // Aparece após 1.5 segundos suavemente
+                }, 1500); 
             }
             
             // --- MENU SANDUÍCHE ---
@@ -1013,6 +1155,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
             criarEfeitoFlutuante('servicos', ['security', 'cleaning_services', 'shield', 'vpn_key', 'build', 'apartment', 'health_and_safety', 'recycling', 'park', 'inventory_2', 'medical_services', 'biotech', 'science', 'supervisor_account', 'manage_accounts', 'account_balance_wallet']);
             criarEfeitoFlutuante('bg-orcamento', ['request_quote', 'attach_money', 'calculate', 'business_center', 'assignment', 'mail', 'chat', 'receipt_long']);
             criarEfeitoFlutuante('bg-trabalhe', ['badge', 'work', 'assignment_ind', 'school', 'description', 'person_add', 'groups', 'engineering']);
+            criarEfeitoFlutuante('bg-vagas', ['work_outline', 'rocket_launch', 'handshake', 'military_tech', 'emoji_events', 'groups', 'corporate_fare']);
 
             // --- CARROSSEL DE SERVIÇOS ---
             const servicosTrack = document.getElementById('servicos-track');
