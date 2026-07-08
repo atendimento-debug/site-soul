@@ -561,6 +561,53 @@
             color: #4FA8FF !important;
         }
 
+        /* --- LIGHTBOX (ZOOM NA IMAGEM) --- */
+        .lightbox-overlay {
+            display: none;
+            position: fixed;
+            z-index: 100000;
+            padding-top: 60px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 20, 45, 0.95);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        .lightbox-img {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            object-fit: contain;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .lightbox-close:hover {
+            color: var(--accent-blue);
+            transform: scale(1.1);
+        }
+        @media only screen and (max-width: 700px){
+            .lightbox-img { max-width: 95%; max-height: 80vh; }
+            .lightbox-close { right: 20px; top: 10px; }
+        }
+
     </style>
 </head>
 <body>
@@ -864,6 +911,11 @@
         <p class="developer-credit">Desenvolvido por <a href="https://goscripts.com.br/" target="_blank">GoScripts</a></p>
     </footer>
 
+    <div id="lightbox-modal" class="lightbox-overlay" onclick="fecharLightbox(event)">
+        <span class="lightbox-close" onclick="fecharLightbox(event, true)">&times;</span>
+        <img class="lightbox-img" id="lightbox-img-src">
+    </div>
+
     <script>
        // ========================================================
 // INICIALIZAÇÃO DO SUPABASE
@@ -1025,7 +1077,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
                     
                     html += `
                         <div class="vaga-card">
-                            <img src="${imgUrl}" alt="${vaga.titulo}" class="vaga-imagem-capa" loading="lazy">
+                            <img src="${imgUrl}" alt="${vaga.titulo}" class="vaga-imagem-capa" loading="lazy" onclick="abrirLightbox('${imgUrl}')" style="cursor: zoom-in;" title="Clique para ampliar">
                             
                             <div class="vaga-conteudo">
                                 <div>
@@ -1457,6 +1509,22 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
                     }
                 });
             }
+
+            // --- SISTEMA DE ZOOM NA IMAGEM DA VAGA ---
+        function abrirLightbox(imgSrc) {
+            const modal = document.getElementById('lightbox-modal');
+            const img = document.getElementById('lightbox-img-src');
+            img.src = imgSrc; // Coloca a foto da vaga no modal
+            modal.classList.add('active'); // Mostra a tela escura
+        }
+
+        function fecharLightbox(event, force = false) {
+            // Só fecha se ele clicar no "X" ou no fundo escuro (fora da imagem)
+            if (force || event.target.id === 'lightbox-modal') {
+                document.getElementById('lightbox-modal').classList.remove('active');
+                document.getElementById('lightbox-img-src').src = '';
+            }
+        }
 
             // ========================================================
             // MÁSCARA DE TELEFONE E VALIDAÇÕES
