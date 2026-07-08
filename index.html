@@ -270,8 +270,8 @@
         
         .vaga-imagem-capa {
             width: 100%;
-            height: 180px; /* Altura fixa para ficar harmônico */
-            object-fit: cover; /* Garante que a imagem preencha sem distorcer */
+            height: 250px; /* 👈 MÁGICA AQUI: Aumentamos a altura da imagem! (Pode mudar para 280px, 300px se quiser maior) */
+            object-fit: cover; /* Garante que a imagem preencha o espaço sem distorcer ou esticar */
             border-bottom: 3px solid var(--accent-blue);
         }
 
@@ -547,6 +547,18 @@
 
         .valores-list li:hover {
             background-color: #f8fafc; 
+        }
+
+        /* Ajuste para as tags de Cidade e Unidade da Vaga no Modo Escuro */
+        body.high-contrast .vaga-meta-tag {
+            background-color: #2a2a2a !important;
+            color: #ffffff !important;
+            border: 1px solid #444 !important;
+        }
+        
+        /* Deixa os ícones (pin de mapa e prédio) azulzinhos no modo escuro */
+        body.high-contrast .vaga-meta-tag i.material-icons {
+            color: #4FA8FF !important;
         }
 
     </style>
