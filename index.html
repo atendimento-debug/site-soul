@@ -120,6 +120,24 @@
             .social-buttons { flex-direction: column; width: 100%; }
             .social-btn { width: 100%; justify-content: center; }
             .checkbox-grid { grid-template-columns: 1fr; } 
+
+            /* 👇 AJUSTES PARA DEIXAR O CARD DE VAGA PERFEITO NO CELULAR 👇 */
+            #lista-vagas-site {
+                grid-template-columns: 1fr !important; /* Força a ter exatamente 1 coluna do tamanho da tela */
+                width: 100%;
+            }
+            .vaga-card {
+                width: 100%;
+            }
+            .vaga-imagem-capa {
+                height: 180px !important; /* Imagem um pouco menor no celular para o texto aparecer logo de cara */
+            }
+            .vaga-conteudo {
+                padding: 20px 15px !important; /* Margens internas menores para aproveitar melhor o espaço do celular */
+            }
+            .vaga-title {
+                font-size: 1.15rem !important; /* Título sutilmente ajustado */
+            }
         }
 
         /* --- Sistema de Abas --- */
