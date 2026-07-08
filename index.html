@@ -248,24 +248,40 @@
         .file-upload-custom.file-selected { border-style: solid; border-color: var(--success-green); background-color: #ecfdf5; color: var(--success-green); }
         .file-upload-custom.file-selected i { color: var(--success-green); transform: none; }
 
-        /* --- VAGAS ABERTAS STYLES --- */
+        /* --- VAGAS ABERTAS STYLES ATUALIZADO --- */
         .vaga-card {
-            background: #fff;
+            background: var(--white);
             border: 1px solid #e2e8f0;
             border-radius: 16px;
-            padding: 25px;
+            /* Tiramos o padding principal para a imagem poder colar nas bordas */
+            padding: 0; 
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-            border-left: 4px solid var(--accent-blue);
+            overflow: hidden; /* Arredonda as bordas da imagem junto com o card */
         }
         .vaga-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 30px rgba(10, 61, 115, 0.1);
             border-color: var(--accent-blue);
         }
+        
+        .vaga-imagem-capa {
+            width: 100%;
+            height: 180px; /* Altura fixa para ficar harmônico */
+            object-fit: cover; /* Garante que a imagem preencha sem distorcer */
+            border-bottom: 3px solid var(--accent-blue);
+        }
+
+        .vaga-conteudo {
+            padding: 25px; /* Devolvemos o padding só pra parte de texto */
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
         .vaga-title {
             color: var(--primary-blue);
             font-size: 1.25rem;
@@ -281,7 +297,7 @@
         .vaga-meta-tag {
             background: #f1f5f9;
             color: #475569;
-            padding: 4px 10px;
+            padding: 6px 12px;
             border-radius: 6px;
             font-size: 0.8rem;
             font-weight: 600;
@@ -292,27 +308,31 @@
         .vaga-desc {
             color: #64748b;
             font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 20px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            white-space: pre-wrap; /* Mantém as quebras de linha digitadas pelo RH */
+            /* Limita o texto para os cards não ficarem de tamanhos bizarros */
             display: -webkit-box;
-            -webkit-line-clamp: 3;
+            -webkit-line-clamp: 4;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            flex: 1; 
         }
         .btn-me-interesso {
             background: rgba(79, 168, 255, 0.1);
             color: var(--accent-blue);
             border: 1px solid var(--accent-blue);
-            padding: 10px;
+            padding: 12px;
             border-radius: 8px;
             text-align: center;
             font-weight: 700;
             cursor: pointer;
             transition: 0.3s;
+            margin-top: auto; /* Empurra o botão pro final */
         }
         .btn-me-interesso:hover {
             background: var(--accent-blue);
-            color: #fff;
+            color: var(--white);
         }
 
         /* --- RODAPÉ (FOOTER) PROFISSIONAL --- */
@@ -988,17 +1008,24 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
                 let html = '';
                 data.forEach(vaga => {
+                    // Se não tiver imagem, usa um fallback cinza para não quebrar o layout
+                    const imgUrl = vaga.imagem_url || 'https://via.placeholder.com/600x300/f1f5f9/94a3b8?text=Vaga+em+Aberto';
+                    
                     html += `
                         <div class="vaga-card">
-                            <div>
-                                <h3 class="vaga-title">${vaga.titulo}</h3>
-                                <div class="vaga-meta">
-                                    <span class="vaga-meta-tag"><i class="material-icons" style="font-size: 16px;">location_on</i> ${vaga.cidade}</span>
-                                    <span class="vaga-meta-tag"><i class="material-icons" style="font-size: 16px;">business</i> ${vaga.unidade}</span>
+                            <img src="${imgUrl}" alt="${vaga.titulo}" class="vaga-imagem-capa" loading="lazy">
+                            
+                            <div class="vaga-conteudo">
+                                <div>
+                                    <h3 class="vaga-title">${vaga.titulo}</h3>
+                                    <div class="vaga-meta">
+                                        <span class="vaga-meta-tag"><i class="material-icons" style="font-size: 16px;">location_on</i> ${vaga.cidade}</span>
+                                        <span class="vaga-meta-tag"><i class="material-icons" style="font-size: 16px;">business</i> ${vaga.unidade}</span>
+                                    </div>
+                                    <div class="vaga-desc">${vaga.descricao || 'Detalhes da vaga na entrevista.'}</div>
                                 </div>
-                                <div class="vaga-desc">${vaga.descricao || 'Detalhes da vaga na entrevista.'}</div>
+                                <div class="btn-me-interesso" onclick="selecionarVaga('${vaga.titulo}')">Me Interesso</div>
                             </div>
-                            <div class="btn-me-interesso" onclick="selecionarVaga('${vaga.titulo}')">Me Interesso</div>
                         </div>
                     `;
                 });
