@@ -310,13 +310,26 @@
             font-size: 0.95rem;
             line-height: 1.6;
             margin-bottom: 25px;
-            white-space: pre-wrap; /* Mantém as quebras de linha digitadas pelo RH */
-            /* Limita o texto para os cards não ficarem de tamanhos bizarros */
-            display: -webkit-box;
-            -webkit-line-clamp: 4;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            white-space: pre-wrap; /* Mantém as quebras de linha */
+            
+            /* 👇 MÁGICA DO SCROLL AQUI 👇 */
+            max-height: 150px; /* Define a altura máxima do texto */
+            overflow-y: auto;  /* Ativa a barra de rolagem vertical se passar do limite */
+            padding-right: 10px; /* Dá um espacinho para a barra não colar nas letras */
             flex: 1; 
+        }
+
+        /* 👇 Estilizando a barrinha de rolagem só para a descrição ficar delicada 👇 */
+        .vaga-desc::-webkit-scrollbar {
+            width: 6px;
+        }
+        .vaga-desc::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+        .vaga-desc::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 8px;
         }
         .btn-me-interesso {
             background: rgba(79, 168, 255, 0.1);
@@ -1510,21 +1523,21 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
                 });
             }
 
-            // --- SISTEMA DE ZOOM NA IMAGEM DA VAGA ---
-        function abrirLightbox(imgSrc) {
+           // --- SISTEMA DE ZOOM NA IMAGEM DA VAGA (CORRIGIDO) ---
+        window.abrirLightbox = function(imgSrc) {
             const modal = document.getElementById('lightbox-modal');
             const img = document.getElementById('lightbox-img-src');
             img.src = imgSrc; // Coloca a foto da vaga no modal
             modal.classList.add('active'); // Mostra a tela escura
-        }
+        };
 
-        function fecharLightbox(event, force = false) {
+        window.fecharLightbox = function(event, force = false) {
             // Só fecha se ele clicar no "X" ou no fundo escuro (fora da imagem)
             if (force || event.target.id === 'lightbox-modal') {
                 document.getElementById('lightbox-modal').classList.remove('active');
                 document.getElementById('lightbox-img-src').src = '';
             }
-        }
+        };
 
             // ========================================================
             // MÁSCARA DE TELEFONE E VALIDAÇÕES
