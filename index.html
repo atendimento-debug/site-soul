@@ -1085,7 +1085,6 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
                 let html = '';
                 data.forEach(vaga => {
-                    // Se não tiver imagem, usa um fallback cinza para não quebrar o layout
                     const imgUrl = vaga.imagem_url || 'https://via.placeholder.com/600x300/f1f5f9/94a3b8?text=Vaga+em+Aberto';
                     
                     html += `
@@ -1095,10 +1094,12 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
                             <div class="vaga-conteudo">
                                 <div>
                                     <h3 class="vaga-title">${vaga.titulo}</h3>
+                                    
+                                    <!-- 👇 MÁGICA AQUI: Deixamos apenas a Cidade visível para o candidato! -->
                                     <div class="vaga-meta">
                                         <span class="vaga-meta-tag"><i class="material-icons" style="font-size: 16px;">location_on</i> ${vaga.cidade}</span>
-                                        <span class="vaga-meta-tag"><i class="material-icons" style="font-size: 16px;">business</i> ${vaga.unidade}</span>
                                     </div>
+                                    
                                     <div class="vaga-desc">${vaga.descricao || 'Detalhes da vaga na entrevista.'}</div>
                                 </div>
                                 <div class="btn-me-interesso" onclick="selecionarVaga('${vaga.titulo}')">Me Interesso</div>
@@ -1108,7 +1109,6 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
                 });
 
                 container.innerHTML = html;
-
             } catch (err) {
                 console.error("Erro ao buscar vagas:", err);
                 container.innerHTML = '<p style="text-align: center; width: 100%; color: var(--error-red);">Erro ao carregar as vagas. Tente novamente mais tarde.</p>';
