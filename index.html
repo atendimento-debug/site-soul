@@ -121,23 +121,8 @@
             .social-btn { width: 100%; justify-content: center; }
             .checkbox-grid { grid-template-columns: 1fr; } 
 
-            /* 👇 AJUSTES PARA DEIXAR O CARD DE VAGA PERFEITO NO CELULAR 👇 */
-            #lista-vagas-site {
-                grid-template-columns: 1fr !important; /* Força a ter exatamente 1 coluna do tamanho da tela */
-                width: 100%;
-            }
-            .vaga-card {
-                width: 100%;
-            }
-            .vaga-imagem-capa {
-                height: 180px !important; /* Imagem um pouco menor no celular para o texto aparecer logo de cara */
-            }
-            .vaga-conteudo {
-                padding: 20px 15px !important; /* Margens internas menores para aproveitar melhor o espaço do celular */
-            }
-            .vaga-title {
-                font-size: 1.15rem !important; /* Título sutilmente ajustado */
-            }
+            #lista-vagas-site { grid-template-columns: 1fr !important; width: 100%; }
+            .vaga-card { width: 100%; }
         }
 
         /* --- Sistema de Abas --- */
@@ -225,7 +210,6 @@
         }
         
         .linha-estado-cidade { display: flex; gap: 20px; width: 100%; }
-        @media (max-width: 768px) { .linha-estado-cidade { flex-direction: column; gap: 20px; } }
         
         /* --- Checkboxes Style (Chips Modernos) --- */
         .checkbox-container { width: 100%; padding: 25px; border: 2px solid #e2e8f0; border-radius: 16px; background-color: #f8fafc; text-align: left; }
@@ -266,35 +250,43 @@
         .file-upload-custom.file-selected { border-style: solid; border-color: var(--success-green); background-color: #ecfdf5; color: var(--success-green); }
         .file-upload-custom.file-selected i { color: var(--success-green); transform: none; }
 
-        /* --- VAGAS ABERTAS STYLES ATUALIZADO --- */
+        /* --- VAGAS ABERTAS STYLES (NOVO DESIGN SEM IMAGEM) --- */
         .vaga-card {
             background: var(--white);
             border: 1px solid #e2e8f0;
+            border-top: 5px solid var(--accent-blue);
             border-radius: 16px;
-            /* Tiramos o padding principal para a imagem poder colar nas bordas */
-            padding: 0; 
+            padding: 30px; 
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-            overflow: hidden; /* Arredonda as bordas da imagem junto com o card */
+            position: relative;
+            overflow: hidden;
+            min-height: 250px;
+        }
+        .vaga-card::before {
+            content: '\e8f9'; /* Ícone de mala/trabalho no Material Icons */
+            font-family: 'Material Icons';
+            position: absolute;
+            top: -20px;
+            right: -10px;
+            font-size: 8rem;
+            color: rgba(79, 168, 255, 0.05); /* Azul clarinho translúcido */
+            z-index: 0;
+            pointer-events: none;
+            transform: rotate(-10deg);
         }
         .vaga-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 30px rgba(10, 61, 115, 0.1);
-            border-color: var(--accent-blue);
+            border-color: var(--primary-blue);
         }
         
-        .vaga-imagem-capa {
-            width: 100%;
-            height: 250px; /* 👈 MÁGICA AQUI: Aumentamos a altura da imagem! (Pode mudar para 280px, 300px se quiser maior) */
-            object-fit: cover; /* Garante que a imagem preencha o espaço sem distorcer ou esticar */
-            border-bottom: 3px solid var(--accent-blue);
-        }
-
         .vaga-conteudo {
-            padding: 25px; /* Devolvemos o padding só pra parte de texto */
+            position: relative;
+            z-index: 1; /* Fica acima do ícone de fundo */
             display: flex;
             flex-direction: column;
             flex: 1;
@@ -302,9 +294,9 @@
 
         .vaga-title {
             color: var(--primary-blue);
-            font-size: 1.25rem;
+            font-size: 1.4rem;
             font-weight: 800;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
         .vaga-meta {
             display: flex;
@@ -328,27 +320,16 @@
             font-size: 0.95rem;
             line-height: 1.6;
             margin-bottom: 25px;
-            white-space: pre-wrap; /* Mantém as quebras de linha */
-            
-            /* 👇 MÁGICA DO SCROLL AQUI 👇 */
-            max-height: 150px; /* Define a altura máxima do texto */
-            overflow-y: auto;  /* Ativa a barra de rolagem vertical se passar do limite */
-            padding-right: 10px; /* Dá um espacinho para a barra não colar nas letras */
+            white-space: pre-wrap; 
+            max-height: 150px; 
+            overflow-y: auto;  
+            padding-right: 10px; 
             flex: 1; 
         }
+        .vaga-desc::-webkit-scrollbar { width: 6px; }
+        .vaga-desc::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 8px; }
+        .vaga-desc::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 8px; }
 
-        /* 👇 Estilizando a barrinha de rolagem só para a descrição ficar delicada 👇 */
-        .vaga-desc::-webkit-scrollbar {
-            width: 6px;
-        }
-        .vaga-desc::-webkit-scrollbar-track {
-            background: #f1f5f9;
-            border-radius: 8px;
-        }
-        .vaga-desc::-webkit-scrollbar-thumb {
-            background-color: #cbd5e1;
-            border-radius: 8px;
-        }
         .btn-me-interesso {
             background: rgba(79, 168, 255, 0.1);
             color: var(--accent-blue);
@@ -359,7 +340,9 @@
             font-weight: 700;
             cursor: pointer;
             transition: 0.3s;
-            margin-top: auto; /* Empurra o botão pro final */
+            margin-top: auto; 
+            position: relative;
+            z-index: 1;
         }
         .btn-me-interesso:hover {
             background: var(--accent-blue);
@@ -424,7 +407,7 @@
             margin-top: 0;
         }
         .outra-vaga-wrapper.show {
-            max-height: 100px; /* Suficiente para o input */
+            max-height: 100px;
             opacity: 1;
             margin-top: 15px;
         }
@@ -439,28 +422,22 @@
         body.high-contrast { background-color: #121212 !important; color: #ffffff !important; }
         body.high-contrast header, body.high-contrast footer, body.high-contrast .navbar, body.high-contrast .nav-links { background-color: #000000 !important; color: #ffffff !important; }
         
-        /* Corrige o fundo branco nas páginas e na seção de serviços */
         body.high-contrast #servicos, body.high-contrast .isolated-page, body.high-contrast .checkbox-container { background-color: #121212 !important; border-color: #333 !important; }
         
-        /* Escurece os Cards e Botões */
         body.high-contrast .servico-card, body.high-contrast .mvv-card, body.high-contrast .isolated-card, body.high-contrast .checkbox-label, body.high-contrast .checkbox-label-normal, body.high-contrast .carousel-btn, body.high-contrast .vaga-card { background-color: #1e1e1e !important; color: #ffffff !important; border-color: #444 !important; box-shadow: none !important; }
         body.high-contrast .carousel-btn:hover { background-color: #333 !important; }
         body.high-contrast .btn-me-interesso { background-color: #333 !important; color: #4FA8FF !important; border-color: #4FA8FF !important; }
         body.high-contrast .btn-me-interesso:hover { background-color: #4FA8FF !important; color: #000 !important; }
         
-        /* Força a cor branca em todos os textos */
         body.high-contrast h1, body.high-contrast h2, body.high-contrast h3, body.high-contrast p, body.high-contrast span, body.high-contrast label { color: #ffffff !important; }
         body.high-contrast .hero-overlay { background: rgba(0,0,0,0.8) !important; }
         
-        /* Corrige os Inputs, Selects e Área de Upload */
         body.high-contrast input[type="text"], body.high-contrast input[type="email"], body.high-contrast input[type="tel"], body.high-contrast textarea, body.high-contrast select, body.high-contrast .file-upload-custom { background-color: #2a2a2a !important; color: #ffffff !important; border-color: #555 !important; }
         body.high-contrast input::placeholder, body.high-contrast textarea::placeholder { color: #aaaaaa !important; }
         
-        /* Mantém os ícones visíveis e bonitos no dark mode */
         body.high-contrast i.material-icons, body.high-contrast .file-upload-custom i { color: #4FA8FF !important; }
         body.high-contrast .toast { background-color: #1e1e1e !important; border-color: #444 !important; color: #fff !important; }
 
-        /* Fonte Grande na raiz do site para afetar os "rems" */
         html.large-text { font-size: 115% !important; }
 
         /* --- BANNER DE COOKIES (LGPD) --- */
@@ -476,21 +453,17 @@
             .accessibility-panel { top: 65%; }
         }
 
-        /* --- MENU ATIVO (PÁGINA ATUAL) --- */
         .nav-links a.active-link:not(.btn-solicitar) { color: var(--accent-blue); }
         .nav-links a.active-link:not(.btn-solicitar)::after { width: 100%; }
         
-        /* Se a pessoa estiver na aba de orçamento, o botão principal também fica marcado */
         .nav-links a.btn-solicitar.active-link { 
             background-color: var(--white); 
             color: var(--primary-blue); 
             box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2); 
         }
         
-        /* Corrige a cor do link ativo se o Modo Alto Contraste estiver ligado */
         body.high-contrast .nav-links a.active-link:not(.btn-solicitar) { color: #4FA8FF !important; }
 
-        /* Caixinha do checkbox da LGPD e a janela Modal no modo escuro */
         body.high-contrast .checkbox-label-normal, 
         body.high-contrast .modal-content { 
             background-color: #121212 !important; 
@@ -499,32 +472,15 @@
             box-shadow: none !important; 
         }
 
-        /* Garante que o link "Leia nossa Política..." fique azul claro legível no tema escuro */
         body.high-contrast .checkbox-label-normal a,
         body.high-contrast .modal-content a {
             color: #4FA8FF !important;
         }
 
-        /* Botão de fechar (X) do Modal no modo escuro */
-        body.high-contrast .modal-close-btn {
-            background-color: #2a2a2a !important;
-            color: #ffffff !important;
-        }
-        body.high-contrast .modal-close-btn:hover {
-            background-color: #fee2e2 !important;
-            color: #ef4444 !important;
-        }
+        body.high-contrast .modal-close-btn { background-color: #2a2a2a !important; color: #ffffff !important; }
+        body.high-contrast .modal-close-btn:hover { background-color: #fee2e2 !important; color: #ef4444 !important; }
 
-
-        /* =========================================================
-           HOVERS E SELEÇÕES NO MODO ALTO CONTRASTE (DARK MODE) 
-           ========================================================= */
-        
-        body.high-contrast .checkbox-label:hover {
-            background-color: #2a2a2a !important;
-            border-color: #4FA8FF !important;
-            color: #4FA8FF !important;
-        }
+        body.high-contrast .checkbox-label:hover { background-color: #2a2a2a !important; border-color: #4FA8FF !important; color: #4FA8FF !important; }
         body.high-contrast .checkbox-label:has(input[type="checkbox"]:checked) {
             background-color: #0A3D73 !important;
             border-color: #4FA8FF !important;      
@@ -532,112 +488,24 @@
             box-shadow: 0 4px 15px rgba(79, 168, 255, 0.2) !important;
         }
 
-        body.high-contrast .file-upload-wrapper:hover .file-upload-custom {
-            background-color: #2a2a2a !important;
-            border-color: #4FA8FF !important;
-            color: #4FA8FF !important;
-        }
-        body.high-contrast .file-upload-custom.file-selected {
-            background-color: rgba(16, 185, 129, 0.1) !important; 
-            border-color: #10b981 !important; 
-            color: #10b981 !important;
-        }
-        body.high-contrast .file-upload-custom.file-selected i {
-            color: #10b981 !important;
-        }
+        body.high-contrast .file-upload-wrapper:hover .file-upload-custom { background-color: #2a2a2a !important; border-color: #4FA8FF !important; color: #4FA8FF !important; }
+        body.high-contrast .file-upload-custom.file-selected { background-color: rgba(16, 185, 129, 0.1) !important;  border-color: #10b981 !important;  color: #10b981 !important; }
+        body.high-contrast .file-upload-custom.file-selected i { color: #10b981 !important; }
 
         body.high-contrast .servico-card:hover, 
         body.high-contrast .mvv-card:hover,
-        body.high-contrast .valores-list li:hover {
-            border-color: #4FA8FF !important;
-            background-color: #252525 !important;
-        }
+        body.high-contrast .valores-list li:hover { border-color: #4FA8FF !important; background-color: #252525 !important; }
 
-        body.high-contrast .nav-links a:not(.active-link):not(.btn-solicitar):hover {
-            color: #4FA8FF !important;
-        }
-        body.high-contrast .btn-solicitar:hover {
-            background-color: #ffffff !important;
-            color: #000000 !important;
-        }
-        body.high-contrast .social-btn:hover {
-            background-color: #2a2a2a !important;
-            border-color: #4FA8FF !important;
-            color: #4FA8FF !important;
-        }
-           
-        body.high-contrast .valores-list li { 
-            background-color: #1e1e1e !important; 
-            color: #cbd5e1 !important; 
-            border-color: #444 !important; 
-            box-shadow: none !important; 
-        }
-        body.high-contrast .valores-list li strong {
-            color: #4FA8FF !important; 
-        }
+        body.high-contrast .nav-links a:not(.active-link):not(.btn-solicitar):hover { color: #4FA8FF !important; }
+        body.high-contrast .btn-solicitar:hover { background-color: #ffffff !important; color: #000000 !important; }
+        body.high-contrast .social-btn:hover { background-color: #2a2a2a !important; border-color: #4FA8FF !important; color: #4FA8FF !important; }
+            
+        body.high-contrast .valores-list li { background-color: #1e1e1e !important; color: #cbd5e1 !important; border-color: #444 !important; box-shadow: none !important; }
+        body.high-contrast .valores-list li strong { color: #4FA8FF !important; }
+        .valores-list li:hover { background-color: #f8fafc; }
 
-        .valores-list li:hover {
-            background-color: #f8fafc; 
-        }
-
-        /* Ajuste para as tags de Cidade e Unidade da Vaga no Modo Escuro */
-        body.high-contrast .vaga-meta-tag {
-            background-color: #2a2a2a !important;
-            color: #ffffff !important;
-            border: 1px solid #444 !important;
-        }
-        
-        /* Deixa os ícones (pin de mapa e prédio) azulzinhos no modo escuro */
-        body.high-contrast .vaga-meta-tag i.material-icons {
-            color: #4FA8FF !important;
-        }
-
-        /* --- LIGHTBOX (ZOOM NA IMAGEM) --- */
-        .lightbox-overlay {
-            display: none;
-            position: fixed;
-            z-index: 100000;
-            padding-top: 60px;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 20, 45, 0.95);
-            backdrop-filter: blur(5px);
-            align-items: center;
-            justify-content: center;
-        }
-        .lightbox-overlay.active {
-            display: flex;
-            animation: fadeIn 0.3s ease;
-        }
-        .lightbox-img {
-            margin: auto;
-            display: block;
-            max-width: 90%;
-            max-height: 85vh;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-            object-fit: contain;
-        }
-        .lightbox-close {
-            position: absolute;
-            top: 20px;
-            right: 35px;
-            color: #f1f1f1;
-            font-size: 40px;
-            font-weight: bold;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-        .lightbox-close:hover {
-            color: var(--accent-blue);
-            transform: scale(1.1);
-        }
-        @media only screen and (max-width: 700px){
-            .lightbox-img { max-width: 95%; max-height: 80vh; }
-            .lightbox-close { right: 20px; top: 10px; }
-        }
+        body.high-contrast .vaga-meta-tag { background-color: #2a2a2a !important; color: #ffffff !important; border: 1px solid #444 !important; }
+        body.high-contrast .vaga-meta-tag i.material-icons { color: #4FA8FF !important; }
 
     </style>
 </head>
@@ -942,11 +810,6 @@
         <p class="developer-credit">Desenvolvido por <a href="https://goscripts.com.br/" target="_blank">GoScripts</a></p>
     </footer>
 
-    <div id="lightbox-modal" class="lightbox-overlay" onclick="fecharLightbox(event)">
-        <span class="lightbox-close" onclick="fecharLightbox(event, true)">&times;</span>
-        <img class="lightbox-img" id="lightbox-img-src">
-    </div>
-
     <script>
        // ========================================================
 // INICIALIZAÇÃO DO SUPABASE
@@ -1085,7 +948,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
             document.getElementById('cookieBanner').classList.remove('show');
         }
 
-        // 👇 NOVA FUNÇÃO: BUSCAR VAGAS DO SUPABASE 👇
+        // 👇 NOVA FUNÇÃO: BUSCAR VAGAS DO SUPABASE (ATUALIZADA SEM IMAGEM) 👇
         async function carregarVagasSite() {
             const container = document.getElementById('lista-vagas-site');
             if(!container) return;
@@ -1103,17 +966,12 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
                 let html = '';
                 data.forEach(vaga => {
-                    const imgUrl = vaga.imagem_url || 'https://via.placeholder.com/600x300/f1f5f9/94a3b8?text=Vaga+em+Aberto';
-                    
                     html += `
                         <div class="vaga-card">
-                            <img src="${imgUrl}" alt="${vaga.titulo}" class="vaga-imagem-capa" loading="lazy" onclick="abrirLightbox('${imgUrl}')" style="cursor: zoom-in;" title="Clique para ampliar">
-                            
                             <div class="vaga-conteudo">
                                 <div>
                                     <h3 class="vaga-title">${vaga.titulo}</h3>
                                     
-                                    <!-- 👇 MÁGICA AQUI: Deixamos apenas a Cidade visível para o candidato! -->
                                     <div class="vaga-meta">
                                         <span class="vaga-meta-tag"><i class="material-icons" style="font-size: 16px;">location_on</i> ${vaga.cidade}</span>
                                     </div>
@@ -1540,22 +1398,6 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
                     }
                 });
             }
-
-           // --- SISTEMA DE ZOOM NA IMAGEM DA VAGA (CORRIGIDO) ---
-        window.abrirLightbox = function(imgSrc) {
-            const modal = document.getElementById('lightbox-modal');
-            const img = document.getElementById('lightbox-img-src');
-            img.src = imgSrc; // Coloca a foto da vaga no modal
-            modal.classList.add('active'); // Mostra a tela escura
-        };
-
-        window.fecharLightbox = function(event, force = false) {
-            // Só fecha se ele clicar no "X" ou no fundo escuro (fora da imagem)
-            if (force || event.target.id === 'lightbox-modal') {
-                document.getElementById('lightbox-modal').classList.remove('active');
-                document.getElementById('lightbox-img-src').src = '';
-            }
-        };
 
             // ========================================================
             // MÁSCARA DE TELEFONE E VALIDAÇÕES
