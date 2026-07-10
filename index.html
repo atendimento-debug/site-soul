@@ -955,7 +955,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
             try {
                 // A chave pública do site só consegue dar SELECT graças ao RLS do Supabase
-                const { data, error } = await supabaseClient.from('vagas_site').select('*').eq('ativa', true).order('criado_em', { ascending: false });
+                const { data, error } = await supabaseClient.from('vagas_site').select('*').eq('ativa', true).order('created_at', { ascending: false });
 
                 if (error) throw error;
 
