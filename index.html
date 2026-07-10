@@ -948,48 +948,51 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
             document.getElementById('cookieBanner').classList.remove('show');
         }
 
-        // 👇 NOVA FUNÇÃO: BUSCAR VAGAS DO SUPABASE (ATUALIZADA SEM IMAGEM) 👇
-        async function carregarVagasSite() {
-            const container = document.getElementById('lista-vagas-site');
-            if(!container) return;
+       // 👇 FUNÇÃO: BUSCAR VAGAS DO SUPABASE (ATUALIZADA E BLINDADA) 👇
+async function carregarVagasSite() {
+    const container = document.getElementById('lista-vagas-site');
+    if(!container) return;
 
-            try {
-                // A chave pública do site só consegue dar SELECT graças ao RLS do Supabase
-                const { data, error } = await supabaseClient.from('vagas_site').select('*').eq('ativa', true).order('created_at', { ascending: false });
+    try {
+        // 👇 Removemos o .order() para o banco não dar erro da coluna inexistente
+        const { data, error } = await supabaseClient.from('vagas_site').select('*').eq('ativa', true);
 
-                if (error) throw error;
+        if (error) throw error;
 
-                if (!data || data.length === 0) {
-                    container.innerHTML = '<p style="text-align: center; width: 100%; color: #64748b;">No momento não temos vagas abertas publicadas, mas envie seu currículo pelo menu "Trabalhe Conosco"!</p>';
-                    return;
-                }
-
-                let html = '';
-                data.forEach(vaga => {
-                    html += `
-                        <div class="vaga-card">
-                            <div class="vaga-conteudo">
-                                <div>
-                                    <h3 class="vaga-title">${vaga.titulo}</h3>
-                                    
-                                    <div class="vaga-meta">
-                                        <span class="vaga-meta-tag"><i class="material-icons" style="font-size: 16px;">location_on</i> ${vaga.cidade}</span>
-                                    </div>
-                                    
-                                    <div class="vaga-desc">${vaga.descricao || 'Detalhes da vaga na entrevista.'}</div>
-                                </div>
-                                <div class="btn-me-interesso" onclick="selecionarVaga('${vaga.titulo}')">Me Interesso</div>
-                            </div>
-                        </div>
-                    `;
-                });
-
-                container.innerHTML = html;
-            } catch (err) {
-                console.error("Erro ao buscar vagas:", err);
-                container.innerHTML = '<p style="text-align: center; width: 100%; color: var(--error-red);">Erro ao carregar as vagas. Tente novamente mais tarde.</p>';
-            }
+        if (!data || data.length === 0) {
+            container.innerHTML = '<p style="text-align: center; width: 100%; color: #64748b;">No momento não temos vagas abertas publicadas, mas envie seu currículo pelo menu "Trabalhe Conosco"!</p>';
+            return;
         }
+
+        // 👇 Inverte a ordem das vagas aqui no front-end para mostrar a mais recente primeiro
+        data.reverse();
+
+        let html = '';
+        data.forEach(vaga => {
+            html += `
+                <div class="vaga-card">
+                    <div class="vaga-conteudo">
+                        <div>
+                            <h3 class="vaga-title">${vaga.titulo}</h3>
+                            
+                            <div class="vaga-meta">
+                                <span class="vaga-meta-tag"><i class="material-icons" style="font-size: 16px;">location_on</i> ${vaga.cidade}</span>
+                            </div>
+                            
+                            <div class="vaga-desc">${vaga.descricao || 'Detalhes da vaga na entrevista.'}</div>
+                        </div>
+                        <div class="btn-me-interesso" onclick="selecionarVaga('${vaga.titulo}')">Me Interesso</div>
+                    </div>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+    } catch (err) {
+        console.error("Erro ao buscar vagas:", err);
+        container.innerHTML = '<p style="text-align: center; width: 100%; color: var(--error-red);">Erro ao carregar as vagas. Tente novamente mais tarde.</p>';
+    }
+}
 
         // 👇 AÇÃO AO CLICAR EM "ME INTERESSO" 👇
         window.selecionarVaga = function(tituloVaga) {
