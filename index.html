@@ -1122,8 +1122,19 @@ async function carregarVagasSite() {
             const btnNextServicos = document.getElementById('btn-next-servicos');
             let autoScrollServicos;
             if (servicosTrack && btnPrevServicos && btnNextServicos) {
-                const scrollAmount = 440; // ajustado pro novo tamanho maior dos cards
+                // 👇 CORREÇÃO: antes o "passo" do scroll era um valor fixo em pixels (pensado
+                // só pro card grande de desktop). No celular o card é bem menor (82vw), então
+                // aquele salto fixo passava do card certo e deixava tudo desalinhado/cortado
+                // na tela. Agora ele mede o card real (+ o espaçamento entre eles) toda vez,
+                // então o passo do carrossel sempre bate exatamente com 1 card, em qualquer tela.
+                const getScrollAmount = () => {
+                    const primeiroCard = servicosTrack.querySelector('.servico-card');
+                    if (!primeiroCard) return servicosTrack.clientWidth;
+                    const gap = parseFloat(getComputedStyle(servicosTrack).columnGap || getComputedStyle(servicosTrack).gap) || 0;
+                    return primeiroCard.getBoundingClientRect().width + gap;
+                };
                 const moveNext = () => {
+                    const scrollAmount = getScrollAmount();
                     if (servicosTrack.scrollLeft + servicosTrack.clientWidth >= servicosTrack.scrollWidth - 10) {
                         servicosTrack.scrollTo({ left: 0, behavior: 'smooth' });
                     } else {
@@ -1134,7 +1145,7 @@ async function carregarVagasSite() {
                 const stopCarrossel = () => { clearInterval(autoScrollServicos); };
                 startCarrossel();
                 btnNextServicos.addEventListener('click', () => { stopCarrossel(); moveNext(); });
-                btnPrevServicos.addEventListener('click', () => { stopCarrossel(); servicosTrack.scrollBy({ left: -scrollAmount, behavior: 'smooth' }); });
+                btnPrevServicos.addEventListener('click', () => { stopCarrossel(); servicosTrack.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' }); });
                 servicosTrack.addEventListener('mousedown', stopCarrossel);
                 servicosTrack.addEventListener('touchstart', stopCarrossel);
                 document.addEventListener('click', (e) => {
