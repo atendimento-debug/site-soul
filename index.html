@@ -4,17 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Soul Facilities</title>
-
     <meta name="description" content="Grupo Soul Segurança e Facilities. Soluções ágeis e eficazes em terceirização de mão de obra e segurança eletrônica para empresas e condomínios.">
     <meta name="keywords" content="Facilities, Segurança Eletrônica, Terceirização, Limpeza, Portaria, Gestão de RH, Condomínios">
     <meta name="author" content="Grupo Soul">
-
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://seusite.com.br/">
     <meta property="og:title" content="Soul Segurança e Facilities">
     <meta property="og:description" content="Facilidade e Segurança para Cidades, Empresas e Condomínios.">
     <meta property="og:image" content="https://gozgames.neocities.org/Logo%20horizontal%20-%20fundo%20azul.png">
-
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Soul Segurança e Facilities">
     <meta name="twitter:description" content="Facilidade e Segurança para Cidades, Empresas e Condomínios.">
@@ -28,13 +25,11 @@
     <link rel="icon" type="image/png" href="https://gozgames.neocities.org/Si%CC%81mbolo%20-%20fundo%20azul.png">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QXWXH99K0M"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-QXWXH99K0M');
     </script>
     
@@ -45,7 +40,6 @@
         a { text-decoration: none; color: inherit; transition: color 0.3s ease; }
         ul { list-style: none; }
         .hidden { display: none !important; }
-
         /* --- Cores e Variáveis --- */
         :root {
             --primary-blue: #0A3D73;
@@ -57,17 +51,14 @@
             --error-red: #ef4444;
             --card-shadow: 0 10px 30px rgba(10, 61, 115, 0.08);
         }
-
         /* --- Barra de Rolagem Customizada --- */
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; }
         ::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 10px; border: 2px solid #f1f5f9; }
         ::-webkit-scrollbar-thumb:hover { background-color: #94a3b8; }
-
         /* --- Header e Navbar --- */
         header { background-color: rgba(10, 61, 115, 0.98); backdrop-filter: blur(10px); padding: 12px 0; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-bottom: 1px solid rgba(255,255,255,0.05); }
         .navbar { max-width: 1250px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; position: relative; }
-
         .logo { height: 45px; position: relative; z-index: 1001; cursor: pointer; transition: transform 0.3s; }
         .logo:hover { transform: scale(1.02); }
         
@@ -80,7 +71,6 @@
         .btn-solicitar { background-color: var(--accent-blue); color: var(--white); padding: 10px 24px; border-radius: 30px; font-weight: 700; transition: all 0.3s ease; display: inline-block; cursor: pointer; box-shadow: 0 4px 15px rgba(79, 168, 255, 0.3); }
         .btn-solicitar:hover { background-color: var(--white); color: var(--primary-blue); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2); }
         .menu-toggle { display: none; color: var(--white); font-size: 2rem; cursor: pointer; position: relative; z-index: 1001; }
-
         @media (max-width: 768px) {
             header { padding: 10px 0; width: 100%; left: 0; }
             .logo { height: 38px; }
@@ -94,7 +84,6 @@
             .servicos-carrossel-track { padding: 20px 20px 40px 20px; gap: 15px; scroll-padding-left: 20px; }
             .servico-card { min-width: 82vw; max-width: 82vw; padding: 30px 20px; scroll-snap-align: center; }
             .carousel-btn { display: none; }
-
             .nav-links { 
                 position: fixed; top: 60px; left: -100%; width: 100%; height: calc(100vh - 60px); 
                 background-color: rgba(10, 61, 115, 0.98); backdrop-filter: blur(15px); 
@@ -110,7 +99,6 @@
             .nav-links.active li:nth-child(4) { transition-delay: 0.4s; }
             .nav-links.active li:nth-child(5) { transition-delay: 0.5s; }
             .nav-links.active li:nth-child(6) { transition-delay: 0.6s; }
-
             .nav-links a { display: block; padding: 15px 0; font-size: 1.2rem; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); letter-spacing: 1px; }
             .nav-links a:not(.btn-solicitar)::after { display: none; }
             .nav-links .btn-solicitar { margin-top: 20px; width: 100%; border-bottom: none; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
@@ -120,22 +108,18 @@
             .social-buttons { flex-direction: column; width: 100%; }
             .social-btn { width: 100%; justify-content: center; }
             .checkbox-grid { grid-template-columns: 1fr; } 
-
             #lista-vagas-site { grid-template-columns: 1fr !important; width: 100%; }
             .vaga-card { width: 100%; }
         }
-
         /* --- Sistema de Abas --- */
         .page-view { display: none; animation: fadeInPage 0.5s ease-in-out; }
         .page-view.active-page { display: block; }
         @keyframes fadeInPage { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-
         /* --- Main e Seções Gerais --- */
         main { margin-top: 70px; min-height: calc(100vh - 70px - 200px); }
         .section { padding: 100px 20px; max-width: 1250px; margin: 0 auto; text-align: center; }
         h2 { font-size: 2.5rem; color: var(--primary-blue); margin-bottom: 50px; position: relative; display: inline-block; font-weight: 800; letter-spacing: -0.5px; }
         h2::after { content: ''; position: absolute; width: 50%; height: 5px; background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue)); bottom: -12px; left: 25%; border-radius: 5px; }
-
         /* --- Hero --- */
         .hero { height: 400px; display: flex; justify-content: center; align-items: center; text-align: center; position: relative; overflow: hidden; }
         .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://gozgames.neocities.org/capa-nova-te-_1_.webp') no-repeat center center; background-size: cover; z-index: 1; transform-origin: center; will-change: transform; }
@@ -145,7 +129,6 @@
         .hero p { font-size: 1.25rem; margin-bottom: 35px; color: #e2e8f0; font-weight: 300; }
         .btn-hero { background-color: var(--accent-blue); color: var(--white); padding: 14px 35px; font-size: 1.1rem; font-weight: 700; border-radius: 30px; box-shadow: 0 8px 20px rgba(79, 168, 255, 0.3); display: inline-block; transition: all 0.3s ease; cursor: pointer; }
         .btn-hero:hover { transform: translateY(-5px); background-color: var(--white); color: var(--primary-blue); box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3); }
-
         /* --- Quem Somos --- */
         .quem-somos-content { max-width: 1200px; margin: 0 auto; text-align: left; }
         .quem-somos-intro { max-width: 850px; margin: 0 auto 60px auto; font-size: 1.15rem; text-align: center; color: #475569; line-height: 1.8; }
@@ -158,7 +141,6 @@
         .mvv-card i { font-size: 3.5rem; color: var(--accent-blue); margin-bottom: 20px; background: #f0f6ff; padding: 20px; border-radius: 50%; }
         .mvv-card h3 { color: var(--primary-blue); margin-bottom: 15px; font-size: 1.6rem; font-weight: 800; }
         .mvv-card p { font-size: 1.05rem; color: #64748b; line-height: 1.7; margin: 0; }
-
         /* --- Valores --- */
         .valores-container { margin-top: 20px; text-align: center; }
         .valores-container h3 { color: var(--primary-blue); font-size: 2rem; font-weight: 800; margin-bottom: 40px; display: flex; align-items: center; justify-content: center; gap: 10px; }
@@ -167,7 +149,6 @@
         .valores-list li { background-color: var(--white); padding: 30px 25px; border-radius: 16px; border-top: 5px solid var(--accent-blue); font-size: 1rem; color: #64748b; text-align: center; line-height: 1.6; box-shadow: var(--card-shadow); transition: all 0.3s ease; display: flex; flex-direction: column; justify-content: flex-start; border-left: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; }
         .valores-list li:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(10, 61, 115, 0.1); border-top-color: var(--primary-blue); }
         .valores-list li strong { color: var(--primary-blue); font-weight: 800; font-size: 1.3rem; display: block; margin-bottom: 12px; }
-
         /* --- Serviços --- */
         #servicos { background-color: var(--background-grey); position: relative; overflow: hidden; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; }
         #servicos h2 { position: relative; z-index: 1; }
@@ -178,19 +159,16 @@
         .servicos-carousel-wrapper { position: relative; max-width: 100%; padding: 0 60px; z-index: 1; }
         .servicos-carrossel-track { display: flex; gap: 30px; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; padding: 20px 10px 50px 10px; align-items: stretch; -ms-overflow-style: none; scrollbar-width: none; }
         .servicos-carrossel-track::-webkit-scrollbar { display: none; }
-
         .servico-card { background-color: var(--white); padding: 40px 30px; border-radius: 20px; box-shadow: var(--card-shadow); border: 1px solid #e2e8f0; transition: all 0.3s ease; cursor: pointer; min-width: 320px; max-width: 350px; flex: 0 0 auto; scroll-snap-align: start; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
         .servico-card:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(10, 61, 115, 0.12); border-color: var(--accent-blue); }
         .servico-card i { font-size: 3.5rem; color: var(--accent-blue); margin-bottom: 25px; transition: transform 0.3s; }
         .servico-card:hover i { transform: scale(1.1); color: var(--primary-blue); }
         .servico-card h3 { color: var(--primary-blue); font-size: 1.2rem; font-weight: 800; margin-bottom: 15px; text-align: center; text-transform: uppercase; letter-spacing: 0.5px; }
         .servico-card p { text-align: center; color: #64748b; margin: 0; font-size: 0.95rem; line-height: 1.6; } 
-
         .carousel-btn { position: absolute; top: 45%; transform: translateY(-50%); background-color: var(--white); color: var(--primary-blue); border: 1px solid #e2e8f0; border-radius: 50%; width: 55px; height: 55px; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 10; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: all 0.3s ease; }
         .carousel-btn:hover { background-color: var(--primary-blue); color: var(--white); transform: translateY(-50%) scale(1.1); border-color: var(--primary-blue); }
         .prev-btn { left: 0; }
         .next-btn { right: 0; }
-
         /* --- ESTILO DAS PÁGINAS ISOLADAS (Formulários) --- */
         .isolated-page { background-color: var(--background-grey); padding: 60px 20px; min-height: calc(100vh - 70px); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; }
         .isolated-card { background-color: var(--white); max-width: 850px; width: 100%; border-radius: 24px; box-shadow: var(--card-shadow); border: 1px solid #e2e8f0; padding: 60px; text-align: center; position: relative; z-index: 1; }
@@ -230,16 +208,13 @@
             box-shadow: 0 6px 15px rgba(10, 61, 115, 0.25);
             transform: translateY(-2px);
         }
-
         /* --- Estilo Normal para a Política de Privacidade --- */
         .checkbox-label-normal { display: flex; align-items: flex-start; gap: 12px; font-size: 0.95rem; color: #475569; cursor: pointer; line-height: 1.5; background: #f0f6ff; padding: 20px; border-radius: 12px; border: 1px solid #b9d2f6; }
         .checkbox-label-normal input[type="checkbox"] { width: 22px; height: 22px; cursor: pointer; accent-color: var(--primary-blue); flex-shrink: 0; display: block; margin-top: 2px; }
-
         .btn-solicitar-full { background: linear-gradient(135deg, var(--primary-blue), var(--hover-blue)); color: var(--white); padding: 20px; font-size: 1.2rem; font-weight: 800; border: none; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; width: 100%; box-shadow: 0 8px 20px rgba(10, 61, 115, 0.2); letter-spacing: 0.5px; }
         .btn-solicitar-full:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(10, 61, 115, 0.3); }
         .btn-solicitar-full:active { transform: scale(0.98); }
         .btn-solicitar-full:disabled { background: #cbd5e1; cursor: not-allowed; box-shadow: none; transform: none; color: #f1f5f9; }
-
         /* Customização Input File (Currículo) */
         .file-upload-wrapper { position: relative; width: 100%; }
         .file-upload-input { position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; z-index: 2; }
@@ -249,7 +224,6 @@
         .file-upload-wrapper:hover .file-upload-custom i { color: var(--accent-blue); transform: translateY(-5px); }
         .file-upload-custom.file-selected { border-style: solid; border-color: var(--success-green); background-color: #ecfdf5; color: var(--success-green); }
         .file-upload-custom.file-selected i { color: var(--success-green); transform: none; }
-
         /* --- VAGAS ABERTAS STYLES (NOVO DESIGN SEM IMAGEM) --- */
         .vaga-card {
             background: var(--white);
@@ -291,7 +265,6 @@
             flex-direction: column;
             flex: 1;
         }
-
         .vaga-title {
             color: var(--primary-blue);
             font-size: 1.4rem;
@@ -329,7 +302,6 @@
         .vaga-desc::-webkit-scrollbar { width: 6px; }
         .vaga-desc::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 8px; }
         .vaga-desc::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 8px; }
-
         .btn-me-interesso {
             background: rgba(79, 168, 255, 0.1);
             color: var(--accent-blue);
@@ -348,7 +320,6 @@
             background: var(--accent-blue);
             color: var(--white);
         }
-
         /* --- RODAPÉ (FOOTER) PROFISSIONAL --- */
         footer { background-color: #052140; color: var(--white); padding: 60px 20px 30px 20px; text-align: center; }
         .footer-content { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 25px; }
@@ -362,7 +333,6 @@
         .developer-credit { font-size: 0.95rem; color: #94a3b8; }
         .developer-credit a { color: var(--accent-blue); font-weight: 700; transition: color 0.3s ease; }
         .developer-credit a:hover { color: var(--white); text-decoration: underline; }
-
         /* --- ANIMAÇÕES DE REVEAL --- */
         .fade-in { opacity: 0; transition: opacity 0.8s ease-out, transform 0.8s ease-out; transform: translateY(30px); }
         .fade-in.is-visible { opacity: 1; transform: translateY(0); }
@@ -372,7 +342,6 @@
         .reveal-right.is-visible { opacity: 1; transform: translateX(0); }
         .reveal-up { opacity: 0; transform: translateY(60px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
         .reveal-up.is-visible { opacity: 1; transform: translateY(0); }
-
         /* --- NOTIFICAÇÃO TOAST --- */
         #toast-container { position: fixed; top: 90px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; }
         .toast { background-color: var(--white); color: #334155; padding: 18px 25px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 15px; font-weight: 600; transform: translateX(120%); transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); border-left: 6px solid transparent; font-size: 0.95rem; }
@@ -387,7 +356,6 @@
             .toast { transform: translateY(120%); }
             .toast.show { transform: translateY(0); }
         }
-
         /* --- MODAL POLÍTICA DE PRIVACIDADE --- */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 20, 45, 0.8); z-index: 10001; justify-content: center; align-items: center; backdrop-filter: blur(8px); }
         .modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
@@ -397,7 +365,6 @@
         .modal-close-btn { position: absolute; top: 20px; right: 20px; background: #f1f5f9; border: none; width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; color: #64748b; cursor: pointer; transition: all 0.3s ease; }
         .modal-close-btn:hover { background: #fee2e2; color: var(--error-red); transform: rotate(90deg); }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
         /* Animação expansão suave para o campo Outros */
         .outra-vaga-wrapper {
             max-height: 0;
@@ -411,7 +378,6 @@
             opacity: 1;
             margin-top: 15px;
         }
-
        /* --- ACESSIBILIDADE --- */
         .accessibility-panel { position: fixed; left: 0; top: 50%; transform: translateY(-50%); background: var(--white); box-shadow: 2px 0 15px rgba(0,0,0,0.1); border-radius: 0 10px 10px 0; z-index: 10002; display: flex; flex-direction: column; overflow: hidden; border: 1px solid #e2e8f0; border-left: none; }
         .acc-btn { border: none; background: transparent; padding: 12px; cursor: pointer; color: var(--primary-blue); border-bottom: 1px solid #f1f5f9; transition: 0.3s; display: flex; align-items: center; justify-content: center; }
@@ -437,9 +403,7 @@
         
         body.high-contrast i.material-icons, body.high-contrast .file-upload-custom i { color: #4FA8FF !important; }
         body.high-contrast .toast { background-color: #1e1e1e !important; border-color: #444 !important; color: #fff !important; }
-
         html.large-text { font-size: 115% !important; }
-
         /* --- BANNER DE COOKIES (LGPD) --- */
         .cookie-banner { position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--white); box-shadow: 0 -5px 25px rgba(0,0,0,0.15); padding: 20px 40px; z-index: 10005; display: flex; justify-content: space-between; align-items: center; gap: 20px; transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); border-top: 3px solid var(--primary-blue); }
         .cookie-banner.show { transform: translateY(0); }
@@ -452,7 +416,6 @@
             .cookie-btn { width: 100%; }
             .accessibility-panel { top: 65%; }
         }
-
         .nav-links a.active-link:not(.btn-solicitar) { color: var(--accent-blue); }
         .nav-links a.active-link:not(.btn-solicitar)::after { width: 100%; }
         
@@ -463,7 +426,6 @@
         }
         
         body.high-contrast .nav-links a.active-link:not(.btn-solicitar) { color: #4FA8FF !important; }
-
         body.high-contrast .checkbox-label-normal, 
         body.high-contrast .modal-content { 
             background-color: #121212 !important; 
@@ -471,15 +433,12 @@
             border: 2px solid #0A3D73 !important; 
             box-shadow: none !important; 
         }
-
         body.high-contrast .checkbox-label-normal a,
         body.high-contrast .modal-content a {
             color: #4FA8FF !important;
         }
-
         body.high-contrast .modal-close-btn { background-color: #2a2a2a !important; color: #ffffff !important; }
         body.high-contrast .modal-close-btn:hover { background-color: #fee2e2 !important; color: #ef4444 !important; }
-
         body.high-contrast .checkbox-label:hover { background-color: #2a2a2a !important; border-color: #4FA8FF !important; color: #4FA8FF !important; }
         body.high-contrast .checkbox-label:has(input[type="checkbox"]:checked) {
             background-color: #0A3D73 !important;
@@ -487,15 +446,12 @@
             color: #ffffff !important;
             box-shadow: 0 4px 15px rgba(79, 168, 255, 0.2) !important;
         }
-
         body.high-contrast .file-upload-wrapper:hover .file-upload-custom { background-color: #2a2a2a !important; border-color: #4FA8FF !important; color: #4FA8FF !important; }
         body.high-contrast .file-upload-custom.file-selected { background-color: rgba(16, 185, 129, 0.1) !important;  border-color: #10b981 !important;  color: #10b981 !important; }
         body.high-contrast .file-upload-custom.file-selected i { color: #10b981 !important; }
-
         body.high-contrast .servico-card:hover, 
         body.high-contrast .mvv-card:hover,
         body.high-contrast .valores-list li:hover { border-color: #4FA8FF !important; background-color: #252525 !important; }
-
         body.high-contrast .nav-links a:not(.active-link):not(.btn-solicitar):hover { color: #4FA8FF !important; }
         body.high-contrast .btn-solicitar:hover { background-color: #ffffff !important; color: #000000 !important; }
         body.high-contrast .social-btn:hover { background-color: #2a2a2a !important; border-color: #4FA8FF !important; color: #4FA8FF !important; }
@@ -503,19 +459,94 @@
         body.high-contrast .valores-list li { background-color: #1e1e1e !important; color: #cbd5e1 !important; border-color: #444 !important; box-shadow: none !important; }
         body.high-contrast .valores-list li strong { color: #4FA8FF !important; }
         .valores-list li:hover { background-color: #f8fafc; }
-
         body.high-contrast .vaga-meta-tag { background-color: #2a2a2a !important; color: #ffffff !important; border: 1px solid #444 !important; }
         body.high-contrast .vaga-meta-tag i.material-icons { color: #4FA8FF !important; }
 
+        /* ============================================================
+           REFINAMENTOS VISUAIS (mantendo a paleta azul da marca)
+           ============================================================ */
+
+        /* --- Header: leve profundidade extra ao rolar --- */
+        header.scrolled { box-shadow: 0 8px 30px rgba(0,0,0,0.18); background-color: rgba(8, 50, 95, 0.98); }
+
+        /* --- Hero: CTA duplo + selo de confiança --- */
+        .hero { min-height: 460px; height: auto; padding: 60px 20px; }
+        .hero-content h1 { font-size: 3rem; }
+        .hero-btn-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 5px; }
+        .btn-hero-outline {
+            display: inline-flex; align-items: center; gap: 10px;
+            background-color: rgba(255,255,255,0.08); color: var(--white);
+            border: 2px solid rgba(255,255,255,0.5); padding: 12px 30px; font-size: 1.05rem; font-weight: 700;
+            border-radius: 30px; transition: all 0.3s ease; backdrop-filter: blur(4px);
+        }
+        .btn-hero-outline:hover { background-color: var(--white); color: var(--primary-blue); border-color: var(--white); transform: translateY(-5px); }
+        .hero-trust {
+            display: inline-flex; align-items: center; gap: 8px; margin-top: 28px; color: #dbeafe;
+            font-size: 0.9rem; font-weight: 600; letter-spacing: 0.3px; opacity: 0.9;
+        }
+        .hero-trust i { font-size: 1.1rem; color: var(--accent-blue); }
+        @media (max-width: 768px) {
+            .hero { min-height: auto; padding: 70px 20px 50px; }
+            .hero-content h1 { font-size: 2.1rem; }
+            .hero-btn-row { flex-direction: column; width: 100%; }
+            .btn-hero, .btn-hero-outline { width: 100%; justify-content: center; }
+        }
+
+        /* --- Eyebrow (rótulo pequeno acima dos títulos das páginas) --- */
+        .isolated-eyebrow {
+            display: inline-block; color: var(--accent-blue); font-weight: 800; font-size: 0.8rem;
+            letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px;
+        }
+
+        /* --- Quem Somos: ícones das cards MVV com fundo em degradê --- */
+        .mvv-card i { background: linear-gradient(135deg, #eef5ff, #dcebff); }
+
+        /* --- Nossos Valores: numeração elegante via CSS (sem alterar o HTML) --- */
+        .valores-list { counter-reset: valor-contador; }
+        .valores-list li { position: relative; padding-top: 45px; }
+        .valores-list li::before {
+            counter-increment: valor-contador; content: counter(valor-contador, decimal-leading-zero);
+            position: absolute; top: 22px; left: 25px; font-size: 0.85rem; font-weight: 800;
+            color: var(--white); background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+        body.high-contrast .valores-list li::before { background: linear-gradient(135deg, #0A3D73, #4FA8FF); }
+
+        /* --- Cards de Serviço: acento no topo, igual às demais cards do site --- */
+        .servico-card { border-top: 4px solid var(--accent-blue); }
+        .servico-card i { background: #f0f6ff; padding: 18px; border-radius: 50%; }
+
+        /* --- Ícones dentro dos campos dos formulários (sem mexer no HTML/IDs) --- */
+        #orc-nome, #cand-nome { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='12' cy='7' r='4'/%3E%3C/svg%3E"); }
+        #orc-email, #cand-email { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Crect x='2' y='4' width='20' height='16' rx='2'/%3E%3Cpath d='m22 6-10 7L2 6'/%3E%3C/svg%3E"); }
+        #orc-telefone, #cand-telefone { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z'/%3E%3C/svg%3E"); }
+        #cand-experiencia { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Crect x='2' y='7' width='20' height='14' rx='2'/%3E%3Cpath d='M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16'/%3E%3C/svg%3E"); }
+        #orc-nome, #cand-nome, #orc-email, #cand-email, #orc-telefone, #cand-telefone, #cand-experiencia {
+            background-repeat: no-repeat; background-position: 18px center; background-size: 20px; padding-left: 52px;
+        }
+        body.high-contrast #orc-nome, body.high-contrast #cand-nome, body.high-contrast #orc-email, body.high-contrast #cand-email,
+        body.high-contrast #orc-telefone, body.high-contrast #cand-telefone, body.high-contrast #cand-experiencia { filter: brightness(1.3); }
+
+        /* --- Vagas: selo "Vaga Ativa" --- */
+        .vaga-status-pill {
+            display: inline-flex; align-items: center; gap: 6px; background: rgba(16, 185, 129, 0.1); color: var(--success-green);
+            border: 1px solid rgba(16, 185, 129, 0.3); padding: 4px 12px; border-radius: 20px; font-size: 0.72rem;
+            font-weight: 800; letter-spacing: 0.4px; text-transform: uppercase; margin-bottom: 12px;
+        }
+        body.high-contrast .vaga-status-pill { background: rgba(16, 185, 129, 0.15); }
+        .btn-me-interesso { display: flex; align-items: center; justify-content: center; }
+
+        /* --- Rodapé: leve refino tipográfico --- */
+        footer { padding: 70px 20px 35px; }
+        .footer-content > p { font-size: 1.05rem; max-width: 500px; }
+        .developer-credit { letter-spacing: 0.3px; }
     </style>
 </head>
 <body>
-
     <div class="accessibility-panel">
         <button class="acc-btn" onclick="toggleContrast()" title="Alto Contraste"><i class="material-icons">contrast</i></button>
         <button class="acc-btn" onclick="toggleFontSize()" title="Aumentar Fonte"><i class="material-icons">text_increase</i></button>
     </div>
-
     <div class="cookie-banner" id="cookieBanner">
         <div class="cookie-text">
             <strong><i class="material-icons" style="vertical-align: middle; font-size: 1.2rem; color: var(--primary-blue);">cookie</i> Respeitamos sua privacidade.</strong><br>
@@ -523,7 +554,6 @@
         </div>
         <button class="cookie-btn" onclick="acceptCookies()">Entendi e Aceito</button>
     </div>
-
     <div vw class="enabled">
         <div vw-access-button class="active"></div>
         <div vw-plugin-wrapper>
@@ -532,13 +562,11 @@
     </div>
     <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
     <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
-
     <header>
         <nav class="navbar">
             <a href="#/"><img src="https://gozgames.neocities.org/Logo%20horizontal%20-%20fundo%20azul.png" alt="Logo Grupo Soul" class="logo"></a>
             
             <i class="material-icons menu-toggle" id="mobile-menu-btn">menu</i>
-
             <ul class="nav-links" id="nav-menu">
                 <li><a href="#/">Home</a></li>
                 <li><a href="#/quem-somos">Quem Somos</a></li>
@@ -548,7 +576,6 @@
             </ul>
         </nav>
     </header>
-
     <main id="main-content">
         
         <div id="page-home" class="page-view active-page">
@@ -558,10 +585,16 @@
                 <div class="hero-content">
                     <h1 class="reveal-up">SOUL SEGURANÇA E FACILITIES</h1>
                     <p class="reveal-up" style="transition-delay: 0.1s;">Facilidade e Segurança para Cidades, Empresas e Condomínios.</p>
-                    <a href="#/orcamento" class="btn-hero reveal-up" style="transition-delay: 0.2s;">Solicitar Orçamento</a>
+                    <div class="hero-btn-row reveal-up" style="transition-delay: 0.2s;">
+                        <a href="#/orcamento" class="btn-hero">Solicitar Orçamento</a>
+                        <a href="https://wa.me/5519996210190?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento." target="_blank" class="btn-hero-outline">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12.031 0C5.392 0 0 5.392 0 12.031c0 2.115.55 4.175 1.594 5.99L.04 24l6.115-1.562a11.96 11.96 0 005.876 1.528h.005c6.638 0 12.031-5.392 12.031-12.031S18.669 0 12.031 0zm0 21.962h-.004a9.92 9.92 0 01-5.068-1.385l-.364-.216-3.766.96-.985-3.674-.237-.378a9.932 9.932 0 01-1.517-5.238c0-5.485 4.468-9.953 9.958-9.953s9.952 4.468 9.952 9.953-4.467 9.953-9.952 9.953zm5.458-7.442c-.299-.15-1.77-.875-2.044-.976-.275-.099-.475-.15-.675.15-.2.3-.775.975-.95 1.175-.175.2-.35.225-.65.075-1.25-.625-2.225-1.125-3.075-2.4-.225-.325.25-.3.675-1.15.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.25-.6-.5-.525-.675-.525h-.575c-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5s1.075 2.9 1.225 3.1c.15.2 2.1 3.225 5.1 4.525.725.3 1.275.475 1.725.625.725.225 1.375.2 1.9.125.575-.075 1.77-.725 2.025-1.425.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z"/></svg>
+                            Fale no WhatsApp
+                        </a>
+                    </div>
+                    <span class="hero-trust reveal-up" style="transition-delay: 0.3s;"><i class="material-icons">verified</i> Quase uma década cuidando de empresas e condomínios</span>
                 </div>
             </section>
-
             <section id="quem-somos" class="section">
                 <h2 class="reveal-up">QUEM SOMOS</h2>
                 <div class="quem-somos-content">
@@ -583,7 +616,6 @@
                             <p>Sermos sempre a primeira referência de confiança e parceria de nossos clientes. Muitos buscam a grandeza de serem os primeiros do ramo, nós focamos na grandeza de atendermos bem a necessidade de nossos clientes, almejamos construir um futuro onde a segurança e a gestão de espaços estejam sempre em evolução, garantindo ambientes protegidos e bem administrados.</p>
                         </div>
                     </div>
-
                     <div class="valores-container reveal-up">
                         <h3><i class="material-icons">diamond</i> NOSSOS VALORES</h3>
                         <ul class="valores-list">
@@ -597,7 +629,6 @@
                     </div>
                 </div>
             </section>
-
             <section id="servicos" class="section fade-in">
                 <h2>NOSSOS SERVIÇOS</h2>
                 <div class="servicos-carousel-wrapper">
@@ -623,12 +654,11 @@
                     <button class="carousel-btn next-btn" id="btn-next-servicos"><i class="material-icons">chevron_right</i></button>
                 </div>
             </section>
-
         </div> 
-
         <div id="page-orcamento" class="page-view">
             <div class="isolated-page" id="bg-orcamento">
                 <div class="isolated-card fade-in">
+                    <span class="isolated-eyebrow">Atendimento personalizado</span>
                     <h2><i class="material-icons icon-title">request_quote</i> Solicitar Orçamento</h2>
                     
                     <p style="color: #64748b; margin-bottom: 20px; font-size: 1.15rem; font-weight: 500;">
@@ -665,14 +695,12 @@
                                     
                                     <label class="checkbox-label"><input type="checkbox" id="chk-orc-outros" name="orc-servico" value="Outros"> Outros Profissionais</label>
                                 </div>
-
                                 <div id="wrapper-orc-outro" class="outra-vaga-wrapper">
                                     <input type="text" id="orc-servico-outro" placeholder="Não encontrou o que procura? Digite aqui o serviço desejado...">
                                 </div>
                             </div>
                             
                             <textarea id="orc-mensagem" placeholder="Detalhes do seu pedido (metragem, quantidade de profissionais, escopo do trabalho, etc.)..." rows="5"></textarea>
-
                             <div class="g-recaptcha" data-sitekey="6LcOOP4sAAAAADlQmccoOxJ1aCGvIv4oh_aAOzqj" style="margin-bottom: 20px;"></div>
                             
                             <button type="submit" id="btn-enviar-orcamento" class="btn-solicitar-full"><i class="material-icons" style="vertical-align: middle; margin-right: 8px;">send</i> Enviar Pedido de Orçamento</button>
@@ -681,10 +709,10 @@
                 </div>
             </div>
         </div> 
-
         <div id="page-vagas" class="page-view">
             <div class="isolated-page" id="bg-vagas">
                 <div class="isolated-card fade-in" style="max-width: 1000px;">
+                    <span class="isolated-eyebrow">Faça parte do time</span>
                     <h2><i class="material-icons icon-title">work</i> Vagas em Destaque</h2>
                     <p style="color: #64748b; margin-bottom: 30px; font-size: 1.15rem; font-weight: 500;">Venha fazer parte do Grupo Soul! Confira nossas oportunidades em aberto na sua região.</p>
                     
@@ -697,6 +725,7 @@
         <div id="page-trabalhe" class="page-view">
             <div class="isolated-page" id="bg-trabalhe">
                 <div class="isolated-card fade-in">
+                    <span class="isolated-eyebrow">Currículo em minutos</span>
                     <h2><i class="material-icons icon-title">badge</i> Trabalhe Conosco</h2>
                     <p style="color: #64748b; margin-bottom: 30px; font-size: 1.15rem; font-weight: 500;">Faça parte da nossa equipe! Selecione sua área e anexe seu currículo em formato PDF.</p>
                     
@@ -736,7 +765,6 @@
                                     
                                     <label class="checkbox-label"><input type="checkbox" id="chk-cand-outros" name="cand-vaga" value="Outros"> Outro Cargo</label>
                                 </div>
-
                                 <div id="wrapper-cand-outro" class="outra-vaga-wrapper">
                                     <input type="text" id="cand-vaga-outra" placeholder="Digite o cargo que está buscando se não estiver na lista...">
                                 </div>
@@ -749,14 +777,12 @@
                                     <span id="file-upload-text">Clique ou arraste para anexar seu Currículo (.PDF)</span>
                                 </div>
                             </div>
-
                             <div style="margin-top: 15px; margin-bottom: 25px; text-align: left;">
     <label class="checkbox-label-normal">
         <input type="checkbox" required> 
         <span>Autorizo o armazenamento do meu currículo e dados para futuros processos seletivos do Grupo Soul. <br> <a href="#" onclick="openModal(event)" style="color: var(--primary-blue); text-decoration: underline; font-weight: bold;">Leia nossa Política de Privacidade (LGPD)</a>.</span>
     </label>
 </div>
-
                             <div class="g-recaptcha" data-sitekey="6LcOOP4sAAAAADlQmccoOxJ1aCGvIv4oh_aAOzqj" style="margin-bottom: 20px;"></div>
                             
                             <button type="submit" id="btn-enviar-cv" class="btn-solicitar-full"><i class="material-icons" style="vertical-align: middle; margin-right: 8px;">upload_file</i> Enviar Currículo</button>
@@ -765,11 +791,8 @@
                 </div>
             </div>
         </div> 
-
     </main>
-
     <div id="toast-container"></div>
-
     <div class="modal-overlay" id="lgpd-modal">
         <div class="modal-content">
             <button class="modal-close-btn" onclick="closeModal()"><i class="material-icons">close</i></button>
@@ -782,7 +805,6 @@
             <p>Ao marcar a caixa de consentimento, você concorda ativamente com estes termos.</p>
         </div>
     </div>
-
    <footer>
         <div class="footer-content">
             <a href="#/">
@@ -809,7 +831,6 @@
         <p style="margin: 0; color: #94a3b8;">© 2026 Grupo Soul. Todos os direitos reservados.</p>
         <p class="developer-credit">Desenvolvido por <a href="https://goscripts.com.br/" target="_blank">GoScripts</a></p>
     </footer>
-
     <script>
        // ========================================================
 // INICIALIZAÇÃO DO SUPABASE
@@ -817,7 +838,6 @@
 const SUPABASE_URL = 'https://kefvwdxebzgedugqeimz.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtlZnZ3ZHhlYnpnZWR1Z3FlaW16Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwMjg4ODgsImV4cCI6MjA4OTYwNDg4OH0.l7mFzcZBV-XhVyauwjNxPFZge9w5tHRKEAOY2YJwFZY';
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
         // --- SISTEMA DE TOAST (NOTIFICAÇÕES) ---
         function showToast(message, type) {
             const container = document.getElementById('toast-container');
@@ -835,7 +855,6 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
                 setTimeout(() => { toast.remove(); }, 400); 
             }, 5000);
         }
-
         // --- SISTEMA DE MODAL (LGPD) ---
         function openModal(event) {
             event.preventDefault(); 
@@ -847,7 +866,6 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
         document.getElementById('lgpd-modal').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
         });
-
         // --- SISTEMA DE ROTEAMENTO (NAVEGAÇÃO POR LINK DIRETO / ABAS) ---
         function handleRoute() {
             const hash = window.location.hash || '#/'; 
@@ -858,24 +876,20 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
                     page_location: window.location.href
                 });
             }
-
             document.querySelectorAll('.page-view').forEach(page => {
                 page.classList.remove('active-page');
             });
-
             const navMenu = document.getElementById('nav-menu');
             if (navMenu && navMenu.classList.contains('active')) {
                 navMenu.classList.remove('active');
                 document.getElementById('mobile-menu-btn').textContent = 'menu';
             }
-
             document.querySelectorAll('.nav-links a').forEach(link => {
                 link.classList.remove('active-link');
                 if (link.getAttribute('href') === hash) {
                     link.classList.add('active-link');
                 }
             });
-
             if (hash === '#/trabalhe') {
                 document.getElementById('page-trabalhe').classList.add('active-page');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -909,17 +923,14 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
                 }, 50);
             }
         }
-
         window.addEventListener('hashchange', handleRoute);
         
         function criarEfeitoFlutuante(containerId, iconesArray) {
             const container = document.getElementById(containerId);
             if (!container) return;
-
             const bgAnimado = document.createElement('div');
             bgAnimado.className = 'bg-animado';
             container.insertBefore(bgAnimado, container.firstChild);
-
             for (let i = 0; i < 15; i++) {
                 const icone = document.createElement('i');
                 icone.className = 'material-icons icone-flutuante';
@@ -931,48 +942,40 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
                 bgAnimado.appendChild(icone);
             }
         }
-
         // --- FUNÇÕES DE ACESSIBILIDADE ---
         function toggleContrast() {
             document.body.classList.toggle('high-contrast');
             localStorage.setItem('soul_high_contrast', document.body.classList.contains('high-contrast'));
         }
-
         function toggleFontSize() {
             document.documentElement.classList.toggle('large-text');
             localStorage.setItem('soul_large_text', document.documentElement.classList.contains('large-text'));
         }
-
         function acceptCookies() {
             localStorage.setItem('soul_cookies_accepted', 'true');
             document.getElementById('cookieBanner').classList.remove('show');
         }
-
        // 👇 FUNÇÃO: BUSCAR VAGAS DO SUPABASE (ATUALIZADA E BLINDADA) 👇
 async function carregarVagasSite() {
     const container = document.getElementById('lista-vagas-site');
     if(!container) return;
-
     try {
         // 👇 Removemos o .order() para o banco não dar erro da coluna inexistente
         const { data, error } = await supabaseClient.from('vagas_site').select('*').eq('ativa', true);
-
         if (error) throw error;
-
         if (!data || data.length === 0) {
             container.innerHTML = '<p style="text-align: center; width: 100%; color: #64748b;">No momento não temos vagas abertas publicadas, mas envie seu currículo pelo menu "Trabalhe Conosco"!</p>';
             return;
         }
-
         // 👇 Inverte a ordem das vagas aqui no front-end para mostrar a mais recente primeiro
         data.reverse();
-
         let html = '';
         data.forEach(vaga => {
             html += `
                 <div class="vaga-card">
                     <div class="vaga-conteudo">
                         <div>
+                            <span class="vaga-status-pill"><i class="material-icons" style="font-size: 13px;">fiber_manual_record</i> Vaga Ativa</span>
                             <h3 class="vaga-title">${vaga.titulo}</h3>
                             
                             <div class="vaga-meta">
@@ -981,19 +984,17 @@ async function carregarVagasSite() {
                             
                             <div class="vaga-desc">${vaga.descricao || 'Detalhes da vaga na entrevista.'}</div>
                         </div>
-                        <div class="btn-me-interesso" onclick="selecionarVaga('${vaga.titulo}')">Me Interesso</div>
+                        <div class="btn-me-interesso" onclick="selecionarVaga('${vaga.titulo}')"><i class="material-icons" style="font-size: 18px; vertical-align: middle; margin-right: 6px;">send</i>Me Interesso</div>
                     </div>
                 </div>
             `;
         });
-
         container.innerHTML = html;
     } catch (err) {
         console.error("Erro ao buscar vagas:", err);
         container.innerHTML = '<p style="text-align: center; width: 100%; color: var(--error-red);">Erro ao carregar as vagas. Tente novamente mais tarde.</p>';
     }
 }
-
         // 👇 AÇÃO AO CLICAR EM "ME INTERESSO" 👇
         window.selecionarVaga = function(tituloVaga) {
             // Muda a rota pro Trabalhe Conosco
@@ -1030,18 +1031,13 @@ async function carregarVagasSite() {
                 showToast(`Vaga selecionada: ${tituloVaga}`, "success");
             }, 300);
         };
-
-
         document.addEventListener('DOMContentLoaded', () => {
-
             handleRoute();
             
             // Chama o carregamento das vagas
             carregarVagasSite();
-
             if (localStorage.getItem('soul_high_contrast') === 'true') document.body.classList.add('high-contrast');
             if (localStorage.getItem('soul_large_text') === 'true') document.documentElement.classList.add('large-text');
-
             if (!localStorage.getItem('soul_cookies_accepted')) {
                 setTimeout(() => {
                     document.getElementById('cookieBanner').classList.add('show');
@@ -1051,17 +1047,14 @@ async function carregarVagasSite() {
             // --- MENU SANDUÍCHE ---
             const menuBtn = document.getElementById('mobile-menu-btn');
             const navMenu = document.getElementById('nav-menu');
-
             menuBtn.addEventListener('click', () => {
                 navMenu.classList.toggle('active');
                 menuBtn.textContent = navMenu.classList.contains('active') ? 'close' : 'menu'; 
             });
-
             // --- LÓGICA DO CHECKBOX "OUTROS" (EXPANSÃO INTELIGENTE) ---
             const chkCandOutros = document.getElementById('chk-cand-outros');
             const wrapperCandOutro = document.getElementById('wrapper-cand-outro');
             const inputCandOutro = document.getElementById('cand-vaga-outra');
-
             if (chkCandOutros) {
                 chkCandOutros.addEventListener('change', function() {
                     if (this.checked) {
@@ -1075,11 +1068,9 @@ async function carregarVagasSite() {
                     }
                 });
             }
-
             const chkOrcOutros = document.getElementById('chk-orc-outros');
             const wrapperOrcOutro = document.getElementById('wrapper-orc-outro');
             const inputOrcOutro = document.getElementById('orc-servico-outro');
-
             if (chkOrcOutros) {
                 chkOrcOutros.addEventListener('change', function() {
                     if (this.checked) {
@@ -1093,17 +1084,14 @@ async function carregarVagasSite() {
                     }
                 });
             }
-
             // --- EFEITO DE SCROLL NO HERO ---
             const hero = document.querySelector('.hero');
             const heroBg = document.querySelector('.hero-bg');
             const heroContent = document.querySelector('.hero-content');
-
             if (hero && heroBg && heroContent) {
                 const imageZoomSpeed = 0.0008; 
                 const textScaleSpeed = 0.003;  
                 const heroHeight = hero.offsetHeight;
-
                 window.addEventListener('scroll', () => {
                     if (!document.getElementById('page-home').classList.contains('active-page')) return;
                     
@@ -1111,17 +1099,14 @@ async function carregarVagasSite() {
                     if (scrollY <= heroHeight + 100) {
                         const scaleBg = 1 + (scrollY * imageZoomSpeed);
                         heroBg.style.transform = `scale(${scaleBg})`;
-
                         const scaleText = 1 + (scrollY * textScaleSpeed);
                         let opacityText = 1 - (scrollY / (heroHeight - 50)); 
                         if (opacityText < 0) opacityText = 0; 
-
                         heroContent.style.transform = `scale(${scaleText}) translateY(${scrollY * 0.2}px)`;
                         heroContent.style.opacity = opacityText;
                     }
                 });
             }
-
             // --- ANIMAÇÃO DE ENTRADA (REVEAL) ---
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -1132,20 +1117,16 @@ async function carregarVagasSite() {
                     }
                 });
             }, { threshold: 0.15 });
-
             document.querySelectorAll('.fade-in, .reveal-left, .reveal-right, .reveal-up').forEach(el => observer.observe(el));
-
             criarEfeitoFlutuante('servicos', ['security', 'cleaning_services', 'shield', 'vpn_key', 'build', 'apartment', 'health_and_safety', 'recycling', 'park', 'inventory_2', 'medical_services', 'biotech', 'science', 'supervisor_account', 'manage_accounts', 'account_balance_wallet']);
             criarEfeitoFlutuante('bg-orcamento', ['request_quote', 'attach_money', 'calculate', 'business_center', 'assignment', 'mail', 'chat', 'receipt_long']);
             criarEfeitoFlutuante('bg-trabalhe', ['badge', 'work', 'assignment_ind', 'school', 'description', 'person_add', 'groups', 'engineering']);
             criarEfeitoFlutuante('bg-vagas', ['work_outline', 'rocket_launch', 'handshake', 'military_tech', 'emoji_events', 'groups', 'corporate_fare']);
-
             // --- CARROSSEL DE SERVIÇOS ---
             const servicosTrack = document.getElementById('servicos-track');
             const btnPrevServicos = document.getElementById('btn-prev-servicos');
             const btnNextServicos = document.getElementById('btn-next-servicos');
             let autoScrollServicos;
-
             if (servicosTrack && btnPrevServicos && btnNextServicos) {
                 const scrollAmount = 370; 
                 const moveNext = () => {
@@ -1155,10 +1136,8 @@ async function carregarVagasSite() {
                         servicosTrack.scrollBy({ left: scrollAmount, behavior: 'smooth' });
                     }
                 };
-
                 const startCarrossel = () => { clearInterval(autoScrollServicos); autoScrollServicos = setInterval(moveNext, 3500); };
                 const stopCarrossel = () => { clearInterval(autoScrollServicos); };
-
                 startCarrossel();
                 btnNextServicos.addEventListener('click', () => { stopCarrossel(); moveNext(); });
                 btnPrevServicos.addEventListener('click', () => { stopCarrossel(); servicosTrack.scrollBy({ left: -scrollAmount, behavior: 'smooth' }); });
@@ -1168,11 +1147,9 @@ async function carregarVagasSite() {
                     if (document.getElementById('servicos') && !document.getElementById('servicos').contains(e.target)) startCarrossel();
                 });
             }
-
             // --- LÓGICA DO INPUT FILE PERSONALIZADO ---
             const inputFile = document.getElementById('cand-arquivo');
             const fileDisplay = document.getElementById('file-upload-display');
-
             if(inputFile) {
                 inputFile.addEventListener('change', function() {
                     if (this.files && this.files.length > 0) {
@@ -1190,13 +1167,11 @@ async function carregarVagasSite() {
                     }
                 });
             }
-
             // ========================================================
             // SISTEMA DE ESTADO E CIDADE (API IBGE)
             // ========================================================
             const selectEstado = document.getElementById('cand-estado');
             const selectCidade = document.getElementById('cand-cidade');
-
             if(selectEstado && selectCidade) {
                 fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome')
                     .then(res => res.json())
@@ -1208,12 +1183,10 @@ async function carregarVagasSite() {
                             selectEstado.appendChild(option);
                         });
                     });
-
                 selectEstado.addEventListener('change', (e) => {
                     const uf = e.target.value;
                     selectCidade.innerHTML = '<option value="" disabled selected>Carregando cidades...</option>';
                     selectCidade.disabled = true;
-
                     fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios?orderBy=nome`)
                         .then(res => res.json())
                         .then(cidades => {
@@ -1228,7 +1201,6 @@ async function carregarVagasSite() {
                         });
                 });
             }
-
             // ========================================================
             // SCRIPT DE ENVIO: ORÇAMENTO (SUPABASE)
             // ========================================================
@@ -1252,7 +1224,6 @@ async function carregarVagasSite() {
                         showToast("Selecione pelo menos um serviço de interesse.", "error");
                         return;
                     }
-
                     const emailInput = document.getElementById('orc-email').value;
                     if (!isEmailValido(emailInput)) {
                         showToast("Por favor, digite um endereço de e-mail válido.", "error");
@@ -1268,10 +1239,8 @@ async function carregarVagasSite() {
                     }
                     
                     const servicosSelecionados = arrayServicos.join(', ');
-
                     btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 8px;">hourglass_empty</i> Enviando Pedido...';
                     btnEnviar.disabled = true;
-
                     try {
                         const { error } = await supabaseClient.from('orcamentos_site').insert([{
                             nome: document.getElementById('orc-nome').value,
@@ -1281,9 +1250,7 @@ async function carregarVagasSite() {
                             mensagem: document.getElementById('orc-mensagem').value,
                             status: 'Novo' 
                         }]);
-
                         if (error) throw error;
-
                         showToast("Pedido de Orçamento enviado com sucesso!", "success");
                         formOrcamento.reset();
                         document.getElementById('wrapper-orc-outro').classList.remove('show');
@@ -1296,7 +1263,6 @@ async function carregarVagasSite() {
                     }
                 });
             }
-
             // ========================================================
             // SCRIPT DE ENVIO: CURRÍCULO (SUPABASE)
             // ========================================================
@@ -1320,7 +1286,6 @@ async function carregarVagasSite() {
                         showToast("Selecione pelo menos uma área de interesse.", "error");
                         return;
                     }
-
                     // Lógica Mágica de Captura de Vagas (Incluindo o "Outros")
                     let arrayVagas = Array.from(checkboxes).map(cb => cb.value);
                     if (arrayVagas.includes("Outros")) {
@@ -1328,51 +1293,39 @@ async function carregarVagasSite() {
                         arrayVagas = arrayVagas.filter(v => v !== "Outros"); 
                         if (textoOutro) arrayVagas.push(`Outros: ${textoOutro}`); 
                     }
-
                     const vagasSelecionadas = arrayVagas.join(', ');
-
                     const file = inputFile.files[0];
                     if (!file) {
                         showToast("Por favor, anexe um currículo.", "error");
                         return;
                     }
-
                     const emailInput = document.getElementById('cand-email').value;
                     if (!isEmailValido(emailInput)) {
                         showToast("Por favor, digite um endereço de e-mail válido.", "error");
                         return;
                     }
-
                     btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 8px;">hourglass_empty</i> Enviando... Aguarde.';
                     btnEnviar.disabled = true;
-
                     try {
                         const telefoneInput = document.getElementById('cand-telefone').value;
                         const { data: isSpam, error: rpcError } = await supabaseClient.rpc('verificar_spam_candidato', {
                             p_email: emailInput,
                             p_telefone: telefoneInput
                         });
-
                         if (rpcError) throw rpcError;
-
                         if (isSpam) {
                             showToast("Você já enviou um currículo nas últimas 24 horas. Aguarde para enviar novamente.", "error");
                             btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 8px;">upload_file</i> Enviar Currículo';
                             btnEnviar.disabled = false;
                             return; 
                         }
-
                         const cleanName = file.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9.]/g, '_');
                         const caminhoStorage = `Banco_Curriculos/${Date.now()}_${cleanName}`;
-
                         const { data: uploadData, error: uploadError } = await supabaseClient.storage
                             .from('documentos') 
                             .upload(caminhoStorage, file);
-
                         if (uploadError) throw uploadError;
-
                         const { data: publicUrlData } = supabaseClient.storage.from('documentos').getPublicUrl(caminhoStorage);
-
                         const { error: dbError } = await supabaseClient.from('banco_curriculos').insert([{
                             nome: document.getElementById('cand-nome').value,
                             email: emailInput,
@@ -1383,15 +1336,12 @@ async function carregarVagasSite() {
                             curriculo_url: publicUrlData.publicUrl,
                             status: 'Novo'
                         }]);
-
                         if (dbError) throw dbError;
-
                         showToast("Currículo enviado com sucesso!", "success");
                         formCurriculo.reset();
                         document.getElementById('wrapper-cand-outro').classList.remove('show');
                         fileDisplay.classList.remove('file-selected');
                         fileDisplay.innerHTML = `<i class="material-icons">cloud_upload</i><span id="file-upload-text">Clique ou arraste para anexar seu Currículo (.PDF)</span>`;
-
                     } catch (error) {
                         console.error("Erro no envio:", error);
                         showToast(error.message || "Erro na conexão. Tente novamente.", "error");
@@ -1401,7 +1351,6 @@ async function carregarVagasSite() {
                     }
                 });
             }
-
             // ========================================================
             // MÁSCARA DE TELEFONE E VALIDAÇÕES
             // ========================================================
@@ -1409,9 +1358,7 @@ async function carregarVagasSite() {
                 let input = event.target;
                 let val = input.value.replace(/\D/g, ''); 
                 let formatado = '';
-
                 if (val.length > 11) val = val.substring(0, 11); 
-
                 if (val.length > 0) {
                     formatado = '(' + val.substring(0, 2);
                     if (val.length > 2) {
@@ -1423,15 +1370,19 @@ async function carregarVagasSite() {
                 }
                 input.value = formatado;
             }
-
             const camposTelefone = document.querySelectorAll('input[type="tel"]');
             camposTelefone.forEach(tel => tel.addEventListener('input', mascaraTelefone));
-
             function isEmailValido(email) {
                 const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 return regex.test(email);
             }
-
+            // --- LEVE PROFUNDIDADE NO HEADER AO ROLAR (só visual, não mexe em nada funcional) ---
+            const headerEl = document.querySelector('header');
+            if (headerEl) {
+                window.addEventListener('scroll', () => {
+                    headerEl.classList.toggle('scrolled', window.scrollY > 20);
+                });
+            }
         }); // <-- FIM DO DOMContentLoaded
     </script>
 </body>
