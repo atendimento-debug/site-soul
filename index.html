@@ -721,7 +721,7 @@
                                     <option value="" disabled selected>Selecione um estado primeiro</option>
                                 </select>
                             </div>
-                            <input type="text" id="cand-experiencia" placeholder="Resumo da experiência ou Link do LinkedIn (Opcional)">
+                            <input type="text" id="cand-experiencia" placeholder="Resumo da experiência ou link do seu perfil no LinkedIn (Opcional)">
                             
                             <div class="checkbox-container">
                                 <span class="checkbox-container-title">Qual a sua Área de Interesse? (Pode selecionar mais de uma)</span>
@@ -1282,6 +1282,14 @@ async function carregarVagasSite() {
                         showToast("Por favor, digite um endereço de e-mail válido.", "error");
                         return;
                     }
+                    // 👇 SEGURANÇA: no campo de "experiência" só aceitamos link do LinkedIn.
+                    // Qualquer outro link (encurtador, site desconhecido, etc.) é bloqueado
+                    // pra evitar que alguém use o formulário público pra espalhar link malicioso.
+                    const experienciaValor = document.getElementById('cand-experiencia').value.trim();
+                    if (!linkPermitidoNoResumo(experienciaValor)) {
+                        showToast("Nesse campo só aceitamos o link do seu perfil do LinkedIn (linkedin.com/in/...). Outros links não são permitidos.", "error");
+                        return;
+                    }
                     btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 8px;">hourglass_empty</i> Enviando... Aguarde.';
                     btnEnviar.disabled = true;
                     try {
@@ -1353,6 +1361,15 @@ async function carregarVagasSite() {
             function isEmailValido(email) {
                 const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 return regex.test(email);
+            }
+            // --- VALIDAÇÃO DO CAMPO "RESUMO DA EXPERIÊNCIA / LINKEDIN" ---
+            // Se o texto tiver cara de link (http, www, ou algo.com/net/etc.), só deixa passar
+            // se for realmente um link do linkedin.com. Texto normal sem link passa liso.
+            function linkPermitidoNoResumo(texto) {
+                if (!texto) return true;
+                const pareceLink = /(https?:\/\/|www\.)/i.test(texto) || /\b[a-z0-9-]+\.[a-z]{2,}(\/|\b)/i.test(texto);
+                if (!pareceLink) return true;
+                return /(^|\.|\/\/)linkedin\.com\//i.test(texto) || /(^|\.|\/\/)linkedin\.com$/i.test(texto);
             }
             // --- LEVE PROFUNDIDADE NO HEADER AO ROLAR (só visual, não mexe em nada funcional) ---
             const headerEl = document.querySelector('header');
