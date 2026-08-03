@@ -71,46 +71,6 @@
         .btn-solicitar { background-color: var(--accent-blue); color: var(--white); padding: 10px 24px; border-radius: 30px; font-weight: 700; transition: all 0.3s ease; display: inline-block; cursor: pointer; box-shadow: 0 4px 15px rgba(79, 168, 255, 0.3); }
         .btn-solicitar:hover { background-color: var(--white); color: var(--primary-blue); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2); }
         .menu-toggle { display: none; color: var(--white); font-size: 2rem; cursor: pointer; position: relative; z-index: 1001; }
-        @media (max-width: 768px) {
-            header { padding: 10px 0; width: 100%; left: 0; }
-            .logo { height: 38px; }
-            .menu-toggle { display: block; }
-            html, body { max-width: 100%; overflow-x: hidden; }
-            
-            #servicos.section { padding-left: 0; padding-right: 0; } 
-            #servicos h2 { margin-left: 20px; margin-right: 20px; } 
-            
-            .servicos-carousel-wrapper { padding: 0; }
-            .servicos-carrossel-track { padding: 20px 20px 40px 20px; gap: 15px; scroll-padding-left: 20px; }
-            .servico-card { min-width: 82vw; max-width: 82vw; padding: 30px 20px; scroll-snap-align: center; }
-            .carousel-btn { display: none; }
-            .nav-links { 
-                position: fixed; top: 60px; left: -100%; width: 100%; height: calc(100vh - 60px); 
-                background-color: rgba(10, 61, 115, 0.98); backdrop-filter: blur(15px); 
-                flex-direction: column; padding: 30px 20px; transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-                z-index: 999; justify-content: flex-start; gap: 10px;
-            }
-            .nav-links.active { left: 0; }
-            .nav-links li { width: 100%; opacity: 0; transform: translateY(20px); transition: all 0.4s ease; }
-            .nav-links.active li { opacity: 1; transform: translateY(0); }
-            .nav-links.active li:nth-child(1) { transition-delay: 0.1s; }
-            .nav-links.active li:nth-child(2) { transition-delay: 0.2s; }
-            .nav-links.active li:nth-child(3) { transition-delay: 0.3s; }
-            .nav-links.active li:nth-child(4) { transition-delay: 0.4s; }
-            .nav-links.active li:nth-child(5) { transition-delay: 0.5s; }
-            .nav-links.active li:nth-child(6) { transition-delay: 0.6s; }
-            .nav-links a { display: block; padding: 15px 0; font-size: 1.2rem; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); letter-spacing: 1px; }
-            .nav-links a:not(.btn-solicitar)::after { display: none; }
-            .nav-links .btn-solicitar { margin-top: 20px; width: 100%; border-bottom: none; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-            
-            .isolated-card { padding: 30px 20px; border-radius: 15px; }
-            .isolated-card h2 { font-size: 1.6rem; flex-direction: column; gap: 5px; }
-            .social-buttons { flex-direction: column; width: 100%; }
-            .social-btn { width: 100%; justify-content: center; }
-            .checkbox-grid { grid-template-columns: 1fr; } 
-            #lista-vagas-site { grid-template-columns: 1fr !important; width: 100%; }
-            .vaga-card { width: 100%; }
-        }
         /* --- Sistema de Abas --- */
         .page-view { display: none; animation: fadeInPage 0.5s ease-in-out; }
         .page-view.active-page { display: block; }
@@ -525,6 +485,48 @@
         footer { padding: 70px 20px 35px; }
         .footer-content > p { font-size: 1.05rem; max-width: 500px; }
         .developer-credit { letter-spacing: 0.3px; }
+
+        /* --- Ajustes gerais de celular (movido pro fim do CSS pra garantir prioridade sobre as regras base) --- */
+        @media (max-width: 768px) {
+            header { padding: 10px 0; width: 100%; left: 0; }
+            .logo { height: 38px; }
+            .menu-toggle { display: block; }
+            html, body { max-width: 100%; overflow-x: hidden; }
+            
+            #servicos.section { padding-left: 0; padding-right: 0; } 
+            #servicos h2 { margin-left: 20px; margin-right: 20px; } 
+            
+            .servicos-carousel-wrapper { padding: 0; }
+            .servicos-carrossel-track { padding: 20px 20px 40px 20px; gap: 15px; scroll-padding-left: 20px; }
+            .servico-card { min-width: 82vw; max-width: 82vw; padding: 30px 20px; scroll-snap-align: center; }
+            .carousel-btn { display: none; }
+            .nav-links { 
+                position: fixed; top: 60px; left: -100%; width: 100%; height: calc(100vh - 60px); 
+                background-color: rgba(10, 61, 115, 0.98); backdrop-filter: blur(15px); 
+                flex-direction: column; padding: 30px 20px; transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+                z-index: 999; justify-content: flex-start; gap: 10px;
+            }
+            .nav-links.active { left: 0; }
+            .nav-links li { width: 100%; opacity: 0; transform: translateY(20px); transition: all 0.4s ease; }
+            .nav-links.active li { opacity: 1; transform: translateY(0); }
+            .nav-links.active li:nth-child(1) { transition-delay: 0.1s; }
+            .nav-links.active li:nth-child(2) { transition-delay: 0.2s; }
+            .nav-links.active li:nth-child(3) { transition-delay: 0.3s; }
+            .nav-links.active li:nth-child(4) { transition-delay: 0.4s; }
+            .nav-links.active li:nth-child(5) { transition-delay: 0.5s; }
+            .nav-links.active li:nth-child(6) { transition-delay: 0.6s; }
+            .nav-links a { display: block; padding: 15px 0; font-size: 1.2rem; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); letter-spacing: 1px; }
+            .nav-links a:not(.btn-solicitar)::after { display: none; }
+            .nav-links .btn-solicitar { margin-top: 20px; width: 100%; border-bottom: none; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+            
+            .isolated-card { padding: 30px 20px; border-radius: 15px; }
+            .isolated-card h2 { font-size: 1.6rem; flex-direction: column; gap: 5px; }
+            .social-buttons { flex-direction: column; width: 100%; }
+            .social-btn { width: 100%; justify-content: center; }
+            .checkbox-grid { grid-template-columns: 1fr; } 
+            #lista-vagas-site { grid-template-columns: 1fr !important; width: 100%; }
+            .vaga-card { width: 100%; }
+        }
     </style>
 </head>
 <body>
