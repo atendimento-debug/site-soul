@@ -150,21 +150,21 @@
         .valores-list li:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(10, 61, 115, 0.1); border-top-color: var(--primary-blue); }
         .valores-list li strong { color: var(--primary-blue); font-weight: 800; font-size: 1.3rem; display: block; margin-bottom: 12px; }
         /* --- Serviços --- */
-        #servicos { background-color: var(--background-grey); position: relative; overflow: hidden; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; }
+        #servicos { background-color: var(--background-grey); position: relative; overflow: hidden; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; max-width: 100%; width: 100%; margin: 0; }
         #servicos h2 { position: relative; z-index: 1; }
         .bg-animado { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
         .icone-flutuante { position: absolute; color: var(--primary-blue); opacity: 0.05; top: -50px; animation: flutuar linear infinite; }
         @keyframes flutuar { 0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0; } 10% { opacity: 0.08; } 90% { opacity: 0.08; } 100% { transform: translateY(1200px) rotate(360deg) scale(1.5); opacity: 0; } }
         
-        .servicos-carousel-wrapper { position: relative; max-width: 100%; padding: 0 60px; z-index: 1; }
+        .servicos-carousel-wrapper { position: relative; max-width: 1500px; margin: 0 auto; padding: 0 70px; z-index: 1; }
         .servicos-carrossel-track { display: flex; gap: 30px; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; padding: 20px 10px 50px 10px; align-items: stretch; -ms-overflow-style: none; scrollbar-width: none; }
         .servicos-carrossel-track::-webkit-scrollbar { display: none; }
-        .servico-card { background-color: var(--white); padding: 40px 30px; border-radius: 20px; box-shadow: var(--card-shadow); border: 1px solid #e2e8f0; transition: all 0.3s ease; cursor: pointer; min-width: 320px; max-width: 350px; flex: 0 0 auto; scroll-snap-align: start; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
+        .servico-card { background-color: var(--white); padding: 55px 40px; border-radius: 24px; box-shadow: var(--card-shadow); border: 1px solid #e2e8f0; transition: all 0.3s ease; cursor: pointer; min-width: 380px; max-width: 420px; flex: 0 0 auto; scroll-snap-align: start; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
         .servico-card:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(10, 61, 115, 0.12); border-color: var(--accent-blue); }
-        .servico-card i { font-size: 3.5rem; color: var(--accent-blue); margin-bottom: 25px; transition: transform 0.3s; }
+        .servico-card i { font-size: 4.2rem; color: var(--accent-blue); margin-bottom: 28px; transition: transform 0.3s; }
         .servico-card:hover i { transform: scale(1.1); color: var(--primary-blue); }
-        .servico-card h3 { color: var(--primary-blue); font-size: 1.2rem; font-weight: 800; margin-bottom: 15px; text-align: center; text-transform: uppercase; letter-spacing: 0.5px; }
-        .servico-card p { text-align: center; color: #64748b; margin: 0; font-size: 0.95rem; line-height: 1.6; } 
+        .servico-card h3 { color: var(--primary-blue); font-size: 1.4rem; font-weight: 800; margin-bottom: 18px; text-align: center; text-transform: uppercase; letter-spacing: 0.5px; }
+        .servico-card p { text-align: center; color: #64748b; margin: 0; font-size: 1.05rem; line-height: 1.7; } 
         .carousel-btn { position: absolute; top: 45%; transform: translateY(-50%); background-color: var(--white); color: var(--primary-blue); border: 1px solid #e2e8f0; border-radius: 50%; width: 55px; height: 55px; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 10; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: all 0.3s ease; }
         .carousel-btn:hover { background-color: var(--primary-blue); color: var(--white); transform: translateY(-50%) scale(1.1); border-color: var(--primary-blue); }
         .prev-btn { left: 0; }
@@ -612,6 +612,22 @@
                 <div class="servicos-carousel-wrapper">
                     <button class="carousel-btn prev-btn" id="btn-prev-servicos"><i class="material-icons">chevron_left</i></button>
                     <div class="servicos-carrossel-track" id="servicos-track">
+                        <div class="servico-card"><i class="material-icons">manage_accounts</i><h3>GESTÃO DE RH</h3><p>Recrutamento, seleção, administração de pessoal e desenvolvimento de talentos para otimizar os resultados da sua empresa.</p></div>
+                        <div class="servico-card"><i class="material-icons">account_balance_wallet</i><h3>FINANCEIRO</h3><p>Gestão financeira, faturamento, controle de contas e planejamento estratégico para manter a saúde do seu negócio.</p></div>
+                        <div class="servico-card"><i class="material-icons">security</i><h3>CONTROLADOR DE ACESSO</h3><p>Controle rigoroso de entrada e saída, monitoramento contínuo e segurança preventiva para o seu patrimônio.</p></div>
+                        <div class="servico-card"><i class="material-icons">cleaning_services</i><h3>AUXILIAR DE LIMPEZA</h3><p>Limpeza e higienização profissional, mantendo ambientes corporativos impecáveis.</p></div>
+                        <div class="servico-card"><i class="material-icons">support_agent</i><h3>PORTARIA E RECEPÇÃO</h3><p>Atendimento cordial, triagem de visitantes e gerenciamento de correspondências com máxima eficiência.</p></div>
+                        <div class="servico-card"><i class="material-icons">home_work</i><h3>ZELADORIA</h3><p>Manutenção e supervisão geral do condomínio, garantindo o bom funcionamento de todas as áreas comuns.</p></div>
+                        <div class="servico-card"><i class="material-icons">recycling</i><h3>COLETORES</h3><p>Gerenciamento de resíduos, coleta seletiva e descarte consciente para manter o ambiente limpo e organizado.</p></div>
+                        <div class="servico-card"><i class="material-icons">park</i><h3>JARDINEIROS</h3><p>Manutenção de áreas verdes, poda, plantio e conservação paisagística para valorizar o seu espaço.</p></div>
+                        <div class="servico-card"><i class="material-icons">inventory_2</i><h3>ESTOQUISTAS</h3><p>Organização, controle de inventário, recebimento e gestão eficiente do armazenamento de materiais.</p></div>
+                        <div class="servico-card"><i class="material-icons">medical_services</i><h3>ENFERMAGEM</h3><p>Assistência em saúde, cuidados preventivos, suporte clínico e atendimento humanizado para empresas e clínicas.</p></div>
+                        <div class="servico-card"><i class="material-icons">biotech</i><h3>ANALISTA CLINICO</h3><p>Profissionais altamente capacitados para análises clínicas, diagnósticos e gestão laboratorial de excelência.</p></div>
+                        <div class="servico-card"><i class="material-icons">science</i><h3>TÉCNICO DE LABORATÓRIO</h3><p>Suporte técnico rigoroso na coleta, manuseio de amostras, preparo de reagentes e assistência em exames.</p></div>
+                        <div class="servico-card"><i class="material-icons">restaurant</i><h3>NUTRICIONISTA</h3><p>Acompanhamento nutricional focado na saúde corporativa, controle de qualidade de alimentos e bem-estar.</p></div>
+                        <div class="servico-card"><i class="material-icons">supervisor_account</i><h3>SUPERVISORES</h3><p>Liderança, fiscalização e acompanhamento contínuo de equipes para garantir a máxima qualidade operacional.</p></div>
+                        
+                        <div class="servico-card"><i class="material-icons">add_circle_outline</i><h3>ENTRE OUTROS...</h3><p>Disponibilizamos diversos outros profissionais qualificados. Montamos a equipe sob medida para a sua necessidade!</p></div>
                         <div class="servico-card"><i class="material-icons">manage_accounts</i><h3>GESTÃO DE RH</h3><p>Recrutamento, seleção, administração de pessoal e desenvolvimento de talentos para otimizar os resultados da sua empresa.</p></div>
                         <div class="servico-card"><i class="material-icons">account_balance_wallet</i><h3>FINANCEIRO</h3><p>Gestão financeira, faturamento, controle de contas e planejamento estratégico para manter a saúde do seu negócio.</p></div>
                         <div class="servico-card"><i class="material-icons">security</i><h3>CONTROLADOR DE ACESSO</h3><p>Controle rigoroso de entrada e saída, monitoramento contínuo e segurança preventiva para o seu patrimônio.</p></div>
@@ -1106,7 +1122,7 @@ async function carregarVagasSite() {
             const btnNextServicos = document.getElementById('btn-next-servicos');
             let autoScrollServicos;
             if (servicosTrack && btnPrevServicos && btnNextServicos) {
-                const scrollAmount = 370; 
+                const scrollAmount = 440; // ajustado pro novo tamanho maior dos cards
                 const moveNext = () => {
                     if (servicosTrack.scrollLeft + servicosTrack.clientWidth >= servicosTrack.scrollWidth - 10) {
                         servicosTrack.scrollTo({ left: 0, behavior: 'smooth' });
