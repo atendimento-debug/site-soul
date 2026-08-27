@@ -833,10 +833,10 @@
 
                             <!-- 👇 NOVO: Foto 👇 -->
                             <div class="file-upload-wrapper">
-                                <input type="file" id="cand-foto" class="file-upload-input" accept="image/*" required>
+                                <input type="file" id="cand-foto" class="file-upload-input" accept="image/*">
                                 <div class="file-upload-custom" id="foto-upload-display">
                                     <i class="material-icons">add_a_photo</i>
-                                    <span id="foto-upload-text">Clique ou arraste para anexar sua Foto (rosto)</span>
+                                    <span id="foto-upload-text">Clique ou arraste para anexar sua Foto (rosto) — opcional</span>
                                 </div>
                             </div>
 
@@ -1264,7 +1264,7 @@ async function carregarVagasSite() {
                         fotoDisplay.innerHTML = `<i class="material-icons">check_circle</i><span id="foto-upload-text">${file.name}</span>`;
                     } else {
                         fotoDisplay.classList.remove('file-selected');
-                        fotoDisplay.innerHTML = `<i class="material-icons">add_a_photo</i><span id="foto-upload-text">Clique ou arraste para anexar sua Foto (rosto)</span>`;
+                        fotoDisplay.innerHTML = `<i class="material-icons">add_a_photo</i><span id="foto-upload-text">Clique ou arraste para anexar sua Foto (rosto) — opcional</span>`;
                     }
                 });
             }
@@ -1628,11 +1628,8 @@ async function carregarVagasSite() {
                         showToast("Selecione a categoria da sua CNH.", "error");
                         return;
                     }
+                    // Foto é opcional — quem não anexar segue normalmente sem ela.
                     const fotoFile = inputFoto && inputFoto.files[0];
-                    if (!fotoFile) {
-                        showToast("Por favor, anexe uma foto.", "error");
-                        return;
-                    }
                     // Referências: nomes de empresas onde já trabalhou, precisa de pelo menos 2
                     const linhasReferencia = Array.from(document.querySelectorAll('#lista-referencias-candidato .referencia-linha'));
                     const referenciasPreenchidas = linhasReferencia
@@ -1666,14 +1663,19 @@ async function carregarVagasSite() {
                         if (uploadError) throw uploadError;
                         const { data: publicUrlData } = supabaseClient.storage.from('documentos').getPublicUrl(caminhoStorage);
 
-                        // 👇 NOVO: upload da foto (mesmo bucket, pasta separada) 👇
-                        const cleanFotoName = fotoFile.name.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-zA-Z0-9.]/g, '_');
-                        const caminhoFoto = `Banco_Curriculos_Fotos/${Date.now()}_${cleanFotoName}`;
-                        const { error: uploadFotoError } = await supabaseClient.storage
-                            .from('documentos')
-                            .upload(caminhoFoto, fotoFile);
-                        if (uploadFotoError) throw uploadFotoError;
-                        const { data: publicUrlFotoData } = supabaseClient.storage.from('documentos').getPublicUrl(caminhoFoto);
+                        // 👇 NOVO: upload da foto (mesmo bucket, pasta separada) — só roda se
+                        // a pessoa anexou, já que a foto agora é opcional.
+                        let urlFotoFinal = null;
+                        if (fotoFile) {
+                            const cleanFotoName = fotoFile.name.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-zA-Z0-9.]/g, '_');
+                            const caminhoFoto = `Banco_Curriculos_Fotos/${Date.now()}_${cleanFotoName}`;
+                            const { error: uploadFotoError } = await supabaseClient.storage
+                                .from('documentos')
+                                .upload(caminhoFoto, fotoFile);
+                            if (uploadFotoError) throw uploadFotoError;
+                            const { data: publicUrlFotoData } = supabaseClient.storage.from('documentos').getPublicUrl(caminhoFoto);
+                            urlFotoFinal = publicUrlFotoData.publicUrl;
+                        }
 
                         const { error: dbError } = await supabaseClient.from('banco_curriculos').insert([{
                             nome: document.getElementById('cand-nome').value,
@@ -1688,7 +1690,7 @@ async function carregarVagasSite() {
                             estado_civil: document.getElementById('cand-estado-civil').value,
                             cpf: cpfValor.replace(/\D/g, ''),
                             data_nascimento: document.getElementById('cand-nascimento').value,
-                            foto_url: publicUrlFotoData.publicUrl,
+                            foto_url: urlFotoFinal,
                             cep: document.getElementById('cand-cep').value,
                             endereco_rua: document.getElementById('cand-rua').value,
                             endereco_numero: document.getElementById('cand-numero').value,
@@ -1709,7 +1711,7 @@ async function carregarVagasSite() {
                         fileDisplay.innerHTML = `<i class="material-icons">cloud_upload</i><span id="file-upload-text">Clique ou arraste para anexar seu Currículo (.PDF)</span>`;
                         if (fotoDisplay) {
                             fotoDisplay.classList.remove('file-selected');
-                            fotoDisplay.innerHTML = `<i class="material-icons">add_a_photo</i><span id="foto-upload-text">Clique ou arraste para anexar sua Foto (rosto)</span>`;
+                            fotoDisplay.innerHTML = `<i class="material-icons">add_a_photo</i><span id="foto-upload-text">Clique ou arraste para anexar sua Foto (rosto) — opcional</span>`;
                         }
                         if (spanIdade) spanIdade.textContent = '';
                         if (selectCnhCategoria) { selectCnhCategoria.disabled = true; selectCnhCategoria.required = false; }
