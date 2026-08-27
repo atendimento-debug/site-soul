@@ -1327,6 +1327,27 @@ async function carregarVagasSite() {
                 if (resto === 10 || resto === 11) resto = 0;
                 return resto === parseInt(cpf.charAt(10));
             }
+            // --- NOVO: VERIFICAÇÃO REAL DO RECAPTCHA (SERVIDOR) ---
+            // Antes, o site só checava se o campo do captcha tinha algum valor
+            // preenchido, mas nunca confirmava com o Google se aquele valor era
+            // válido de verdade — por isso o Google mandou o alerta de segurança
+            // avisando que o site "não está verificando as respostas". Essa função
+            // chama a Edge Function `verificar-recaptcha` do Supabase, que por sua
+            // vez confirma o token com o Google usando a chave secreta (que fica
+            // guardada só no Supabase, nunca aqui no código do site).
+            async function recaptchaValidoNoServidor(token) {
+                if (!token) return false;
+                try {
+                    const { data, error } = await supabaseClient.functions.invoke('verificar-recaptcha', {
+                        body: { token }
+                    });
+                    if (error) { console.error("Erro ao verificar reCAPTCHA:", error); return false; }
+                    return data && data.success === true;
+                } catch (err) {
+                    console.error("Erro ao verificar reCAPTCHA:", err);
+                    return false;
+                }
+            }
             const inputCpf = document.getElementById('cand-cpf');
             const avisoCpf = document.getElementById('cand-cpf-aviso');
             // 👇 NOVO: guarda o resultado da checagem de "já foi colaborador" pra usar
@@ -1500,16 +1521,21 @@ async function carregarVagasSite() {
             const formOrcamento = document.getElementById('orcamento-form');
             if (formOrcamento) {
                formOrcamento.addEventListener('submit', async function(e) {
-    e.preventDefault(); 
-    
-    // --- NOVA VALIDAÇÃO DO RECAPTCHA ---
+    e.preventDefault();
+
+    // --- VALIDAÇÃO DO RECAPTCHA (CONFIRMADA NO SERVIDOR) ---
     const recaptchaResponse = e.target.querySelector('.g-recaptcha-response').value;
     if (!recaptchaResponse) {
         showToast("Por favor, confirme que você não é um robô.", "error");
         return;
     }
+    if (!(await recaptchaValidoNoServidor(recaptchaResponse))) {
+        showToast("Não foi possível confirmar o captcha. Tente novamente.", "error");
+        if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
+        return;
+    }
     // -----------------------------------
-    
+
     const btnEnviar = document.getElementById('btn-enviar-orcamento');
                     
                     const checkboxes = document.querySelectorAll('input[name="orc-servico"]:checked');
@@ -1562,16 +1588,21 @@ async function carregarVagasSite() {
             const formCurriculo = document.getElementById('form-curriculo');
             if (formCurriculo) {
                 formCurriculo.addEventListener('submit', async function(e) {
-    e.preventDefault(); 
-    
-    // --- NOVA VALIDAÇÃO DO RECAPTCHA ---
+    e.preventDefault();
+
+    // --- VALIDAÇÃO DO RECAPTCHA (CONFIRMADA NO SERVIDOR) ---
     const recaptchaResponse = e.target.querySelector('.g-recaptcha-response').value;
     if (!recaptchaResponse) {
         showToast("Por favor, confirme que você não é um robô.", "error");
         return;
     }
+    if (!(await recaptchaValidoNoServidor(recaptchaResponse))) {
+        showToast("Não foi possível confirmar o captcha. Tente novamente.", "error");
+        if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
+        return;
+    }
     // -----------------------------------
-    
+
     const btnEnviar = document.getElementById('btn-enviar-cv');
                     
                     const checkboxes = document.querySelectorAll('input[name="cand-vaga"]:checked');
