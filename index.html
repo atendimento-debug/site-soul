@@ -740,7 +740,10 @@
                                     <option value="Viúvo(a)">Viúvo(a)</option>
                                     <option value="União Estável">União Estável</option>
                                 </select>
-                                <input type="text" id="cand-cpf" placeholder="CPF" required style="flex: 1;">
+                                <div style="flex: 1;">
+                                    <input type="text" id="cand-cpf" placeholder="CPF" required style="width: 100%;">
+                                    <span id="cand-cpf-aviso" style="display: block; font-size: 0.85rem; color: var(--error-red); margin-top: 6px; font-weight: 600;"></span>
+                                </div>
                             </div>
 
                             <div class="linha-estado-cidade">
@@ -1322,8 +1325,41 @@ async function carregarVagasSite() {
                 return resto === parseInt(cpf.charAt(10));
             }
             const inputCpf = document.getElementById('cand-cpf');
+            const avisoCpf = document.getElementById('cand-cpf-aviso');
+            // 👇 NOVO: guarda o resultado da checagem de "já foi colaborador" pra usar
+            // como trava (gate) na hora de enviar o formulário, sem precisar refazer
+            // a consulta de novo no clique do botão.
+            window.statusColaboradorCpf = null;
+            // Consulta uma função no banco (RPC) que só devolve o status do colaborador
+            // (Ativo/Desligado/etc) achado por aquele CPF — nunca dados pessoais dele.
+            // Precisa da função `verificar_colaborador_por_cpf` criada no Supabase.
+            async function verificarCpfJaFoiColaborador(cpfLimpo) {
+                if (!avisoCpf) return;
+                avisoCpf.textContent = '';
+                window.statusColaboradorCpf = null;
+                try {
+                    const { data: status, error } = await supabaseClient.rpc('verificar_colaborador_por_cpf', { p_cpf: cpfLimpo });
+                    if (error) { console.error("Erro ao verificar CPF:", error); return; }
+                    window.statusColaboradorCpf = status || null;
+                    if (status === 'Ativo') {
+                        avisoCpf.textContent = 'Não foi possível: esse CPF já faz parte da nossa equipe atualmente.';
+                    } else if (status) {
+                        avisoCpf.textContent = 'Esse CPF já foi de um colaborador do Grupo Soul.';
+                    }
+                } catch (err) {
+                    console.error("Erro ao verificar CPF:", err);
+                }
+            }
             if (inputCpf) {
-                inputCpf.addEventListener('input', function() { this.value = mascaraCPF(this.value); });
+                inputCpf.addEventListener('input', function() {
+                    this.value = mascaraCPF(this.value);
+                    if (avisoCpf) avisoCpf.textContent = '';
+                    window.statusColaboradorCpf = null;
+                });
+                inputCpf.addEventListener('blur', function() {
+                    const cpfLimpo = this.value.replace(/\D/g, '');
+                    if (cpfValido(this.value)) verificarCpfJaFoiColaborador(cpfLimpo);
+                });
             }
             // --- NOVO: CEP -> preenche Rua/Bairro automaticamente (mesmo mecanismo do sistema do RH) ---
             const inputCep = document.getElementById('cand-cep');
@@ -1529,6 +1565,18 @@ async function carregarVagasSite() {
                     const cpfValor = document.getElementById('cand-cpf').value;
                     if (!cpfValido(cpfValor)) {
                         showToast("Digite um CPF válido.", "error");
+                        return;
+                    }
+                    // 👇 TRAVA: bloqueia o envio se esse CPF já for de um colaborador
+                    // (atual ou ex) do Grupo Soul. Refaz a checagem aqui (não confia só
+                    // no resultado do blur) pra cobrir quem colou o CPF e enviou direto
+                    // sem tirar o foco do campo.
+                    await verificarCpfJaFoiColaborador(cpfValor.replace(/\D/g, ''));
+                    if (window.statusColaboradorCpf === 'Ativo') {
+                        showToast("Não foi possível enviar: esse CPF já faz parte da nossa equipe atualmente.", "error");
+                        return;
+                    } else if (window.statusColaboradorCpf) {
+                        showToast("Esse CPF já foi de um colaborador do Grupo Soul. Não é possível enviar um novo currículo por aqui.", "error");
                         return;
                     }
                     const cnhPossuiValor = document.getElementById('cand-cnh-possui').value;
