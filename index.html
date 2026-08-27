@@ -1335,17 +1335,22 @@ async function carregarVagasSite() {
             // (Ativo/Desligado/etc) achado por aquele CPF — nunca dados pessoais dele.
             // Precisa da função `verificar_colaborador_por_cpf` criada no Supabase.
             async function verificarCpfJaFoiColaborador(cpfLimpo) {
-                if (!avisoCpf) return;
-                avisoCpf.textContent = '';
                 window.statusColaboradorCpf = null;
                 try {
                     const { data: status, error } = await supabaseClient.rpc('verificar_colaborador_por_cpf', { p_cpf: cpfLimpo });
                     if (error) { console.error("Erro ao verificar CPF:", error); return; }
                     window.statusColaboradorCpf = status || null;
+                    // 👇 NOVO: agora avisa em tempo real com o mesmo popup (toast) que o
+                    // site já usa em qualquer outro erro, assim que o CPF é reconhecido —
+                    // não precisa mais esperar enviar o formulário pra descobrir.
                     if (status === 'Ativo') {
-                        avisoCpf.textContent = 'Não foi possível: esse CPF já faz parte da nossa equipe atualmente.';
+                        if (avisoCpf) avisoCpf.textContent = 'Esse CPF já faz parte da nossa equipe atualmente.';
+                        showToast("Não foi possível: esse CPF já faz parte da nossa equipe atualmente.", "error");
                     } else if (status) {
-                        avisoCpf.textContent = 'Esse CPF já foi de um colaborador do Grupo Soul.';
+                        if (avisoCpf) avisoCpf.textContent = 'Esse CPF já foi de um colaborador do Grupo Soul.';
+                        showToast("Esse CPF já foi de um colaborador do Grupo Soul. Não é possível enviar um novo currículo por aqui.", "error");
+                    } else if (avisoCpf) {
+                        avisoCpf.textContent = '';
                     }
                 } catch (err) {
                     console.error("Erro ao verificar CPF:", err);
@@ -1356,10 +1361,27 @@ async function carregarVagasSite() {
                     this.value = mascaraCPF(this.value);
                     if (avisoCpf) avisoCpf.textContent = '';
                     window.statusColaboradorCpf = null;
+                    // 👇 NOVO: assim que o CPF completa 11 dígitos, já valida na hora —
+                    // não precisa mais tirar o foco do campo (blur) nem tentar enviar o
+                    // formulário pra descobrir que o CPF está errado.
+                    const cpfLimpo = this.value.replace(/\D/g, '');
+                    if (cpfLimpo.length === 11) {
+                        if (!cpfValido(this.value)) {
+                            if (avisoCpf) avisoCpf.textContent = 'CPF inválido.';
+                            showToast("CPF inválido. Confira os números digitados.", "error");
+                        } else {
+                            verificarCpfJaFoiColaborador(cpfLimpo);
+                        }
+                    }
                 });
                 inputCpf.addEventListener('blur', function() {
                     const cpfLimpo = this.value.replace(/\D/g, '');
-                    if (cpfValido(this.value)) verificarCpfJaFoiColaborador(cpfLimpo);
+                    if (cpfLimpo.length > 0 && cpfLimpo.length < 11) {
+                        if (avisoCpf) avisoCpf.textContent = 'CPF incompleto.';
+                        showToast("CPF incompleto. Confira os números digitados.", "error");
+                    } else if (cpfValido(this.value)) {
+                        verificarCpfJaFoiColaborador(cpfLimpo);
+                    }
                 });
             }
             // --- NOVO: CEP -> preenche Rua/Bairro automaticamente (mesmo mecanismo do sistema do RH) ---
