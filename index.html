@@ -748,6 +748,7 @@
 
                             <div class="linha-estado-cidade">
                                 <div style="flex: 1;">
+                                    <span style="display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 6px; font-weight: 600;">Data de Nascimento</span>
                                     <input type="date" id="cand-nascimento" required style="width: 100%;">
                                     <span id="cand-idade-calculada" style="display: block; font-size: 0.85rem; color: #64748b; margin-top: 6px; font-weight: 600;"></span>
                                 </div>
@@ -765,7 +766,7 @@
                             <!-- 👇 NOVO: Endereço completo (CEP com preenchimento automático, igual já existe
                                  no sistema do RH) 👇 -->
                             <div class="linha-estado-cidade">
-                                <input type="text" id="cand-cep" placeholder="CEP" required style="flex: 1;" maxlength="9">
+                                <input type="text" id="cand-cep" placeholder="CEP (opcional)" style="flex: 1;" maxlength="9">
                                 <input type="text" id="cand-rua" placeholder="Rua / Logradouro" required style="flex: 2;">
                             </div>
                             <div class="linha-estado-cidade">
@@ -825,7 +826,7 @@
                             
                             <!-- 👇 NOVO: Referências (mínimo 2) 👇 -->
                             <div class="checkbox-container">
-                                <span class="checkbox-container-title">Referências Profissionais (mínimo 2)</span>
+                                <span class="checkbox-container-title">Referências Profissionais — Empresas onde já trabalhou (mínimo 2)</span>
                                 <div id="lista-referencias-candidato" style="display: flex; flex-direction: column; gap: 12px;"></div>
                                 <button type="button" id="btn-add-referencia" style="margin-top: 12px; background: none; border: 2px dashed var(--accent-blue); color: var(--primary-blue); font-weight: 700; padding: 10px; border-radius: 10px; cursor: pointer; width: 100%;">+ Adicionar Referência</button>
                             </div>
@@ -1368,7 +1369,10 @@ async function carregarVagasSite() {
                     this.value = this.value.replace(/\D/g, '').replace(/^(\d{5})(\d)/, '$1-$2').substr(0, 9);
                 });
                 inputCep.addEventListener('blur', async function() {
+                    // CEP é opcional agora — se a pessoa não souber, não faz nada e ela
+                    // preenche o endereço na mão nos campos abaixo.
                     const cepLimpo = this.value.replace(/\D/g, '');
+                    if (cepLimpo.length === 0) return;
                     if (cepLimpo.length !== 8) return;
                     try {
                         const response = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
@@ -1376,9 +1380,24 @@ async function carregarVagasSite() {
                         if (!data.erro) {
                             document.getElementById('cand-rua').value = data.logradouro || '';
                             document.getElementById('cand-bairro').value = data.bairro || '';
+                            // 👇 NOVO: agora também preenche Estado e Cidade automaticamente
+                            // (antes só preenchia Rua/Bairro e a pessoa tinha que escolher
+                            // Estado/Cidade na mão de novo).
+                            if (data.uf && selectEstado) {
+                                selectEstado.value = data.uf;
+                                try {
+                                    await carregarCidadesPorUf(data.uf);
+                                    if (data.localidade && selectCidade) {
+                                        const opcaoExiste = Array.from(selectCidade.options).some(o => o.value === data.localidade);
+                                        if (opcaoExiste) selectCidade.value = data.localidade;
+                                    }
+                                } catch (err) {
+                                    console.error("Erro ao carregar cidades do CEP", err);
+                                }
+                            }
                             document.getElementById('cand-numero').focus();
                         } else {
-                            showToast("CEP não encontrado. Verifique e tente novamente.", "error");
+                            showToast("CEP não encontrado. Se preferir, preencha o endereço manualmente abaixo.", "error");
                         }
                     } catch (err) {
                         console.error("Erro ao buscar CEP", err);
@@ -1393,11 +1412,9 @@ async function carregarVagasSite() {
                 linha.className = 'referencia-linha';
                 linha.style.cssText = 'display: flex; gap: 10px; align-items: center;';
                 linha.innerHTML = `
-                    <input type="text" class="ref-nome" placeholder="Nome da referência" required style="flex: 2; margin: 0;">
-                    <input type="tel" class="ref-telefone" placeholder="Telefone" required style="flex: 1; margin: 0;">
+                    <input type="text" class="ref-nome" placeholder="Nome da empresa" required style="flex: 1; margin: 0;">
                     <button type="button" class="btn-remover-referencia" title="Remover" style="background: none; border: none; color: var(--error-red); font-size: 1.4rem; cursor: pointer; padding: 5px; flex-shrink: 0;"><i class="material-icons">close</i></button>
                 `;
-                linha.querySelector('.ref-telefone').addEventListener('input', mascaraTelefone);
                 linha.querySelector('.btn-remover-referencia').addEventListener('click', function() {
                     // Nunca deixa ter menos de 2 linhas — referência é obrigatória (mínimo 2)
                     if (listaReferencias.children.length <= 2) {
@@ -1420,6 +1437,24 @@ async function carregarVagasSite() {
             // ========================================================
             const selectEstado = document.getElementById('cand-estado');
             const selectCidade = document.getElementById('cand-cidade');
+            // 👇 NOVO: virou uma função reaproveitável (retorna Promise) pra poder ser
+            // chamada tanto quando a pessoa troca o Estado manualmente quanto quando o
+            // CEP já vem preenchido com o Estado/Cidade automaticamente.
+            async function carregarCidadesPorUf(uf) {
+                selectCidade.innerHTML = '<option value="" disabled selected>Carregando cidades...</option>';
+                selectCidade.disabled = true;
+                const res = await fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios?orderBy=nome`);
+                const cidades = await res.json();
+                selectCidade.innerHTML = '<option value="" disabled selected>Selecione a Cidade</option>';
+                cidades.forEach(cidade => {
+                    const option = document.createElement('option');
+                    option.value = cidade.nome;
+                    option.textContent = cidade.nome;
+                    selectCidade.appendChild(option);
+                });
+                selectCidade.disabled = false;
+                return cidades;
+            }
             if(selectEstado && selectCidade) {
                 fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome')
                     .then(res => res.json())
@@ -1432,21 +1467,7 @@ async function carregarVagasSite() {
                         });
                     });
                 selectEstado.addEventListener('change', (e) => {
-                    const uf = e.target.value;
-                    selectCidade.innerHTML = '<option value="" disabled selected>Carregando cidades...</option>';
-                    selectCidade.disabled = true;
-                    fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios?orderBy=nome`)
-                        .then(res => res.json())
-                        .then(cidades => {
-                            selectCidade.innerHTML = '<option value="" disabled selected>Selecione a Cidade</option>';
-                            cidades.forEach(cidade => {
-                                const option = document.createElement('option');
-                                option.value = cidade.nome;
-                                option.textContent = cidade.nome;
-                                selectCidade.appendChild(option);
-                            });
-                            selectCidade.disabled = false;
-                        });
+                    carregarCidadesPorUf(e.target.value);
                 });
             }
             // ========================================================
@@ -1590,16 +1611,13 @@ async function carregarVagasSite() {
                         showToast("Por favor, anexe uma foto.", "error");
                         return;
                     }
-                    // Referências: precisa de pelo menos 2 preenchidas (nome + telefone)
+                    // Referências: nomes de empresas onde já trabalhou, precisa de pelo menos 2
                     const linhasReferencia = Array.from(document.querySelectorAll('#lista-referencias-candidato .referencia-linha'));
                     const referenciasPreenchidas = linhasReferencia
-                        .map(linha => ({
-                            nome: linha.querySelector('.ref-nome').value.trim(),
-                            telefone: linha.querySelector('.ref-telefone').value.trim()
-                        }))
-                        .filter(r => r.nome && r.telefone);
+                        .map(linha => ({ nome: linha.querySelector('.ref-nome').value.trim() }))
+                        .filter(r => r.nome);
                     if (referenciasPreenchidas.length < 2) {
-                        showToast("Preencha pelo menos 2 referências (nome e telefone).", "error");
+                        showToast("Preencha pelo menos 2 referências (nome de empresas onde já trabalhou).", "error");
                         return;
                     }
 
