@@ -139,7 +139,7 @@
         .form-container { width: 100%; display: flex; flex-direction: column; gap: 20px; margin-top: 40px; text-align: left; }
         
         /* Estilos dos Inputs Modernizados */
-        .form-container input[type="text"], .form-container input[type="email"], .form-container input[type="tel"], .form-container textarea, .form-container select { 
+        .form-container input[type="text"], .form-container input[type="email"], .form-container input[type="tel"], .form-container input[type="date"], .form-container textarea, .form-container select { 
             width: 100%; padding: 18px; border: 2px solid #e2e8f0; border-radius: 12px; font-family: inherit; font-size: 1rem; color: #334155; transition: all 0.3s ease; background-color: #f8fafc; font-weight: 500;
         }
         .form-container input::placeholder, .form-container textarea::placeholder { color: #94a3b8; font-weight: 400; }
@@ -358,7 +358,7 @@
         body.high-contrast h1, body.high-contrast h2, body.high-contrast h3, body.high-contrast p, body.high-contrast span, body.high-contrast label { color: #ffffff !important; }
         body.high-contrast .hero-overlay { background: rgba(0,0,0,0.8) !important; }
         
-        body.high-contrast input[type="text"], body.high-contrast input[type="email"], body.high-contrast input[type="tel"], body.high-contrast textarea, body.high-contrast select, body.high-contrast .file-upload-custom { background-color: #2a2a2a !important; color: #ffffff !important; border-color: #555 !important; }
+        body.high-contrast input[type="text"], body.high-contrast input[type="email"], body.high-contrast input[type="tel"], body.high-contrast input[type="date"], body.high-contrast textarea, body.high-contrast select, body.high-contrast .file-upload-custom { background-color: #2a2a2a !important; color: #ffffff !important; border-color: #555 !important; }
         body.high-contrast input::placeholder, body.high-contrast textarea::placeholder { color: #aaaaaa !important; }
         
         body.high-contrast i.material-icons, body.high-contrast .file-upload-custom i { color: #4FA8FF !important; }
@@ -730,7 +730,26 @@
                             <input type="text" id="cand-nome" placeholder="Seu Nome Completo" required>
                             <input type="email" id="cand-email" placeholder="Seu E-mail" required>
                             <input type="tel" id="cand-telefone" placeholder="Seu Telefone / WhatsApp" required>
-                            
+
+                            <div class="linha-estado-cidade">
+                                <select id="cand-estado-civil" required style="flex: 1; cursor: pointer;">
+                                    <option value="" disabled selected>Estado Civil</option>
+                                    <option value="Solteiro(a)">Solteiro(a)</option>
+                                    <option value="Casado(a)">Casado(a)</option>
+                                    <option value="Divorciado(a)">Divorciado(a)</option>
+                                    <option value="Viúvo(a)">Viúvo(a)</option>
+                                    <option value="União Estável">União Estável</option>
+                                </select>
+                                <input type="text" id="cand-cpf" placeholder="CPF" required style="flex: 1;">
+                            </div>
+
+                            <div class="linha-estado-cidade">
+                                <div style="flex: 1;">
+                                    <input type="date" id="cand-nascimento" required style="width: 100%;">
+                                    <span id="cand-idade-calculada" style="display: block; font-size: 0.85rem; color: #64748b; margin-top: 6px; font-weight: 600;"></span>
+                                </div>
+                            </div>
+
                             <div class="linha-estado-cidade">
                                 <select id="cand-estado" required style="flex: 1; cursor: pointer;">
                                     <option value="" disabled selected>Estado</option>
@@ -739,8 +758,41 @@
                                     <option value="" disabled selected>Selecione um estado primeiro</option>
                                 </select>
                             </div>
-                            <input type="text" id="cand-experiencia" placeholder="Resumo da experiência ou link do seu perfil no LinkedIn (Opcional)">
-                            
+
+                            <!-- 👇 NOVO: Endereço completo (CEP com preenchimento automático, igual já existe
+                                 no sistema do RH) 👇 -->
+                            <div class="linha-estado-cidade">
+                                <input type="text" id="cand-cep" placeholder="CEP" required style="flex: 1;" maxlength="9">
+                                <input type="text" id="cand-rua" placeholder="Rua / Logradouro" required style="flex: 2;">
+                            </div>
+                            <div class="linha-estado-cidade">
+                                <input type="text" id="cand-numero" placeholder="Número" required style="flex: 1;">
+                                <input type="text" id="cand-complemento" placeholder="Complemento (opcional)" style="flex: 1;">
+                                <input type="text" id="cand-bairro" placeholder="Bairro" required style="flex: 1;">
+                            </div>
+
+                            <input type="text" id="cand-experiencia" placeholder="Link do seu perfil no LinkedIn (Opcional)">
+
+                            <!-- 👇 NOVO: CNH 👇 -->
+                            <div class="linha-estado-cidade">
+                                <select id="cand-cnh-possui" required style="flex: 1; cursor: pointer;">
+                                    <option value="" disabled selected>Possui CNH?</option>
+                                    <option value="Sim">Sim, possuo CNH</option>
+                                    <option value="Não">Não possuo</option>
+                                </select>
+                                <select id="cand-cnh-categoria" disabled style="flex: 1; cursor: pointer;">
+                                    <option value="" disabled selected>Categoria</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="AB">AB</option>
+                                </select>
+                            </div>
+
+                            <!-- 👇 NOVO: Formação, Experiência e Objetivos 👇 -->
+                            <textarea id="cand-formacao" placeholder="Formação Acadêmica (Ex: Ensino Médio Completo, Técnico em Segurança, etc.)" rows="3" required></textarea>
+                            <textarea id="cand-experiencia-profissional" placeholder="Experiência Profissional (empresas, cargos e período em que trabalhou)" rows="4" required></textarea>
+                            <textarea id="cand-objetivos" placeholder="Seus objetivos profissionais" rows="3" required></textarea>
+
                             <div class="checkbox-container">
                                 <span class="checkbox-container-title">Qual a sua Área de Interesse? (Pode selecionar mais de uma)</span>
                                 <div class="checkbox-grid">
@@ -768,6 +820,22 @@
                                 </div>
                             </div>
                             
+                            <!-- 👇 NOVO: Referências (mínimo 2) 👇 -->
+                            <div class="checkbox-container">
+                                <span class="checkbox-container-title">Referências Profissionais (mínimo 2)</span>
+                                <div id="lista-referencias-candidato" style="display: flex; flex-direction: column; gap: 12px;"></div>
+                                <button type="button" id="btn-add-referencia" style="margin-top: 12px; background: none; border: 2px dashed var(--accent-blue); color: var(--primary-blue); font-weight: 700; padding: 10px; border-radius: 10px; cursor: pointer; width: 100%;">+ Adicionar Referência</button>
+                            </div>
+
+                            <!-- 👇 NOVO: Foto 👇 -->
+                            <div class="file-upload-wrapper">
+                                <input type="file" id="cand-foto" class="file-upload-input" accept="image/*" required>
+                                <div class="file-upload-custom" id="foto-upload-display">
+                                    <i class="material-icons">add_a_photo</i>
+                                    <span id="foto-upload-text">Clique ou arraste para anexar sua Foto (rosto)</span>
+                                </div>
+                            </div>
+
                             <div class="file-upload-wrapper">
                                 <input type="file" id="cand-arquivo" class="file-upload-input" accept=".pdf" required>
                                 <div class="file-upload-custom" id="file-upload-display">
@@ -1176,6 +1244,141 @@ async function carregarVagasSite() {
                     }
                 });
             }
+            // --- NOVO: LÓGICA DO INPUT DE FOTO PERSONALIZADO (mesmo padrão do currículo) ---
+            const inputFoto = document.getElementById('cand-foto');
+            const fotoDisplay = document.getElementById('foto-upload-display');
+            if (inputFoto) {
+                inputFoto.addEventListener('change', function() {
+                    if (this.files && this.files.length > 0) {
+                        const file = this.files[0];
+                        if (file.size > 5 * 1024 * 1024) {
+                            showToast("A foto é muito grande. Máximo 5MB.", "error");
+                            this.value = '';
+                            return;
+                        }
+                        fotoDisplay.classList.add('file-selected');
+                        fotoDisplay.innerHTML = `<i class="material-icons">check_circle</i><span id="foto-upload-text">${file.name}</span>`;
+                    } else {
+                        fotoDisplay.classList.remove('file-selected');
+                        fotoDisplay.innerHTML = `<i class="material-icons">add_a_photo</i><span id="foto-upload-text">Clique ou arraste para anexar sua Foto (rosto)</span>`;
+                    }
+                });
+            }
+            // --- NOVO: CNH (mostra a categoria só quando "Sim" for selecionado) ---
+            const selectCnhPossui = document.getElementById('cand-cnh-possui');
+            const selectCnhCategoria = document.getElementById('cand-cnh-categoria');
+            if (selectCnhPossui && selectCnhCategoria) {
+                selectCnhPossui.addEventListener('change', function() {
+                    if (this.value === 'Sim') {
+                        selectCnhCategoria.disabled = false;
+                        selectCnhCategoria.required = true;
+                    } else {
+                        selectCnhCategoria.disabled = true;
+                        selectCnhCategoria.required = false;
+                        selectCnhCategoria.value = '';
+                    }
+                });
+            }
+            // --- NOVO: DATA DE NASCIMENTO -> CALCULA E MOSTRA A IDADE NA HORA ---
+            const inputNascimento = document.getElementById('cand-nascimento');
+            const spanIdade = document.getElementById('cand-idade-calculada');
+            if (inputNascimento && spanIdade) {
+                inputNascimento.addEventListener('change', function() {
+                    const idade = calcularIdade(this.value);
+                    spanIdade.textContent = idade !== null ? `Idade: ${idade} anos` : '';
+                });
+            }
+            function calcularIdade(dataStr) {
+                if (!dataStr) return null;
+                const nasc = new Date(dataStr + 'T00:00:00');
+                if (isNaN(nasc.getTime())) return null;
+                const hoje = new Date();
+                let idade = hoje.getFullYear() - nasc.getFullYear();
+                const aindaNaoFezAniversario = (hoje.getMonth() < nasc.getMonth()) || (hoje.getMonth() === nasc.getMonth() && hoje.getDate() < nasc.getDate());
+                if (aindaNaoFezAniversario) idade--;
+                return (idade >= 0 && idade < 130) ? idade : null;
+            }
+            // --- NOVO: MÁSCARA DE CPF (mesmo padrão usado no sistema do RH) ---
+            function mascaraCPF(v) {
+                v = v.replace(/\D/g, "");
+                if (v.length > 11) v = v.substring(0, 11);
+                v = v.replace(/(\d{3})(\d)/, "$1.$2");
+                v = v.replace(/(\d{3})(\d)/, "$1.$2");
+                v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+                return v;
+            }
+            function cpfValido(cpf) {
+                cpf = (cpf || '').replace(/\D/g, '');
+                if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+                let soma = 0;
+                for (let i = 0; i < 9; i++) soma += parseInt(cpf.charAt(i)) * (10 - i);
+                let resto = (soma * 10) % 11;
+                if (resto === 10 || resto === 11) resto = 0;
+                if (resto !== parseInt(cpf.charAt(9))) return false;
+                soma = 0;
+                for (let i = 0; i < 10; i++) soma += parseInt(cpf.charAt(i)) * (11 - i);
+                resto = (soma * 10) % 11;
+                if (resto === 10 || resto === 11) resto = 0;
+                return resto === parseInt(cpf.charAt(10));
+            }
+            const inputCpf = document.getElementById('cand-cpf');
+            if (inputCpf) {
+                inputCpf.addEventListener('input', function() { this.value = mascaraCPF(this.value); });
+            }
+            // --- NOVO: CEP -> preenche Rua/Bairro automaticamente (mesmo mecanismo do sistema do RH) ---
+            const inputCep = document.getElementById('cand-cep');
+            if (inputCep) {
+                inputCep.addEventListener('input', function() {
+                    this.value = this.value.replace(/\D/g, '').replace(/^(\d{5})(\d)/, '$1-$2').substr(0, 9);
+                });
+                inputCep.addEventListener('blur', async function() {
+                    const cepLimpo = this.value.replace(/\D/g, '');
+                    if (cepLimpo.length !== 8) return;
+                    try {
+                        const response = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
+                        const data = await response.json();
+                        if (!data.erro) {
+                            document.getElementById('cand-rua').value = data.logradouro || '';
+                            document.getElementById('cand-bairro').value = data.bairro || '';
+                            document.getElementById('cand-numero').focus();
+                        } else {
+                            showToast("CEP não encontrado. Verifique e tente novamente.", "error");
+                        }
+                    } catch (err) {
+                        console.error("Erro ao buscar CEP", err);
+                    }
+                });
+            }
+            // --- NOVO: REFERÊNCIAS (mínimo 2, com botão de adicionar/remover) ---
+            const listaReferencias = document.getElementById('lista-referencias-candidato');
+            const btnAddReferencia = document.getElementById('btn-add-referencia');
+            function criarLinhaReferencia() {
+                const linha = document.createElement('div');
+                linha.className = 'referencia-linha';
+                linha.style.cssText = 'display: flex; gap: 10px; align-items: center;';
+                linha.innerHTML = `
+                    <input type="text" class="ref-nome" placeholder="Nome da referência" required style="flex: 2; margin: 0;">
+                    <input type="tel" class="ref-telefone" placeholder="Telefone" required style="flex: 1; margin: 0;">
+                    <button type="button" class="btn-remover-referencia" title="Remover" style="background: none; border: none; color: var(--error-red); font-size: 1.4rem; cursor: pointer; padding: 5px; flex-shrink: 0;"><i class="material-icons">close</i></button>
+                `;
+                linha.querySelector('.ref-telefone').addEventListener('input', mascaraTelefone);
+                linha.querySelector('.btn-remover-referencia').addEventListener('click', function() {
+                    // Nunca deixa ter menos de 2 linhas — referência é obrigatória (mínimo 2)
+                    if (listaReferencias.children.length <= 2) {
+                        showToast("São necessárias pelo menos 2 referências.", "error");
+                        return;
+                    }
+                    linha.remove();
+                });
+                return linha;
+            }
+            if (listaReferencias) {
+                listaReferencias.appendChild(criarLinhaReferencia());
+                listaReferencias.appendChild(criarLinhaReferencia());
+            }
+            if (btnAddReferencia) {
+                btnAddReferencia.addEventListener('click', () => listaReferencias.appendChild(criarLinhaReferencia()));
+            }
             // ========================================================
             // SISTEMA DE ESTADO E CIDADE (API IBGE)
             // ========================================================
@@ -1321,6 +1524,37 @@ async function carregarVagasSite() {
                         showToast("Nesse campo só aceitamos o link do seu perfil do LinkedIn (linkedin.com/in/...). Outros links não são permitidos.", "error");
                         return;
                     }
+
+                    // 👇 NOVO: validações dos campos adicionados no formulário 👇
+                    const cpfValor = document.getElementById('cand-cpf').value;
+                    if (!cpfValido(cpfValor)) {
+                        showToast("Digite um CPF válido.", "error");
+                        return;
+                    }
+                    const cnhPossuiValor = document.getElementById('cand-cnh-possui').value;
+                    const cnhCategoriaValor = document.getElementById('cand-cnh-categoria').value;
+                    if (cnhPossuiValor === 'Sim' && !cnhCategoriaValor) {
+                        showToast("Selecione a categoria da sua CNH.", "error");
+                        return;
+                    }
+                    const fotoFile = inputFoto && inputFoto.files[0];
+                    if (!fotoFile) {
+                        showToast("Por favor, anexe uma foto.", "error");
+                        return;
+                    }
+                    // Referências: precisa de pelo menos 2 preenchidas (nome + telefone)
+                    const linhasReferencia = Array.from(document.querySelectorAll('#lista-referencias-candidato .referencia-linha'));
+                    const referenciasPreenchidas = linhasReferencia
+                        .map(linha => ({
+                            nome: linha.querySelector('.ref-nome').value.trim(),
+                            telefone: linha.querySelector('.ref-telefone').value.trim()
+                        }))
+                        .filter(r => r.nome && r.telefone);
+                    if (referenciasPreenchidas.length < 2) {
+                        showToast("Preencha pelo menos 2 referências (nome e telefone).", "error");
+                        return;
+                    }
+
                     btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 8px;">hourglass_empty</i> Enviando... Aguarde.';
                     btnEnviar.disabled = true;
                     try {
@@ -1343,6 +1577,16 @@ async function carregarVagasSite() {
                             .upload(caminhoStorage, file);
                         if (uploadError) throw uploadError;
                         const { data: publicUrlData } = supabaseClient.storage.from('documentos').getPublicUrl(caminhoStorage);
+
+                        // 👇 NOVO: upload da foto (mesmo bucket, pasta separada) 👇
+                        const cleanFotoName = fotoFile.name.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-zA-Z0-9.]/g, '_');
+                        const caminhoFoto = `Banco_Curriculos_Fotos/${Date.now()}_${cleanFotoName}`;
+                        const { error: uploadFotoError } = await supabaseClient.storage
+                            .from('documentos')
+                            .upload(caminhoFoto, fotoFile);
+                        if (uploadFotoError) throw uploadFotoError;
+                        const { data: publicUrlFotoData } = supabaseClient.storage.from('documentos').getPublicUrl(caminhoFoto);
+
                         const { error: dbError } = await supabaseClient.from('banco_curriculos').insert([{
                             nome: document.getElementById('cand-nome').value,
                             email: emailInput,
@@ -1351,7 +1595,23 @@ async function carregarVagasSite() {
                             vagas_interesse: vagasSelecionadas,
                             experiencia_resumo: document.getElementById('cand-experiencia').value,
                             curriculo_url: publicUrlData.publicUrl,
-                            status: 'Novo'
+                            status: 'Novo',
+                            // 👇 NOVO: campos extras coletados agora no formulário 👇
+                            estado_civil: document.getElementById('cand-estado-civil').value,
+                            cpf: cpfValor.replace(/\D/g, ''),
+                            data_nascimento: document.getElementById('cand-nascimento').value,
+                            foto_url: publicUrlFotoData.publicUrl,
+                            cep: document.getElementById('cand-cep').value,
+                            endereco_rua: document.getElementById('cand-rua').value,
+                            endereco_numero: document.getElementById('cand-numero').value,
+                            endereco_complemento: document.getElementById('cand-complemento').value,
+                            endereco_bairro: document.getElementById('cand-bairro').value,
+                            cnh_possui: cnhPossuiValor,
+                            cnh_categoria: cnhPossuiValor === 'Sim' ? cnhCategoriaValor : null,
+                            formacao_academica: document.getElementById('cand-formacao').value,
+                            experiencias_profissionais: document.getElementById('cand-experiencia-profissional').value,
+                            objetivo_profissional: document.getElementById('cand-objetivos').value,
+                            referencias: referenciasPreenchidas
                         }]);
                         if (dbError) throw dbError;
                         showToast("Currículo enviado com sucesso!", "success");
@@ -1359,6 +1619,18 @@ async function carregarVagasSite() {
                         document.getElementById('wrapper-cand-outro').classList.remove('show');
                         fileDisplay.classList.remove('file-selected');
                         fileDisplay.innerHTML = `<i class="material-icons">cloud_upload</i><span id="file-upload-text">Clique ou arraste para anexar seu Currículo (.PDF)</span>`;
+                        if (fotoDisplay) {
+                            fotoDisplay.classList.remove('file-selected');
+                            fotoDisplay.innerHTML = `<i class="material-icons">add_a_photo</i><span id="foto-upload-text">Clique ou arraste para anexar sua Foto (rosto)</span>`;
+                        }
+                        if (spanIdade) spanIdade.textContent = '';
+                        if (selectCnhCategoria) { selectCnhCategoria.disabled = true; selectCnhCategoria.required = false; }
+                        // Reseta as linhas de referência de volta pra 2 em branco
+                        if (listaReferencias) {
+                            listaReferencias.innerHTML = '';
+                            listaReferencias.appendChild(criarLinhaReferencia());
+                            listaReferencias.appendChild(criarLinhaReferencia());
+                        }
                     } catch (error) {
                         console.error("Erro no envio:", error);
                         showToast(error.message || "Erro na conexão. Tente novamente.", "error");
