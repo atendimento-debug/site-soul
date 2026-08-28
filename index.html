@@ -759,7 +759,10 @@
                                  opcional pra quem não souber o CEP de cor, mas preenche mais fácil
                                  pra quem sabe. -->
                             <div class="linha-estado-cidade">
-                                <input type="text" id="cand-cep" placeholder="CEP (opcional) — preencha aqui primeiro para autocompletar o resto" style="flex: 1;" maxlength="9">
+                                <div style="flex: 1;">
+                                    <span style="display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 6px; font-weight: 600;">Sabe seu CEP? Preencha primeiro que o resto do endereço vem sozinho (opcional)</span>
+                                    <input type="text" id="cand-cep" placeholder="CEP" style="width: 100%;" maxlength="9">
+                                </div>
                             </div>
 
                             <div class="linha-estado-cidade">
@@ -809,6 +812,8 @@
                                     <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Auxiliar de Limpeza"> Auxiliar de Limpeza</label>
                                     <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Copeira"> Copeira</label>
                                     <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Auxiliar de Produção"> Auxiliar de Produção</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Assistente Administrativo"> Assistente Administrativo</label>
+                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Auxiliar de Escritório"> Auxiliar de Escritório</label>
                                     <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Portaria e Recepção"> Portaria e Recepção</label>
                                     <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Zeladoria"> Zeladoria</label>
                                     <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Coletor de Resíduos"> Coletor de Resíduos</label>
@@ -849,7 +854,7 @@
                                 <input type="file" id="cand-arquivo" class="file-upload-input" accept=".pdf" required>
                                 <div class="file-upload-custom" id="file-upload-display">
                                     <i class="material-icons">cloud_upload</i>
-                                    <span id="file-upload-text">Clique ou arraste para anexar seu Currículo (.PDF)</span>
+                                    <span id="file-upload-text">Clique ou arraste para anexar seu Currículo em PDF (obrigatório)</span>
                                 </div>
                             </div>
                             <div style="margin-top: 15px; margin-bottom: 25px; text-align: left;">
@@ -1251,7 +1256,7 @@ async function carregarVagasSite() {
                         fileDisplay.innerHTML = `<i class="material-icons">check_circle</i><span id="file-upload-text">${file.name}</span>`;
                     } else {
                         fileDisplay.classList.remove('file-selected');
-                        fileDisplay.innerHTML = `<i class="material-icons">cloud_upload</i><span id="file-upload-text">Clique ou arraste para anexar seu Currículo (.PDF)</span>`;
+                        fileDisplay.innerHTML = `<i class="material-icons">cloud_upload</i><span id="file-upload-text">Clique ou arraste para anexar seu Currículo em PDF (obrigatório)</span>`;
                     }
                 });
             }
@@ -1746,7 +1751,7 @@ async function carregarVagasSite() {
                         formCurriculo.reset();
                         document.getElementById('wrapper-cand-outro').classList.remove('show');
                         fileDisplay.classList.remove('file-selected');
-                        fileDisplay.innerHTML = `<i class="material-icons">cloud_upload</i><span id="file-upload-text">Clique ou arraste para anexar seu Currículo (.PDF)</span>`;
+                        fileDisplay.innerHTML = `<i class="material-icons">cloud_upload</i><span id="file-upload-text">Clique ou arraste para anexar seu Currículo em PDF (obrigatório)</span>`;
                         if (fotoDisplay) {
                             fotoDisplay.classList.remove('file-selected');
                             fotoDisplay.innerHTML = `<i class="material-icons">add_a_photo</i><span id="foto-upload-text">Clique ou arraste para anexar sua Foto (rosto) — opcional</span>`;
