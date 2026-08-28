@@ -833,7 +833,29 @@
                                     <input type="text" id="cand-vaga-outra" placeholder="Digite o cargo que está buscando se não estiver na lista...">
                                 </div>
                             </div>
-                            
+
+                            <!-- 👇 NOVO: Como ficou sabendo da vaga 👇 -->
+                            <div class="checkbox-container">
+                                <span class="checkbox-container-title">Como você ficou sabendo desta vaga?</span>
+                                <select id="cand-como-soube" style="width: 100%; cursor: pointer;">
+                                    <option value="" disabled selected>Selecione...</option>
+                                    <option value="Indeed">Indeed</option>
+                                    <option value="InfoJobs">InfoJobs</option>
+                                    <option value="Gupy">Gupy</option>
+                                    <option value="LinkedIn">LinkedIn</option>
+                                    <option value="Grupo de WhatsApp">Grupo de WhatsApp</option>
+                                    <option value="Grupo de Facebook">Grupo de Facebook</option>
+                                    <option value="Indicação">Indicação de alguém</option>
+                                    <option value="Outros">Outros</option>
+                                </select>
+                                <div id="wrapper-cand-indicacao" class="outra-vaga-wrapper">
+                                    <input type="text" id="cand-indicacao-nome" placeholder="Nome de quem te indicou">
+                                </div>
+                                <div id="wrapper-cand-como-soube-outro" class="outra-vaga-wrapper">
+                                    <input type="text" id="cand-como-soube-outro" placeholder="Digite onde você ficou sabendo da vaga...">
+                                </div>
+                            </div>
+
                             <!-- 👇 NOVO: Referências (mínimo 2) 👇 -->
                             <div class="checkbox-container">
                                 <span class="checkbox-container-title">Referências Profissionais — Empresas onde já trabalhou (mínimo 2)</span>
@@ -1147,6 +1169,33 @@ async function carregarVagasSite() {
                         wrapperCandOutro.classList.remove('show');
                         inputCandOutro.required = false;
                         inputCandOutro.value = '';
+                    }
+                });
+            }
+            // --- LÓGICA DO "COMO FICOU SABENDO DA VAGA" (INDICAÇÃO / OUTROS) ---
+            const selectComoSoube = document.getElementById('cand-como-soube');
+            const wrapperIndicacao = document.getElementById('wrapper-cand-indicacao');
+            const inputIndicacaoNome = document.getElementById('cand-indicacao-nome');
+            const wrapperComoSoubeOutro = document.getElementById('wrapper-cand-como-soube-outro');
+            const inputComoSoubeOutro = document.getElementById('cand-como-soube-outro');
+            if (selectComoSoube) {
+                selectComoSoube.addEventListener('change', function() {
+                    // Esconde os dois primeiro, depois só mostra o que faz sentido pra opção escolhida
+                    wrapperIndicacao.classList.remove('show');
+                    inputIndicacaoNome.required = false;
+                    inputIndicacaoNome.value = '';
+                    wrapperComoSoubeOutro.classList.remove('show');
+                    inputComoSoubeOutro.required = false;
+                    inputComoSoubeOutro.value = '';
+
+                    if (this.value === 'Indicação') {
+                        wrapperIndicacao.classList.add('show');
+                        inputIndicacaoNome.required = true;
+                        setTimeout(() => inputIndicacaoNome.focus(), 300);
+                    } else if (this.value === 'Outros') {
+                        wrapperComoSoubeOutro.classList.add('show');
+                        inputComoSoubeOutro.required = true;
+                        setTimeout(() => inputComoSoubeOutro.focus(), 300);
                     }
                 });
             }
@@ -1744,12 +1793,29 @@ async function carregarVagasSite() {
                             formacao_academica: document.getElementById('cand-formacao').value,
                             experiencias_profissionais: document.getElementById('cand-experiencia-profissional').value,
                             objetivo_profissional: document.getElementById('cand-objetivos').value,
-                            referencias: referenciasPreenchidas
+                            referencias: referenciasPreenchidas,
+                            // 👇 NOVO: como o candidato ficou sabendo da vaga. Quando escolhe
+                            // "Outros", já junta a resposta digitada dentro do próprio campo
+                            // (mesmo padrão usado no "Outro Cargo"); "Indicação" guarda o nome
+                            // de quem indicou num campo à parte.
+                            como_soube_vaga: (function() {
+                                const valorComoSoube = document.getElementById('cand-como-soube').value;
+                                if (valorComoSoube === 'Outros') {
+                                    const textoOutroComoSoube = document.getElementById('cand-como-soube-outro').value.trim();
+                                    return textoOutroComoSoube ? `Outros: ${textoOutroComoSoube}` : 'Outros';
+                                }
+                                return valorComoSoube || null;
+                            })(),
+                            indicacao_nome: document.getElementById('cand-como-soube').value === 'Indicação'
+                                ? document.getElementById('cand-indicacao-nome').value.trim()
+                                : null
                         }]);
                         if (dbError) throw dbError;
                         showToast("Currículo enviado com sucesso!", "success");
                         formCurriculo.reset();
                         document.getElementById('wrapper-cand-outro').classList.remove('show');
+                        document.getElementById('wrapper-cand-indicacao').classList.remove('show');
+                        document.getElementById('wrapper-cand-como-soube-outro').classList.remove('show');
                         fileDisplay.classList.remove('file-selected');
                         fileDisplay.innerHTML = `<i class="material-icons">cloud_upload</i><span id="file-upload-text">Clique ou arraste para anexar seu Currículo em PDF (obrigatório)</span>`;
                         if (fotoDisplay) {
