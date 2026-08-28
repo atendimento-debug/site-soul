@@ -754,6 +754,14 @@
                                 </div>
                             </div>
 
+                            <!-- 👇 NOVO: CEP vem primeiro — preenchendo ele, Estado/Cidade/Rua/Bairro
+                                 já vêm automáticos (igual já existe no sistema do RH). Continua
+                                 opcional pra quem não souber o CEP de cor, mas preenche mais fácil
+                                 pra quem sabe. -->
+                            <div class="linha-estado-cidade">
+                                <input type="text" id="cand-cep" placeholder="CEP (opcional) — preencha aqui primeiro para autocompletar o resto" style="flex: 1;" maxlength="9">
+                            </div>
+
                             <div class="linha-estado-cidade">
                                 <select id="cand-estado" required style="flex: 1; cursor: pointer;">
                                     <option value="" disabled selected>Estado</option>
@@ -763,10 +771,7 @@
                                 </select>
                             </div>
 
-                            <!-- 👇 NOVO: Endereço completo (CEP com preenchimento automático, igual já existe
-                                 no sistema do RH) 👇 -->
                             <div class="linha-estado-cidade">
-                                <input type="text" id="cand-cep" placeholder="CEP (opcional)" style="flex: 1;" maxlength="9">
                                 <input type="text" id="cand-rua" placeholder="Rua / Logradouro" required style="flex: 2;">
                             </div>
                             <div class="linha-estado-cidade">
