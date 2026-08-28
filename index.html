@@ -697,8 +697,8 @@
                             </div>
                             
                             <textarea id="orc-mensagem" placeholder="Detalhes do seu pedido (metragem, quantidade de profissionais, escopo do trabalho, etc.)..." rows="5"></textarea>
-                            <div class="g-recaptcha" data-sitekey="6LcOOP4sAAAAADlQmccoOxJ1aCGvIv4oh_aAOzqj" style="margin-bottom: 20px;"></div>
-                            
+                            <div class="g-recaptcha" data-sitekey="6LcOOP4sAAAAADlQmccoOxJ1aCGvIv4oh_aAOzqj" data-expired-callback="onRecaptchaExpirado" style="margin-bottom: 20px;"></div>
+
                             <button type="submit" id="btn-enviar-orcamento" class="btn-solicitar-full"><i class="material-icons" style="vertical-align: middle; margin-right: 8px;">send</i> Enviar Pedido de Orçamento</button>
                         </form>
                     </div>
@@ -885,8 +885,8 @@
         <span>Autorizo o armazenamento do meu currículo e dados para futuros processos seletivos do Grupo Soul. <br> <a href="#" onclick="openModal(event)" style="color: var(--primary-blue); text-decoration: underline; font-weight: bold;">Leia nossa Política de Privacidade (LGPD)</a>.</span>
     </label>
 </div>
-                            <div class="g-recaptcha" data-sitekey="6LcOOP4sAAAAADlQmccoOxJ1aCGvIv4oh_aAOzqj" style="margin-bottom: 20px;"></div>
-                            
+                            <div class="g-recaptcha" data-sitekey="6LcOOP4sAAAAADlQmccoOxJ1aCGvIv4oh_aAOzqj" data-expired-callback="onRecaptchaExpirado" style="margin-bottom: 20px;"></div>
+
                             <button type="submit" id="btn-enviar-cv" class="btn-solicitar-full"><i class="material-icons" style="vertical-align: middle; margin-right: 8px;">upload_file</i> Enviar Currículo</button>
                         </form>
                     </div>
@@ -1407,6 +1407,16 @@ async function carregarVagasSite() {
                     return false;
                 }
             }
+            // 👇 O token do reCAPTCHA expira ~2 minutos depois de marcado. Em formulários
+            // longos (como o de Currículo, que tem upload de foto + PDF e vários campos),
+            // é comum o usuário demorar mais que isso pra terminar de preencher — daí na
+            // hora de enviar o token já está vencido e o Google recusa a confirmação
+            // ("Não foi possível confirmar o captcha"), mesmo com o quadrinho ainda
+            // marcado na tela. Esse callback avisa o usuário assim que o Google marca o
+            // token como expirado, pra ele já saber que precisa marcar de novo.
+            function onRecaptchaExpirado() {
+                showToast("O captcha expirou por demora no preenchimento. Marque \"Não sou um robô\" novamente antes de enviar.", "error");
+            }
             const inputCpf = document.getElementById('cand-cpf');
             const avisoCpf = document.getElementById('cand-cpf-aviso');
             // 👇 NOVO: guarda o resultado da checagem de "já foi colaborador" pra usar
@@ -1589,7 +1599,7 @@ async function carregarVagasSite() {
         return;
     }
     if (!(await recaptchaValidoNoServidor(recaptchaResponse))) {
-        showToast("Não foi possível confirmar o captcha. Tente novamente.", "error");
+        showToast("O captcha expirou ou não pôde ser confirmado. Marque \"Não sou um robô\" novamente e envie de novo.", "error");
         if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
         return;
     }
@@ -1649,21 +1659,34 @@ async function carregarVagasSite() {
                 formCurriculo.addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    // --- VALIDAÇÃO DO RECAPTCHA (CONFIRMADA NO SERVIDOR) ---
-    const recaptchaResponse = e.target.querySelector('.g-recaptcha-response').value;
-    if (!recaptchaResponse) {
-        showToast("Por favor, confirme que você não é um robô.", "error");
-        return;
-    }
-    if (!(await recaptchaValidoNoServidor(recaptchaResponse))) {
-        showToast("Não foi possível confirmar o captcha. Tente novamente.", "error");
-        if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
-        return;
-    }
-    // -----------------------------------
+    // 🆕 Trava contra clique duplo: como a checagem do captcha é assíncrona
+    // (chama o Supabase e o Google), um segundo toque no botão antes da
+    // resposta voltar reenviava o MESMO token — e o Google recusa token
+    // repetido ("timeout-or-duplicate"), gerando esse erro à toa.
+    if (window.envioCvEmAndamento) return;
+    window.envioCvEmAndamento = true;
 
     const btnEnviar = document.getElementById('btn-enviar-cv');
-                    
+    const textoOriginalBtnCv = btnEnviar.innerHTML;
+    btnEnviar.disabled = true;
+
+    try {
+        // --- VALIDAÇÃO DO RECAPTCHA (CONFIRMADA NO SERVIDOR) ---
+        const recaptchaResponse = e.target.querySelector('.g-recaptcha-response').value;
+        if (!recaptchaResponse) {
+            showToast("Por favor, confirme que você não é um robô.", "error");
+            return;
+        }
+        if (!(await recaptchaValidoNoServidor(recaptchaResponse))) {
+            // 👇 Causa mais comum: o captcha foi marcado no início, mas o preenchimento
+            // (principalmente o upload da foto/PDF) demorou mais que os ~2 minutos de
+            // validade do token — daí o Google recusa mesmo com o quadrinho marcado.
+            showToast("O captcha expirou (demorou pra enviar). Marque \"Não sou um robô\" de novo e envie outra vez.", "error");
+            if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
+            return;
+        }
+        // -----------------------------------
+
                     const checkboxes = document.querySelectorAll('input[name="cand-vaga"]:checked');
                     if (checkboxes.length === 0) {
                         showToast("Selecione pelo menos uma área de interesse.", "error");
@@ -1837,6 +1860,14 @@ async function carregarVagasSite() {
                         btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 8px;">upload_file</i> Enviar Currículo';
                         btnEnviar.disabled = false;
                     }
+    } finally {
+        // Libera a trava de clique duplo e garante que o botão nunca fique
+        // travado se alguma validação acima barrou o envio antes de chegar
+        // no bloco de envio de verdade (que já reseta o botão sozinho).
+        window.envioCvEmAndamento = false;
+        btnEnviar.disabled = false;
+        btnEnviar.innerHTML = textoOriginalBtnCv;
+    }
                 });
             }
             // ========================================================
