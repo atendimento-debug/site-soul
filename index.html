@@ -723,17 +723,18 @@
                 <div class="isolated-card fade-in">
                     <span class="isolated-eyebrow">Currículo em minutos</span>
                     <h2><i class="material-icons icon-title">badge</i> Trabalhe Conosco</h2>
-                    <p style="color: #64748b; margin-bottom: 30px; font-size: 1.15rem; font-weight: 500;">Faça parte da nossa equipe! Selecione sua área e anexe seu currículo em formato PDF.</p>
-                    
+                    <p style="color: #64748b; margin-bottom: 10px; font-size: 1.15rem; font-weight: 500;">Faça parte da nossa equipe! Selecione sua área e anexe seu currículo em formato PDF.</p>
+                    <p style="color: #64748b; margin-bottom: 30px; font-size: 0.9rem; font-weight: 600;">Os campos marcados com <span style="color: var(--error-red); font-weight: 800;">*</span> são obrigatórios.</p>
+
                     <div class="form-container">
                         <form id="form-curriculo">
-                            <input type="text" id="cand-nome" placeholder="Seu Nome Completo" required>
-                            <input type="email" id="cand-email" placeholder="Seu E-mail" required>
-                            <input type="tel" id="cand-telefone" placeholder="Seu Telefone / WhatsApp" required>
+                            <input type="text" id="cand-nome" placeholder="Seu Nome Completo *" required>
+                            <input type="email" id="cand-email" placeholder="Seu E-mail *" required>
+                            <input type="tel" id="cand-telefone" placeholder="Seu Telefone / WhatsApp *" required>
 
                             <div class="linha-estado-cidade">
                                 <select id="cand-estado-civil" required style="flex: 1; cursor: pointer;">
-                                    <option value="" disabled selected>Estado Civil</option>
+                                    <option value="" disabled selected>Estado Civil *</option>
                                     <option value="Solteiro(a)">Solteiro(a)</option>
                                     <option value="Casado(a)">Casado(a)</option>
                                     <option value="Divorciado(a)">Divorciado(a)</option>
@@ -741,14 +742,14 @@
                                     <option value="União Estável">União Estável</option>
                                 </select>
                                 <div style="flex: 1;">
-                                    <input type="text" id="cand-cpf" placeholder="CPF" required style="width: 100%;">
+                                    <input type="text" id="cand-cpf" placeholder="CPF *" required style="width: 100%;">
                                     <span id="cand-cpf-aviso" style="display: block; font-size: 0.85rem; color: var(--error-red); margin-top: 6px; font-weight: 600;"></span>
                                 </div>
                             </div>
 
                             <div class="linha-estado-cidade">
                                 <div style="flex: 1;">
-                                    <span style="display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 6px; font-weight: 600;">Data de Nascimento</span>
+                                    <span style="display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 6px; font-weight: 600;">Data de Nascimento <span style="color: var(--error-red);">*</span></span>
                                     <input type="date" id="cand-nascimento" required style="width: 100%;">
                                     <span id="cand-idade-calculada" style="display: block; font-size: 0.85rem; color: #64748b; margin-top: 6px; font-weight: 600;"></span>
                                 </div>
@@ -767,20 +768,20 @@
 
                             <div class="linha-estado-cidade">
                                 <select id="cand-estado" required style="flex: 1; cursor: pointer;">
-                                    <option value="" disabled selected>Estado</option>
+                                    <option value="" disabled selected>Estado *</option>
                                 </select>
                                 <select id="cand-cidade" required disabled style="flex: 2; cursor: pointer;">
-                                    <option value="" disabled selected>Selecione um estado primeiro</option>
+                                    <option value="" disabled selected>Selecione um estado primeiro *</option>
                                 </select>
                             </div>
 
                             <div class="linha-estado-cidade">
-                                <input type="text" id="cand-rua" placeholder="Rua / Logradouro" required style="flex: 2;">
+                                <input type="text" id="cand-rua" placeholder="Rua / Logradouro *" required style="flex: 2;">
                             </div>
                             <div class="linha-estado-cidade">
-                                <input type="text" id="cand-numero" placeholder="Número" required style="flex: 1;">
+                                <input type="text" id="cand-numero" placeholder="Número *" required style="flex: 1;">
                                 <input type="text" id="cand-complemento" placeholder="Complemento (opcional)" style="flex: 1;">
-                                <input type="text" id="cand-bairro" placeholder="Bairro" required style="flex: 1;">
+                                <input type="text" id="cand-bairro" placeholder="Bairro *" required style="flex: 1;">
                             </div>
 
                             <input type="text" id="cand-experiencia" placeholder="Link do seu perfil no LinkedIn (Opcional)">
@@ -788,7 +789,7 @@
                             <!-- 👇 NOVO: CNH 👇 -->
                             <div class="linha-estado-cidade">
                                 <select id="cand-cnh-possui" required style="flex: 1; cursor: pointer;">
-                                    <option value="" disabled selected>Possui CNH?</option>
+                                    <option value="" disabled selected>Possui CNH? *</option>
                                     <option value="Sim">Sim, possuo CNH</option>
                                     <option value="Não">Não possuo</option>
                                 </select>
@@ -801,12 +802,12 @@
                             </div>
 
                             <!-- 👇 NOVO: Formação, Experiência e Objetivos 👇 -->
-                            <textarea id="cand-formacao" placeholder="Formação Acadêmica (Ex: Ensino Médio Completo, Técnico em Segurança, etc.)" rows="3" required></textarea>
-                            <textarea id="cand-experiencia-profissional" placeholder="Experiência Profissional (empresas, cargos e período em que trabalhou)" rows="4" required></textarea>
-                            <textarea id="cand-objetivos" placeholder="Seus objetivos profissionais" rows="3" required></textarea>
+                            <textarea id="cand-formacao" placeholder="Formação Acadêmica (Ex: Ensino Médio Completo, Técnico em Segurança, etc.) *" rows="3" required></textarea>
+                            <textarea id="cand-experiencia-profissional" placeholder="Experiência Profissional (empresas, cargos e período em que trabalhou) *" rows="4" required></textarea>
+                            <textarea id="cand-objetivos" placeholder="Seus objetivos profissionais *" rows="3" required></textarea>
 
                             <div class="checkbox-container">
-                                <span class="checkbox-container-title">Qual a sua Área de Interesse? (Pode selecionar mais de uma)</span>
+                                <span class="checkbox-container-title">Qual a sua Área de Interesse? (Pode selecionar mais de uma) <span style="color: var(--error-red);">*</span></span>
                                 <div class="checkbox-grid">
                                     <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Controlador de Acesso"> Controlador de Acesso</label>
                                     <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Auxiliar de Limpeza"> Auxiliar de Limpeza</label>
@@ -859,7 +860,7 @@
 
                             <!-- 👇 NOVO: Referências (mínimo 2) 👇 -->
                             <div class="checkbox-container">
-                                <span class="checkbox-container-title">Referências Profissionais — Empresas onde já trabalhou (mínimo 2)</span>
+                                <span class="checkbox-container-title">Referências Profissionais — Empresas onde já trabalhou (mínimo 2) <span style="color: var(--error-red);">*</span></span>
                                 <div id="lista-referencias-candidato" style="display: flex; flex-direction: column; gap: 12px;"></div>
                                 <button type="button" id="btn-add-referencia" style="margin-top: 12px; background: none; border: 2px dashed var(--accent-blue); color: var(--primary-blue); font-weight: 700; padding: 10px; border-radius: 10px; cursor: pointer; width: 100%;">+ Adicionar Referência</button>
                             </div>
@@ -877,13 +878,13 @@
                                 <input type="file" id="cand-arquivo" class="file-upload-input" accept=".pdf" required>
                                 <div class="file-upload-custom" id="file-upload-display">
                                     <i class="material-icons">cloud_upload</i>
-                                    <span id="file-upload-text">Clique ou arraste para anexar seu Currículo em PDF (obrigatório)</span>
+                                    <span id="file-upload-text">Clique ou arraste para anexar seu Currículo em PDF (obrigatório) <span style="color: var(--error-red); font-weight: 800;">*</span></span>
                                 </div>
                             </div>
                             <div style="margin-top: 15px; margin-bottom: 25px; text-align: left;">
     <label class="checkbox-label-normal">
-        <input type="checkbox" required> 
-        <span>Autorizo o armazenamento do meu currículo e dados para futuros processos seletivos do Grupo Soul. <br> <a href="#" onclick="openModal(event)" style="color: var(--primary-blue); text-decoration: underline; font-weight: bold;">Leia nossa Política de Privacidade (LGPD)</a>.</span>
+        <input type="checkbox" required>
+        <span><span style="color: var(--error-red); font-weight: 800;">*</span> Autorizo o armazenamento do meu currículo e dados para futuros processos seletivos do Grupo Soul. <br> <a href="#" onclick="openModal(event)" style="color: var(--primary-blue); text-decoration: underline; font-weight: bold;">Leia nossa Política de Privacidade (LGPD)</a>.</span>
     </label>
 </div>
                             <div class="g-recaptcha" data-sitekey="6LcOOP4sAAAAADlQmccoOxJ1aCGvIv4oh_aAOzqj" data-expired-callback="onRecaptchaExpirado" style="margin-bottom: 20px;"></div>
@@ -1527,7 +1528,7 @@ async function carregarVagasSite() {
                 linha.className = 'referencia-linha';
                 linha.style.cssText = 'display: flex; gap: 10px; align-items: center;';
                 linha.innerHTML = `
-                    <input type="text" class="ref-nome" placeholder="Nome da empresa" required style="flex: 1; margin: 0;">
+                    <input type="text" class="ref-nome" placeholder="Nome da empresa *" required style="flex: 1; margin: 0;">
                     <button type="button" class="btn-remover-referencia" title="Remover" style="background: none; border: none; color: var(--error-red); font-size: 1.4rem; cursor: pointer; padding: 5px; flex-shrink: 0;"><i class="material-icons">close</i></button>
                 `;
                 linha.querySelector('.btn-remover-referencia').addEventListener('click', function() {
