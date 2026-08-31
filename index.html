@@ -523,9 +523,16 @@
             .isolated-card h2 { font-size: 1.6rem; flex-direction: column; gap: 5px; }
             .social-buttons { flex-direction: column; width: 100%; }
             .social-btn { width: 100%; justify-content: center; }
-            .checkbox-grid { grid-template-columns: 1fr; } 
+            .checkbox-grid { grid-template-columns: 1fr; }
             #lista-vagas-site { grid-template-columns: 1fr !important; width: 100%; }
             .vaga-card { width: 100%; }
+
+            /* 👇 CORREÇÃO: no celular, campos lado a lado (Estado Civil/CPF,
+               Estado/Cidade, Possui CNH?/Categoria, etc.) ficavam estreitos
+               demais e cortavam o texto no meio (ex: "Possui CNH?" virando
+               "Possui CNI"). Agora empilha um embaixo do outro, com largura
+               cheia, então o texto sempre cabe inteiro. */
+            .linha-estado-cidade { flex-direction: column; gap: 15px; }
         }
     </style>
 </head>
@@ -972,6 +979,20 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
         document.getElementById('lgpd-modal').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
         });
+        // 👇 CORREÇÃO: no celular, quando essas páginas (Trabalhe Conosco, Orçamento,
+        // Vagas) eram trocadas via menu/link (sem recarregar a página), os elementos
+        // ".fade-in"/".reveal-*" continuavam com opacity:0 (o observer já tinha marcado
+        // eles como "fora da tela" enquanto a página estava com display:none, e no
+        // celular o navegador só reavalia isso depois de um scroll de verdade — daí a
+        // tela ficava em branco até a pessoa rolar). Aqui, na hora de trocar de página,
+        // já força esses elementos a aparecerem na hora, sem depender do observer.
+        function revelarAgora(pageId) {
+            const pagina = document.getElementById(pageId);
+            if (!pagina) return;
+            pagina.querySelectorAll('.fade-in, .reveal-left, .reveal-right, .reveal-up').forEach(el => {
+                el.classList.add('is-visible');
+            });
+        }
         // --- SISTEMA DE ROTEAMENTO (NAVEGAÇÃO POR LINK DIRETO / ABAS) ---
         function handleRoute() {
             const hash = window.location.hash || '#/'; 
@@ -999,16 +1020,19 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
             if (hash === '#/trabalhe') {
                 document.getElementById('page-trabalhe').classList.add('active-page');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-                
+                revelarAgora('page-trabalhe');
+
             } else if (hash === '#/orcamento') {
                 document.getElementById('page-orcamento').classList.add('active-page');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-            
+                revelarAgora('page-orcamento');
+
             // 👇 ROTA DA NOVA PÁGINA DE VAGAS 👇
             } else if (hash === '#/vagas') {
                 document.getElementById('page-vagas').classList.add('active-page');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-                
+                revelarAgora('page-vagas');
+
             } else {
                 document.getElementById('page-home').classList.add('active-page');
                 
