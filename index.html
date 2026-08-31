@@ -533,6 +533,18 @@
                "Possui CNI"). Agora empilha um embaixo do outro, com largura
                cheia, então o texto sempre cabe inteiro. */
             .linha-estado-cidade { flex-direction: column; gap: 15px; }
+
+            /* 👇 A pedido: no celular o efeito de "aparecer aos poucos ao rolar"
+               (fade-in / reveal) estava dando problema (tela ficava em branco até
+               a pessoa arrastar pra baixo). Em vez de ficar caçando esse bug,
+               desativamos o efeito só no celular — os elementos já aparecem
+               visíveis direto, sem animação, sem depender de scroll. No
+               computador o efeito continua normal. */
+            .fade-in, .reveal-left, .reveal-right, .reveal-up {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
         }
     </style>
 </head>
@@ -800,7 +812,7 @@
                                     <option value="Sim">Sim, possuo CNH</option>
                                     <option value="Não">Não possuo</option>
                                 </select>
-                                <select id="cand-cnh-categoria" disabled style="flex: 1; cursor: pointer;">
+                                <select id="cand-cnh-categoria" disabled style="flex: 1; cursor: pointer; display: none;">
                                     <option value="" disabled selected>Categoria</option>
                                     <option value="A">A</option>
                                     <option value="B">B</option>
@@ -1363,10 +1375,12 @@ async function carregarVagasSite() {
                     if (this.value === 'Sim') {
                         selectCnhCategoria.disabled = false;
                         selectCnhCategoria.required = true;
+                        selectCnhCategoria.style.display = '';
                     } else {
                         selectCnhCategoria.disabled = true;
                         selectCnhCategoria.required = false;
                         selectCnhCategoria.value = '';
+                        selectCnhCategoria.style.display = 'none';
                     }
                 });
             }
