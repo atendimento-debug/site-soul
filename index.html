@@ -700,6 +700,7 @@
                             </div>
                             
                             <textarea id="orc-mensagem" placeholder="Detalhes do seu pedido (metragem, quantidade de profissionais, escopo do trabalho, etc.)..." rows="5"></textarea>
+                            <div aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden;"><label>Não preencha este campo <input type="text" id="orc-hp" name="website" tabindex="-1" autocomplete="off"></label></div>
                             <div class="g-recaptcha" data-sitekey="6LcOOP4sAAAAADlQmccoOxJ1aCGvIv4oh_aAOzqj" data-expired-callback="onRecaptchaExpirado" style="margin-bottom: 20px;"></div>
 
                             <button type="submit" id="btn-enviar-orcamento" class="btn-solicitar-full"><i class="material-icons" style="vertical-align: middle; margin-right: 8px;">send</i> Enviar Pedido de Orçamento</button>
@@ -891,6 +892,7 @@
         <span><span style="color: var(--error-red); font-weight: 800;">*</span> Autorizo o armazenamento do meu currículo e dados para futuros processos seletivos do Grupo Soul. <br> <a href="#" onclick="openModal(event)" style="color: var(--primary-blue); text-decoration: underline; font-weight: bold;">Leia nossa Política de Privacidade (LGPD)</a>.</span>
     </label>
 </div>
+                            <div aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden;"><label>Não preencha este campo <input type="text" id="cand-hp" name="website" tabindex="-1" autocomplete="off"></label></div>
                             <div class="g-recaptcha" data-sitekey="6LcOOP4sAAAAADlQmccoOxJ1aCGvIv4oh_aAOzqj" data-expired-callback="onRecaptchaExpirado" style="margin-bottom: 20px;"></div>
 
                             <button type="submit" id="btn-enviar-cv" class="btn-solicitar-full"><i class="material-icons" style="vertical-align: middle; margin-right: 8px;">upload_file</i> Enviar Currículo</button>
@@ -1422,6 +1424,23 @@ async function carregarVagasSite() {
             // chama a Edge Function `verificar-recaptcha` do Supabase, que por sua
             // vez confirma o token com o Google usando a chave secreta (que fica
             // guardada só no Supabase, nunca aqui no código do site).
+            // 🔒 Envio dos formulários (Currículo/Orçamento) pelo SERVIDOR: a função `enviar-formulario-site`
+            // confere o captcha, limita flood por IP/CPF, valida arquivos e grava no banco. O navegador não grava mais direto.
+            window.paginaAbertaEm = Date.now();
+            async function enviarFormularioSite(formData) {
+                formData.append('tempo', String(Date.now() - window.paginaAbertaEm));
+                const { data, error } = await supabaseClient.functions.invoke('enviar-formulario-site', { body: formData });
+                if (error) {
+                    let msg = 'Erro na conexão. Tente novamente.';
+                    try { const j = await error.context.json(); if (j && j.erro) msg = j.erro; } catch (_) {}
+                    throw new Error(msg);
+                }
+                if (!data || data.ok !== true) {
+                    if (data && data.codigo === 'captcha' && typeof grecaptcha !== 'undefined') grecaptcha.reset();
+                    throw new Error((data && data.erro) || 'Não foi possível enviar. Tente novamente.');
+                }
+                return data;
+            }
             async function recaptchaValidoNoServidor(token) {
                 if (!token) return false;
                 try {
@@ -1626,11 +1645,7 @@ async function carregarVagasSite() {
         showToast("Por favor, confirme que você não é um robô.", "error");
         return;
     }
-    if (!(await recaptchaValidoNoServidor(recaptchaResponse))) {
-        showToast("O captcha expirou ou não pôde ser confirmado. Marque \"Não sou um robô\" novamente e envie de novo.", "error");
-        if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
-        return;
-    }
+    // (a confirmação com o Google agora acontece dentro da função do servidor, junto com o envio)
     // -----------------------------------
 
     const btnEnviar = document.getElementById('btn-enviar-orcamento');
@@ -1658,15 +1673,19 @@ async function carregarVagasSite() {
                     btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 8px;">hourglass_empty</i> Enviando Pedido...';
                     btnEnviar.disabled = true;
                     try {
-                        const { error } = await supabaseClient.from('orcamentos_site').insert([{
+                        const fdOrc = new FormData();
+                        fdOrc.append('tipo', 'orcamento');
+                        fdOrc.append('token', recaptchaResponse);
+                        fdOrc.append('hp', (document.getElementById('orc-hp') || {}).value || '');
+                        fdOrc.append('dados', JSON.stringify({
                             nome: document.getElementById('orc-nome').value,
                             email: emailInput,
                             telefone: document.getElementById('orc-telefone').value,
                             servicos_interesse: servicosSelecionados,
-                            mensagem: document.getElementById('orc-mensagem').value,
-                            status: 'Novo' 
-                        }]);
-                        if (error) throw error;
+                            mensagem: document.getElementById('orc-mensagem').value
+                        }));
+                        await enviarFormularioSite(fdOrc);
+                        if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
                         showToast("Pedido de Orçamento enviado com sucesso!", "success");
                         formOrcamento.reset();
                         document.getElementById('wrapper-orc-outro').classList.remove('show');
@@ -1705,14 +1724,7 @@ async function carregarVagasSite() {
             showToast("Por favor, confirme que você não é um robô.", "error");
             return;
         }
-        if (!(await recaptchaValidoNoServidor(recaptchaResponse))) {
-            // 👇 Causa mais comum: o captcha foi marcado no início, mas o preenchimento
-            // (principalmente o upload da foto/PDF) demorou mais que os ~2 minutos de
-            // validade do token — daí o Google recusa mesmo com o quadrinho marcado.
-            showToast("O captcha expirou (demorou pra enviar). Marque \"Não sou um robô\" de novo e envie outra vez.", "error");
-            if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
-            return;
-        }
+        // (a confirmação com o Google agora acontece dentro da função do servidor, junto com o envio)
         // -----------------------------------
 
                     const checkboxes = document.querySelectorAll('input[name="cand-vaga"]:checked');
@@ -1787,53 +1799,21 @@ async function carregarVagasSite() {
                     btnEnviar.disabled = true;
                     try {
                         const telefoneInput = document.getElementById('cand-telefone').value;
-                        const { data: isSpam, error: rpcError } = await supabaseClient.rpc('verificar_spam_candidato', {
-                            p_email: emailInput,
-                            p_telefone: telefoneInput
-                        });
-                        if (rpcError) throw rpcError;
-                        if (isSpam) {
-                            showToast("Você já enviou um currículo nas últimas 24 horas. Aguarde para enviar novamente.", "error");
-                            btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 8px;">upload_file</i> Enviar Currículo';
-                            btnEnviar.disabled = false;
-                            return; 
-                        }
-                        const cleanName = file.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9.]/g, '_');
-                        const caminhoStorage = `Banco_Curriculos/${Date.now()}_${cleanName}`;
-                        const { data: uploadData, error: uploadError } = await supabaseClient.storage
-                            .from('documentos') 
-                            .upload(caminhoStorage, file);
-                        if (uploadError) throw uploadError;
-                        const { data: publicUrlData } = supabaseClient.storage.from('documentos').getPublicUrl(caminhoStorage);
-
-                        // 👇 NOVO: upload da foto (mesmo bucket, pasta separada) — só roda se
-                        // a pessoa anexou, já que a foto agora é opcional.
-                        let urlFotoFinal = null;
-                        if (fotoFile) {
-                            const cleanFotoName = fotoFile.name.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-zA-Z0-9.]/g, '_');
-                            const caminhoFoto = `Banco_Curriculos_Fotos/${Date.now()}_${cleanFotoName}`;
-                            const { error: uploadFotoError } = await supabaseClient.storage
-                                .from('documentos')
-                                .upload(caminhoFoto, fotoFile);
-                            if (uploadFotoError) throw uploadFotoError;
-                            const { data: publicUrlFotoData } = supabaseClient.storage.from('documentos').getPublicUrl(caminhoFoto);
-                            urlFotoFinal = publicUrlFotoData.publicUrl;
-                        }
-
-                        const { error: dbError } = await supabaseClient.from('banco_curriculos').insert([{
+                        const fdCv = new FormData();
+                        fdCv.append('tipo', 'curriculo');
+                        fdCv.append('token', recaptchaResponse);
+                        fdCv.append('hp', (document.getElementById('cand-hp') || {}).value || '');
+                        fdCv.append('dados', JSON.stringify({
                             nome: document.getElementById('cand-nome').value,
                             email: emailInput,
                             telefone: telefoneInput,
-                            cidade_estado: `${document.getElementById('cand-cidade').value} - ${document.getElementById('cand-estado').value}`,
+                            cidade: document.getElementById('cand-cidade').value,
+                            estado: document.getElementById('cand-estado').value,
                             vagas_interesse: vagasSelecionadas,
                             experiencia_resumo: document.getElementById('cand-experiencia').value,
-                            curriculo_url: publicUrlData.publicUrl,
-                            status: 'Novo',
-                            // 👇 NOVO: campos extras coletados agora no formulário 👇
                             estado_civil: document.getElementById('cand-estado-civil').value,
                             cpf: cpfValor.replace(/\D/g, ''),
                             data_nascimento: document.getElementById('cand-nascimento').value,
-                            foto_url: urlFotoFinal,
                             cep: document.getElementById('cand-cep').value,
                             endereco_rua: document.getElementById('cand-rua').value,
                             endereco_numero: document.getElementById('cand-numero').value,
@@ -1845,10 +1825,6 @@ async function carregarVagasSite() {
                             experiencias_profissionais: document.getElementById('cand-experiencia-profissional').value,
                             objetivo_profissional: document.getElementById('cand-objetivos').value,
                             referencias: referenciasPreenchidas,
-                            // 👇 NOVO: como o candidato ficou sabendo da vaga. Quando escolhe
-                            // "Outros", já junta a resposta digitada dentro do próprio campo
-                            // (mesmo padrão usado no "Outro Cargo"); "Indicação" guarda o nome
-                            // de quem indicou num campo à parte.
                             como_soube_vaga: (function() {
                                 const valorComoSoube = document.getElementById('cand-como-soube').value;
                                 if (valorComoSoube === 'Outros') {
@@ -1860,8 +1836,11 @@ async function carregarVagasSite() {
                             indicacao_nome: document.getElementById('cand-como-soube').value === 'Indicação'
                                 ? document.getElementById('cand-indicacao-nome').value.trim()
                                 : null
-                        }]);
-                        if (dbError) throw dbError;
+                        }));
+                        fdCv.append('curriculo', file, file.name);
+                        if (fotoFile) fdCv.append('foto', fotoFile, fotoFile.name);
+                        await enviarFormularioSite(fdCv);
+                        if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
                         showToast("Currículo enviado com sucesso!", "success");
                         formCurriculo.reset();
                         document.getElementById('wrapper-cand-outro').classList.remove('show');
