@@ -1034,12 +1034,27 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
         }
         // --- SISTEMA DE ROTEAMENTO (NAVEGAÇÃO POR LINK DIRETO / ABAS) ---
         function handleRoute() {
-            const hash = window.location.hash || '#/'; 
-            
+            const hash = window.location.hash || '#/';
+
+            // Título por aba — sem isso o Analytics mostrava tudo junto como uma
+            // única página ("Soul Facilities"), porque o título nunca mudava e o
+            // caminho depois do # é ignorado pelo relatório padrão de páginas.
+            const titulosPorRota = {
+                '#/': 'Início',
+                '#/quem-somos': 'Quem Somos',
+                '#/servicos': 'Serviços',
+                '#/como-funciona': 'Como Contratar',
+                '#/vagas': 'Vagas Abertas',
+                '#/trabalhe': 'Trabalhe Conosco',
+                '#/orcamento': 'Solicitar Orçamento'
+            };
+            document.title = (titulosPorRota[hash] || 'Início') + ' | Soul Facilities';
+
             if (typeof gtag === 'function') {
                 gtag('event', 'page_view', {
-                    page_path: hash, 
-                    page_location: window.location.href
+                    page_path: hash,
+                    page_location: window.location.href,
+                    page_title: document.title
                 });
             }
             document.querySelectorAll('.page-view').forEach(page => {
