@@ -461,6 +461,30 @@
         .servico-card { border-top: 4px solid var(--accent-blue); }
         .servico-card i { background: #f0f6ff; padding: 18px; border-radius: 50%; }
 
+        /* --- Como Funciona: 4 passos do processo, numerados, no mesmo padrão visual das outras seções --- */
+        .processo-grid {
+            list-style: none; padding: 0; margin: 0; display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; counter-reset: processo-contador;
+        }
+        .processo-card {
+            background-color: var(--white); padding: 35px 25px 30px; border-radius: 16px;
+            border-top: 5px solid var(--accent-blue); box-shadow: var(--card-shadow);
+            text-align: center; position: relative; transition: all 0.3s ease;
+        }
+        .processo-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(10, 61, 115, 0.1); border-top-color: var(--primary-blue); }
+        .processo-card::before {
+            counter-increment: processo-contador; content: counter(processo-contador);
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 18px;
+            width: 46px; height: 46px; border-radius: 50%; font-size: 1.2rem; font-weight: 800; color: var(--white);
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+        }
+        .processo-card i { font-size: 2rem; color: var(--accent-blue); margin-bottom: 12px; display: block; }
+        .processo-card h3 { color: var(--primary-blue); font-size: 1.15rem; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.4px; }
+        .processo-card p { color: #64748b; font-size: 0.98rem; line-height: 1.6; margin: 0; }
+        body.high-contrast .processo-card { background-color: #1e1e1e !important; color: #ffffff !important; border-color: #444 !important; box-shadow: none !important; }
+        body.high-contrast .processo-card::before { background: linear-gradient(135deg, #0A3D73, #4FA8FF); }
+        body.high-contrast .processo-card p { color: #cbd5e1 !important; }
+
         /* --- Ícones dentro dos campos dos formulários (sem mexer no HTML/IDs) --- */
         #orc-nome, #cand-nome { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='12' cy='7' r='4'/%3E%3C/svg%3E"); }
         #orc-email, #cand-email { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Crect x='2' y='4' width='20' height='16' rx='2'/%3E%3Cpath d='m22 6-10 7L2 6'/%3E%3C/svg%3E"); }
@@ -577,6 +601,7 @@
                 <li><a href="#/">Home</a></li>
                 <li><a href="#/quem-somos">Quem Somos</a></li>
                 <li><a href="#/servicos">Serviços</a></li>
+                <li><a href="#/como-funciona">Como Funciona</a></li>
                 <li><a href="#/vagas">Vagas Abertas</a></li> <li><a href="#/trabalhe">Trabalhe Conosco</a></li>
                 <li><a href="#/orcamento" class="btn-solicitar">Solicitar Orçamento</a></li>
             </ul>
@@ -653,7 +678,19 @@
                     <button class="carousel-btn next-btn" id="btn-next-servicos"><i class="material-icons">chevron_right</i></button>
                 </div>
             </section>
-        </div> 
+            <section id="como-funciona" class="section fade-in">
+                <h2>COMO FUNCIONA</h2>
+                <p style="text-align:center; max-width: 720px; margin: -10px auto 35px; color: #64748b; font-size: 1.05rem; line-height: 1.7;">
+                    Do primeiro contato ao início do serviço, simplificamos cada etapa para você.
+                </p>
+                <ul class="processo-grid">
+                    <li class="processo-card"><i class="material-icons">chat</i><h3>Solicita Orçamento</h3><p>Você entra em contato pelo site ou WhatsApp e conta a sua necessidade.</p></li>
+                    <li class="processo-card"><i class="material-icons">fact_check</i><h3>Visita Técnica</h3><p>Avaliamos o local e o escopo do serviço para entender a demanda real.</p></li>
+                    <li class="processo-card"><i class="material-icons">description</i><h3>Proposta</h3><p>Enviamos uma proposta personalizada, sem compromisso, de acordo com o que foi avaliado.</p></li>
+                    <li class="processo-card"><i class="material-icons">handshake</i><h3>Contrato e Início</h3><p>Com a proposta aprovada, formalizamos o contrato e colocamos a equipe para trabalhar.</p></li>
+                </ul>
+            </section>
+        </div>
         <div id="page-orcamento" class="page-view">
             <div class="isolated-page" id="bg-orcamento">
                 <div class="isolated-card fade-in">
@@ -1039,9 +1076,10 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
                 document.getElementById('page-home').classList.add('active-page');
                 
                 setTimeout(() => {
-                    let sectionId = 'home'; 
+                    let sectionId = 'home';
                     if (hash === '#/quem-somos') sectionId = 'quem-somos';
                     if (hash === '#/servicos') sectionId = 'servicos';
+                    if (hash === '#/como-funciona') sectionId = 'como-funciona';
                     
                     const section = document.getElementById(sectionId);
                     if (section) {
@@ -1686,6 +1724,9 @@ async function carregarVagasSite() {
                         }));
                         await enviarFormularioSite(fdOrc);
                         if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
+                        if (typeof gtag === 'function') {
+                            gtag('event', 'generate_lead', { event_category: 'Formulario', event_label: 'Orcamento' });
+                        }
                         showToast("Pedido de Orçamento enviado com sucesso!", "success");
                         formOrcamento.reset();
                         document.getElementById('wrapper-orc-outro').classList.remove('show');
@@ -1841,6 +1882,9 @@ async function carregarVagasSite() {
                         if (fotoFile) fdCv.append('foto', fotoFile, fotoFile.name);
                         await enviarFormularioSite(fdCv);
                         if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
+                        if (typeof gtag === 'function') {
+                            gtag('event', 'generate_lead', { event_category: 'Formulario', event_label: 'Curriculo' });
+                        }
                         showToast("Currículo enviado com sucesso!", "success");
                         formCurriculo.reset();
                         document.getElementById('wrapper-cand-outro').classList.remove('show');
