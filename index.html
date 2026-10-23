@@ -179,6 +179,17 @@
         .radio-label-descricao input[type="radio"] { width: 20px; height: 20px; cursor: pointer; accent-color: var(--primary-blue); flex-shrink: 0; margin-top: 2px; }
         .radio-label-descricao strong { display: block; color: var(--primary-blue); font-size: 0.95rem; }
         .radio-label-descricao small { display: block; color: #64748b; font-size: 0.8rem; margin-top: 2px; line-height: 1.4; }
+        /* --- Grupo de radios compacto (lado a lado, ex: Tipo de Contrato / PCD Sim-Não) --- */
+        .radio-grupo-compacto { flex-direction: row; flex-wrap: wrap; }
+        .radio-grupo-compacto .radio-label-descricao { flex: 1; min-width: 110px; justify-content: center; text-align: center; }
+        /* --- Telefone com seletor de país (DDI) --- */
+        .grupo-telefone-pais { display: flex; gap: 10px; }
+        .select-pais-telefone { flex: 0 0 110px; border: 2px solid #e2e8f0; border-radius: 10px; padding: 0 8px; font-size: 0.95rem; background-color: var(--white); cursor: pointer; color: #1e293b; }
+        /* --- Caixa de aviso de não-discriminação (Diversidade) --- */
+        .aviso-diversidade-caixa { background-color: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46; border-radius: 12px; padding: 14px 16px; font-size: 0.85rem; line-height: 1.5; font-weight: 600; }
+        /* --- Bloco de detalhes do PCD (laudo, acessibilidade, CID) --- */
+        .bloco-pcd-detalhes { display: flex; flex-direction: column; gap: 0; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; }
+        .bloco-pcd-detalhes textarea, .bloco-pcd-detalhes input[type="text"] { width: 100%; }
         .btn-solicitar-full { background: linear-gradient(135deg, var(--primary-blue), var(--hover-blue)); color: var(--white); padding: 20px; font-size: 1.2rem; font-weight: 800; border: none; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; width: 100%; box-shadow: 0 8px 20px rgba(10, 61, 115, 0.2); letter-spacing: 0.5px; }
         .btn-solicitar-full:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(10, 61, 115, 0.3); }
         .btn-solicitar-full:active { transform: scale(0.98); }
@@ -424,6 +435,10 @@
             box-shadow: 0 4px 15px rgba(79, 168, 255, 0.2) !important;
         }
         body.high-contrast .file-upload-wrapper:hover .file-upload-custom { background-color: #2a2a2a !important; border-color: #4FA8FF !important; color: #4FA8FF !important; }
+        body.high-contrast .select-pais-telefone { background-color: #1e1e1e !important; border-color: #444 !important; color: #e2e8f0 !important; }
+        body.high-contrast .aviso-diversidade-caixa { background-color: #0d2b20 !important; border-color: #1f6b4f !important; color: #6ee7b7 !important; }
+        body.high-contrast .bloco-pcd-detalhes { background-color: #1e1e1e !important; border-color: #444 !important; }
+        body.high-contrast .bloco-pcd-detalhes textarea, body.high-contrast .bloco-pcd-detalhes input[type="text"] { background-color: #151515 !important; border-color: #444 !important; color: #e2e8f0 !important; }
         body.high-contrast .file-upload-custom.file-selected { background-color: rgba(16, 185, 129, 0.1) !important;  border-color: #10b981 !important;  color: #10b981 !important; }
         body.high-contrast .file-upload-custom.file-selected i { color: #10b981 !important; }
         body.high-contrast .servico-card:hover, 
@@ -791,7 +806,18 @@
                                 <div style="display: flex; flex-direction: column; gap: 20px;">
                                     <input type="text" id="cand-nome" placeholder="Seu Nome Completo *" required>
                                     <input type="email" id="cand-email" placeholder="Seu E-mail *" required>
-                                    <input type="tel" id="cand-telefone" placeholder="Seu Telefone / WhatsApp *" required>
+                                    <div class="grupo-telefone-pais">
+                                        <select id="cand-telefone-pais" class="select-pais-telefone">
+                                            <option value="+55" data-flag="🇧🇷" selected>🇧🇷 +55</option>
+                                            <option value="+1" data-flag="🇺🇸">🇺🇸 +1</option>
+                                            <option value="+351" data-flag="🇵🇹">🇵🇹 +351</option>
+                                            <option value="+54" data-flag="🇦🇷">🇦🇷 +54</option>
+                                            <option value="+595" data-flag="🇵🇾">🇵🇾 +595</option>
+                                            <option value="+598" data-flag="🇺🇾">🇺🇾 +598</option>
+                                            <option value="+591" data-flag="🇧🇴">🇧🇴 +591</option>
+                                        </select>
+                                        <input type="tel" id="cand-telefone" placeholder="Seu Telefone / WhatsApp *" required style="flex: 1;">
+                                    </div>
 
                                     <div class="linha-estado-cidade">
                                         <select id="cand-estado-civil" required style="flex: 1; cursor: pointer;">
@@ -816,26 +842,162 @@
                                         </div>
                                     </div>
 
+                                    <div class="linha-estado-cidade">
+                                        <div style="flex: 1;">
+                                            <span style="display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 6px; font-weight: 600;">Pretensão Salarial <span style="color: var(--error-red);">*</span></span>
+                                            <input type="text" id="cand-pretensao-salarial" placeholder="Ex: R$ 1.800,00" required style="width: 100%;">
+                                        </div>
+                                    </div>
+
+                                    <div class="linha-estado-cidade" style="flex-direction: column; align-items: stretch;">
+                                        <span style="display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 10px; font-weight: 600;">Tipo de Contrato que está buscando <span style="color: var(--error-red);">*</span></span>
+                                        <div class="radio-grupo-descricao radio-grupo-compacto" id="grupo-cand-tipo-contrato">
+                                            <label class="radio-label-descricao">
+                                                <input type="radio" name="cand-tipo-contrato" value="CLT" required>
+                                                <span><strong>CLT</strong></span>
+                                            </label>
+                                            <label class="radio-label-descricao">
+                                                <input type="radio" name="cand-tipo-contrato" value="Estágio" required>
+                                                <span><strong>Estágio</strong></span>
+                                            </label>
+                                            <label class="radio-label-descricao">
+                                                <input type="radio" name="cand-tipo-contrato" value="Menor Aprendiz" required>
+                                                <span><strong>Menor Aprendiz</strong></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
                                     <div class="linha-estado-cidade" style="flex-direction: column; align-items: stretch;">
                                         <span style="display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 10px; font-weight: 600;">Identidade de Gênero <span style="color: var(--error-red);">*</span></span>
                                         <div class="radio-grupo-descricao" id="grupo-cand-identidade-genero">
                                             <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-identidade-genero" value="Cisgênero" required>
-                                                <span><strong>Cisgênero</strong><small>Identidade de gênero igual à atribuída no nascimento</small></span>
+                                                <input type="radio" name="cand-identidade-genero" value="Homem Cisgênero" required>
+                                                <span><strong>Homem Cisgênero</strong><small>Nasceu homem e se identifica como homem.</small></span>
                                             </label>
                                             <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-identidade-genero" value="Transgênero" required>
-                                                <span><strong>Transgênero</strong><small>Identidade de gênero oposta à atribuída no nascimento</small></span>
+                                                <input type="radio" name="cand-identidade-genero" value="Mulher Cisgênero" required>
+                                                <span><strong>Mulher Cisgênero</strong><small>Nasceu mulher e se identifica como mulher.</small></span>
+                                            </label>
+                                            <label class="radio-label-descricao">
+                                                <input type="radio" name="cand-identidade-genero" value="Homem Transgênero" required>
+                                                <span><strong>Homem Transgênero</strong><small>Sexo atribuído no nascimento foi feminino; identifica-se como homem.</small></span>
+                                            </label>
+                                            <label class="radio-label-descricao">
+                                                <input type="radio" name="cand-identidade-genero" value="Mulher Transgênero" required>
+                                                <span><strong>Mulher Transgênero</strong><small>Sexo atribuído no nascimento foi masculino; identifica-se como mulher.</small></span>
                                             </label>
                                             <label class="radio-label-descricao">
                                                 <input type="radio" name="cand-identidade-genero" value="Não binário" required>
-                                                <span><strong>Não binário</strong><small>Não se identifica só com masculino ou só com feminino</small></span>
+                                                <span><strong>Não binário</strong><small>Não se identifica só como homem ou só como mulher.</small></span>
                                             </label>
                                             <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-identidade-genero" value="Prefiro não informar" required>
-                                                <span><strong>Prefiro não informar</strong></span>
+                                                <input type="radio" name="cand-identidade-genero" value="Agênero" required>
+                                                <span><strong>Agênero</strong><small>Não se identifica com nenhum gênero.</small></span>
+                                            </label>
+                                            <label class="radio-label-descricao">
+                                                <input type="radio" name="cand-identidade-genero" value="Gênero fluido" required>
+                                                <span><strong>Gênero fluido</strong><small>Tem identidade de gênero que muda em momentos diferentes.</small></span>
+                                            </label>
+                                            <label class="radio-label-descricao">
+                                                <input type="radio" name="cand-identidade-genero" value="Prefiro não responder" required>
+                                                <span><strong>Prefiro não responder</strong></span>
                                             </label>
                                         </div>
+                                    </div>
+
+                                    <div class="linha-estado-cidade" style="flex-direction: column; align-items: stretch;">
+                                        <span style="display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 10px; font-weight: 600;">Qual é a sua cor ou raça? <span style="color: var(--error-red);">*</span></span>
+                                        <div class="radio-grupo-descricao" id="grupo-cand-cor-raca">
+                                            <label class="radio-label-descricao">
+                                                <input type="radio" name="cand-cor-raca" value="Amarela" required>
+                                                <span><strong>Amarela</strong><small>Tem origem asiática oriental (japonesa, chinesa, coreana etc.).</small></span>
+                                            </label>
+                                            <label class="radio-label-descricao">
+                                                <input type="radio" name="cand-cor-raca" value="Indígena" required>
+                                                <span><strong>Indígena</strong><small>Pertence a um povo originário do Brasil, dentro ou fora de aldeia.</small></span>
+                                            </label>
+                                            <label class="radio-label-descricao">
+                                                <input type="radio" name="cand-cor-raca" value="Branca" required>
+                                                <span><strong>Branca</strong><small>Tem traços de origem europeia.</small></span>
+                                            </label>
+                                            <label class="radio-label-descricao">
+                                                <input type="radio" name="cand-cor-raca" value="Parda" required>
+                                                <span><strong>Parda</strong><small>Tem mistura de raças, incluindo traços negros.</small></span>
+                                            </label>
+                                            <label class="radio-label-descricao">
+                                                <input type="radio" name="cand-cor-raca" value="Preta" required>
+                                                <span><strong>Preta</strong><small>Tem ascendência predominantemente africana.</small></span>
+                                            </label>
+                                            <label class="radio-label-descricao">
+                                                <input type="radio" name="cand-cor-raca" value="Prefiro não responder" required>
+                                                <span><strong>Prefiro não responder</strong></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="linha-estado-cidade" style="flex-direction: column; align-items: stretch;">
+                                        <span style="display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 10px; font-weight: 600;">Qual é a sua orientação sexual? <span style="color: var(--error-red);">*</span></span>
+                                        <div class="radio-grupo-descricao" id="grupo-cand-orientacao-sexual">
+                                            <label class="radio-label-descricao">
+                                                <input type="radio" name="cand-orientacao-sexual" value="Homossexual" required>
+                                                <span><strong>Homossexual</strong><small>Sente atração por pessoas do mesmo gênero.</small></span>
+                                            </label>
+                                            <label class="radio-label-descricao">
+                                                <input type="radio" name="cand-orientacao-sexual" value="Heterossexual" required>
+                                                <span><strong>Heterossexual</strong><small>Sente atração por pessoas do gênero oposto.</small></span>
+                                            </label>
+                                            <label class="radio-label-descricao">
+                                                <input type="radio" name="cand-orientacao-sexual" value="Bissexual" required>
+                                                <span><strong>Bissexual</strong><small>Sente atração por mais de um gênero.</small></span>
+                                            </label>
+                                            <label class="radio-label-descricao">
+                                                <input type="radio" name="cand-orientacao-sexual" value="Pansexual" required>
+                                                <span><strong>Pansexual</strong><small>Sente atração por pessoas, independente do gênero.</small></span>
+                                            </label>
+                                            <label class="radio-label-descricao">
+                                                <input type="radio" name="cand-orientacao-sexual" value="Assexual" required>
+                                                <span><strong>Assexual</strong><small>Sente pouca ou nenhuma atração sexual por outras pessoas.</small></span>
+                                            </label>
+                                            <label class="radio-label-descricao">
+                                                <input type="radio" name="cand-orientacao-sexual" value="Outro" required>
+                                                <span><strong>Outro</strong><small>Não se identifica com as opções acima.</small></span>
+                                            </label>
+                                            <label class="radio-label-descricao">
+                                                <input type="radio" name="cand-orientacao-sexual" value="Prefiro não responder" required>
+                                                <span><strong>Prefiro não responder</strong></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="aviso-diversidade-caixa">
+                                        <i class="material-icons" style="vertical-align: -6px; margin-right: 6px;">verified_user</i>
+                                        Garantimos que seus dados nunca serão tratados de maneira discriminatória. O compromisso do Grupo Soul é promover a diversidade em todas as ações.
+                                    </div>
+
+                                    <div class="linha-estado-cidade" style="flex-direction: column; align-items: stretch;">
+                                        <span style="display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 10px; font-weight: 600;">Deseja se candidatar para a vaga como pessoa com deficiência? <span style="color: var(--error-red);">*</span></span>
+                                        <div class="radio-grupo-descricao radio-grupo-compacto" id="grupo-cand-pcd">
+                                            <label class="radio-label-descricao">
+                                                <input type="radio" name="cand-pcd" value="Sim" required>
+                                                <span><strong>Sim</strong></span>
+                                            </label>
+                                            <label class="radio-label-descricao">
+                                                <input type="radio" name="cand-pcd" value="Não" required>
+                                                <span><strong>Não</strong></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div id="bloco-cand-pcd-detalhes" class="bloco-pcd-detalhes" style="display: none;">
+                                        <div class="file-upload-wrapper" style="margin-bottom: 20px;">
+                                            <input type="file" id="cand-pcd-laudo" class="file-upload-input" accept=".pdf,image/*">
+                                            <div class="file-upload-custom" id="pcd-laudo-upload-display">
+                                                <i class="material-icons">upload_file</i>
+                                                <span id="pcd-laudo-upload-text">Clique ou arraste para anexar seu Laudo Médico <span style="color: var(--error-red); font-weight: 800;">*</span></span>
+                                            </div>
+                                        </div>
+                                        <textarea id="cand-pcd-acessibilidade" placeholder="Você necessita de algum recurso específico de acessibilidade ou precisa de alguma adaptação para que o momento seja mais confortável para você? *" rows="3" style="margin-bottom: 20px;"></textarea>
+                                        <input type="text" id="cand-pcd-cid" placeholder="Número do CID informado em seu laudo médico *">
                                     </div>
                                 </div>
                             </div>
@@ -1464,6 +1626,47 @@ async function carregarVagasSite() {
                     }
                 });
             }
+            // --- NOVO: LÓGICA DO INPUT DE LAUDO MÉDICO (PCD) PERSONALIZADO (mesmo padrão da foto/currículo) ---
+            const inputPcdLaudo = document.getElementById('cand-pcd-laudo');
+            const pcdLaudoDisplay = document.getElementById('pcd-laudo-upload-display');
+            if (inputPcdLaudo) {
+                inputPcdLaudo.addEventListener('change', function() {
+                    if (this.files && this.files.length > 0) {
+                        const file = this.files[0];
+                        if (file.size > 5 * 1024 * 1024) {
+                            showToast("O arquivo do laudo é muito grande. Máximo 5MB.", "error");
+                            this.value = '';
+                            return;
+                        }
+                        pcdLaudoDisplay.classList.add('file-selected');
+                        pcdLaudoDisplay.innerHTML = `<i class="material-icons">check_circle</i><span id="pcd-laudo-upload-text">${file.name}</span>`;
+                    } else {
+                        pcdLaudoDisplay.classList.remove('file-selected');
+                        pcdLaudoDisplay.innerHTML = `<i class="material-icons">upload_file</i><span id="pcd-laudo-upload-text">Clique ou arraste para anexar seu Laudo Médico</span>`;
+                    }
+                });
+            }
+            // --- NOVO: PCD — mostra/exige laudo médico, acessibilidade e CID só quando "Sim" ---
+            const radiosPcd = document.querySelectorAll('input[name="cand-pcd"]');
+            const blocoPcdDetalhes = document.getElementById('bloco-cand-pcd-detalhes');
+            const campoPcdAcessibilidade = document.getElementById('cand-pcd-acessibilidade');
+            const campoPcdCid = document.getElementById('cand-pcd-cid');
+            if (radiosPcd.length && blocoPcdDetalhes) {
+                radiosPcd.forEach(r => r.addEventListener('change', function() {
+                    if (this.value === 'Sim' && this.checked) {
+                        blocoPcdDetalhes.style.display = 'flex';
+                        if (inputPcdLaudo) inputPcdLaudo.required = true;
+                        if (campoPcdAcessibilidade) campoPcdAcessibilidade.required = true;
+                        if (campoPcdCid) campoPcdCid.required = true;
+                    } else if (this.checked) {
+                        blocoPcdDetalhes.style.display = 'none';
+                        if (inputPcdLaudo) { inputPcdLaudo.required = false; inputPcdLaudo.value = ''; }
+                        if (campoPcdAcessibilidade) { campoPcdAcessibilidade.required = false; campoPcdAcessibilidade.value = ''; }
+                        if (campoPcdCid) { campoPcdCid.required = false; campoPcdCid.value = ''; }
+                        if (pcdLaudoDisplay) { pcdLaudoDisplay.classList.remove('file-selected'); pcdLaudoDisplay.innerHTML = `<i class="material-icons">upload_file</i><span id="pcd-laudo-upload-text">Clique ou arraste para anexar seu Laudo Médico</span>`; }
+                    }
+                }));
+            }
             // --- NOVO: CNH (mostra a categoria só quando "Sim" for selecionado) ---
             const selectCnhPossui = document.getElementById('cand-cnh-possui');
             const selectCnhCategoria = document.getElementById('cand-cnh-categoria');
@@ -1893,6 +2096,42 @@ async function carregarVagasSite() {
                         showToast("Selecione a categoria da sua CNH.", "error");
                         return;
                     }
+                    // 👇 NOVO: validações dos campos de Diversidade e do Tipo de Contrato/Pretensão 👇
+                    if (!document.getElementById('cand-pretensao-salarial').value.trim()) {
+                        showToast("Informe sua pretensão salarial.", "error");
+                        return;
+                    }
+                    if (!document.querySelector('input[name="cand-tipo-contrato"]:checked')) {
+                        showToast("Selecione o tipo de contrato que está buscando.", "error");
+                        return;
+                    }
+                    if (!document.querySelector('input[name="cand-cor-raca"]:checked')) {
+                        showToast("Selecione sua cor ou raça.", "error");
+                        return;
+                    }
+                    if (!document.querySelector('input[name="cand-orientacao-sexual"]:checked')) {
+                        showToast("Selecione sua orientação sexual.", "error");
+                        return;
+                    }
+                    const pcdValor = (document.querySelector('input[name="cand-pcd"]:checked') || {}).value || '';
+                    if (!pcdValor) {
+                        showToast("Informe se deseja se candidatar como pessoa com deficiência.", "error");
+                        return;
+                    }
+                    if (pcdValor === 'Sim') {
+                        if (!(document.getElementById('cand-pcd-laudo') && document.getElementById('cand-pcd-laudo').files[0])) {
+                            showToast("Anexe o seu laudo médico.", "error");
+                            return;
+                        }
+                        if (!document.getElementById('cand-pcd-acessibilidade').value.trim()) {
+                            showToast("Conte se você precisa de algum recurso de acessibilidade ou adaptação.", "error");
+                            return;
+                        }
+                        if (!document.getElementById('cand-pcd-cid').value.trim()) {
+                            showToast("Informe o número do CID do seu laudo médico.", "error");
+                            return;
+                        }
+                    }
                     // Foto é opcional — quem não anexar segue normalmente sem ela.
                     const fotoFile = inputFoto && inputFoto.files[0];
                     // Referências: nomes de empresas onde já trabalhou, precisa de pelo menos 2
@@ -1908,7 +2147,9 @@ async function carregarVagasSite() {
                     btnEnviar.innerHTML = '<i class="material-icons" style="vertical-align: middle; margin-right: 8px;">hourglass_empty</i> Enviando... Aguarde.';
                     btnEnviar.disabled = true;
                     try {
-                        const telefoneInput = document.getElementById('cand-telefone').value;
+                        const telefonePaisInput = document.getElementById('cand-telefone-pais').value;
+                        const telefoneInput = telefonePaisInput + ' ' + document.getElementById('cand-telefone').value;
+                        const pcdFile = document.getElementById('cand-pcd-laudo') && document.getElementById('cand-pcd-laudo').files[0];
                         const fdCv = new FormData();
                         fdCv.append('tipo', 'curriculo');
                         fdCv.append('token', recaptchaResponse);
@@ -1923,6 +2164,13 @@ async function carregarVagasSite() {
                             experiencia_resumo: document.getElementById('cand-experiencia').value,
                             estado_civil: document.getElementById('cand-estado-civil').value,
                             identidade_genero: (document.querySelector('input[name="cand-identidade-genero"]:checked') || {}).value || '',
+                            cor_raca: (document.querySelector('input[name="cand-cor-raca"]:checked') || {}).value || '',
+                            orientacao_sexual: (document.querySelector('input[name="cand-orientacao-sexual"]:checked') || {}).value || '',
+                            pretensao_salarial: document.getElementById('cand-pretensao-salarial').value,
+                            tipo_contrato: (document.querySelector('input[name="cand-tipo-contrato"]:checked') || {}).value || '',
+                            pcd: (document.querySelector('input[name="cand-pcd"]:checked') || {}).value || '',
+                            pcd_acessibilidade: document.getElementById('cand-pcd-acessibilidade').value,
+                            pcd_cid: document.getElementById('cand-pcd-cid').value,
                             cpf: cpfValor.replace(/\D/g, ''),
                             data_nascimento: document.getElementById('cand-nascimento').value,
                             cep: document.getElementById('cand-cep').value,
@@ -1950,6 +2198,7 @@ async function carregarVagasSite() {
                         }));
                         fdCv.append('curriculo', file, file.name);
                         if (fotoFile) fdCv.append('foto', fotoFile, fotoFile.name);
+                        if (pcdFile) fdCv.append('pcd_laudo', pcdFile, pcdFile.name);
                         await enviarFormularioSite(fdCv);
                         if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
                         if (typeof gtag === 'function') {
@@ -1968,6 +2217,12 @@ async function carregarVagasSite() {
                         }
                         if (spanIdade) spanIdade.textContent = '';
                         if (selectCnhCategoria) { selectCnhCategoria.disabled = true; selectCnhCategoria.required = false; }
+                        if (blocoPcdDetalhes) blocoPcdDetalhes.style.display = 'none';
+                        if (inputPcdLaudo) inputPcdLaudo.required = false;
+                        if (campoPcdAcessibilidade) campoPcdAcessibilidade.required = false;
+                        if (campoPcdCid) campoPcdCid.required = false;
+                        if (pcdLaudoDisplay) { pcdLaudoDisplay.classList.remove('file-selected'); pcdLaudoDisplay.innerHTML = `<i class="material-icons">upload_file</i><span id="pcd-laudo-upload-text">Clique ou arraste para anexar seu Laudo Médico</span>`; }
+                        document.getElementById('cand-telefone-pais').value = '+55';
                         // Reseta as linhas de referência de volta pra 2 em branco
                         if (listaReferencias) {
                             listaReferencias.innerHTML = '';
