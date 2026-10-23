@@ -819,7 +819,7 @@
                                         <input type="tel" id="cand-telefone" placeholder="Seu Telefone / WhatsApp *" required style="flex: 1;">
                                     </div>
 
-                                    <div class="linha-estado-cidade">
+                                    <div class="linha-estado-cidade" style="align-items: flex-start;">
                                         <select id="cand-estado-civil" required style="flex: 1; cursor: pointer;">
                                             <option value="" disabled selected>Estado Civil *</option>
                                             <option value="Solteiro(a)">Solteiro(a)</option>
@@ -845,7 +845,7 @@
                                     <div class="linha-estado-cidade">
                                         <div style="flex: 1;">
                                             <span style="display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 6px; font-weight: 600;">Pretensão Salarial <span style="color: var(--error-red);">*</span></span>
-                                            <input type="text" id="cand-pretensao-salarial" placeholder="Ex: R$ 1.800,00" required style="width: 100%;">
+                                            <input type="text" inputmode="numeric" id="cand-pretensao-salarial" placeholder="Ex: R$ 1.800,00" required style="width: 100%;">
                                         </div>
                                     </div>
 
@@ -1832,13 +1832,31 @@ async function carregarVagasSite() {
                     }
                 });
                 inputCpf.addEventListener('blur', function() {
+                    // 👇 CORREÇÃO: o 'input' acima já confere o CPF completo (e dispara o
+                    // aviso) assim que a pessoa digita o 11º número — então, ao perder o
+                    // foco logo em seguida (tab ou clique no próximo campo), esse 'blur'
+                    // chamava verificarCpfJaFoiColaborador() DE NOVO pro mesmo CPF, e isso
+                    // fazia o aviso de "CPF já é colaborador" aparecer repetido (às vezes
+                    // várias vezes, se o toast anterior ainda não tinha fechado). Aqui no
+                    // blur agora só sobra o aviso de CPF incompleto — o CPF completo e
+                    // válido já foi conferido no 'input'.
                     const cpfLimpo = this.value.replace(/\D/g, '');
                     if (cpfLimpo.length > 0 && cpfLimpo.length < 11) {
                         if (avisoCpf) avisoCpf.textContent = 'CPF incompleto.';
                         showToast("CPF incompleto. Confira os números digitados.", "error");
-                    } else if (cpfValido(this.value)) {
-                        verificarCpfJaFoiColaborador(cpfLimpo);
                     }
+                });
+            }
+            // --- NOVO: MÁSCARA DE MOEDA (R$) NA PRETENSÃO SALARIAL ---
+            const inputPretensaoSalarial = document.getElementById('cand-pretensao-salarial');
+            if (inputPretensaoSalarial) {
+                inputPretensaoSalarial.addEventListener('input', function() {
+                    let v = this.value.replace(/\D/g, '');
+                    if (!v) { this.value = ''; return; }
+                    v = (parseInt(v, 10) / 100).toFixed(2);
+                    const [inteiro, centavos] = v.split('.');
+                    const inteiroFormatado = inteiro.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                    this.value = 'R$ ' + inteiroFormatado + ',' + centavos;
                 });
             }
             // --- NOVO: CEP -> preenche Rua/Bairro automaticamente (mesmo mecanismo do sistema do RH) ---
