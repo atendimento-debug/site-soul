@@ -917,33 +917,35 @@
                                     </div>
 
                                     <div class="linha-estado-cidade" style="flex-direction: column; align-items: stretch;">
-                                        <span style="display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 10px; font-weight: 600;">Qual é a sua cor ou raça? <span style="color: var(--error-red);">*</span></span>
-                                        <div class="radio-grupo-descricao" id="grupo-cand-cor-raca">
-                                            <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-cor-raca" value="Amarela" required>
-                                                <span><strong>Amarela</strong><small>Tem origem asiática oriental (japonesa, chinesa, coreana etc.).</small></span>
-                                            </label>
-                                            <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-cor-raca" value="Indígena" required>
-                                                <span><strong>Indígena</strong><small>Pertence a um povo originário do Brasil, dentro ou fora de aldeia.</small></span>
-                                            </label>
-                                            <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-cor-raca" value="Branca" required>
-                                                <span><strong>Branca</strong><small>Tem traços de origem europeia.</small></span>
-                                            </label>
-                                            <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-cor-raca" value="Parda" required>
-                                                <span><strong>Parda</strong><small>Tem mistura de raças, incluindo traços negros.</small></span>
-                                            </label>
-                                            <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-cor-raca" value="Preta" required>
-                                                <span><strong>Preta</strong><small>Tem ascendência predominantemente africana.</small></span>
-                                            </label>
-                                            <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-cor-raca" value="Prefiro não responder" required>
-                                                <span><strong>Prefiro não responder</strong></span>
-                                            </label>
-                                        </div>
+                                        <details class="dropdown-select-descricao" id="detalhes-cor-raca">
+                                            <summary class="dropdown-select-descricao-resumo" id="resumo-cor-raca">Qual é a sua cor ou raça? *</summary>
+                                            <div class="radio-grupo-descricao" id="grupo-cand-cor-raca">
+                                                <label class="radio-label-descricao">
+                                                    <input type="radio" name="cand-cor-raca" value="Amarela" required onchange="selecionarOpcaoDescricao(this, 'cor-raca')">
+                                                    <span><strong>Amarela</strong><small>Tem origem asiática oriental (japonesa, chinesa, coreana etc.).</small></span>
+                                                </label>
+                                                <label class="radio-label-descricao">
+                                                    <input type="radio" name="cand-cor-raca" value="Indígena" required onchange="selecionarOpcaoDescricao(this, 'cor-raca')">
+                                                    <span><strong>Indígena</strong><small>Pertence a um povo originário do Brasil, dentro ou fora de aldeia.</small></span>
+                                                </label>
+                                                <label class="radio-label-descricao">
+                                                    <input type="radio" name="cand-cor-raca" value="Branca" required onchange="selecionarOpcaoDescricao(this, 'cor-raca')">
+                                                    <span><strong>Branca</strong><small>Tem traços de origem europeia.</small></span>
+                                                </label>
+                                                <label class="radio-label-descricao">
+                                                    <input type="radio" name="cand-cor-raca" value="Parda" required onchange="selecionarOpcaoDescricao(this, 'cor-raca')">
+                                                    <span><strong>Parda</strong><small>Tem mistura de raças, incluindo traços negros.</small></span>
+                                                </label>
+                                                <label class="radio-label-descricao">
+                                                    <input type="radio" name="cand-cor-raca" value="Preta" required onchange="selecionarOpcaoDescricao(this, 'cor-raca')">
+                                                    <span><strong>Preta</strong><small>Tem ascendência predominantemente africana.</small></span>
+                                                </label>
+                                                <label class="radio-label-descricao">
+                                                    <input type="radio" name="cand-cor-raca" value="Prefiro não responder" required onchange="selecionarOpcaoDescricao(this, 'cor-raca')">
+                                                    <span><strong>Prefiro não responder</strong></span>
+                                                </label>
+                                            </div>
+                                        </details>
                                     </div>
 
                                     <div class="linha-estado-cidade" style="flex-direction: column; align-items: stretch;">
