@@ -867,42 +867,18 @@
                                         </div>
                                     </div>
 
-                                    <div class="linha-estado-cidade" style="flex-direction: column; align-items: stretch;">
-                                        <span style="display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 10px; font-weight: 600;">Identidade de Gênero <span style="color: var(--error-red);">*</span></span>
-                                        <div class="radio-grupo-descricao" id="grupo-cand-identidade-genero">
-                                            <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-identidade-genero" value="Homem Cisgênero" required>
-                                                <span><strong>Homem Cisgênero</strong><small>Nasceu homem e se identifica como homem.</small></span>
-                                            </label>
-                                            <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-identidade-genero" value="Mulher Cisgênero" required>
-                                                <span><strong>Mulher Cisgênero</strong><small>Nasceu mulher e se identifica como mulher.</small></span>
-                                            </label>
-                                            <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-identidade-genero" value="Homem Transgênero" required>
-                                                <span><strong>Homem Transgênero</strong><small>Sexo atribuído no nascimento foi feminino; identifica-se como homem.</small></span>
-                                            </label>
-                                            <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-identidade-genero" value="Mulher Transgênero" required>
-                                                <span><strong>Mulher Transgênero</strong><small>Sexo atribuído no nascimento foi masculino; identifica-se como mulher.</small></span>
-                                            </label>
-                                            <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-identidade-genero" value="Não binário" required>
-                                                <span><strong>Não binário</strong><small>Não se identifica só como homem ou só como mulher.</small></span>
-                                            </label>
-                                            <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-identidade-genero" value="Agênero" required>
-                                                <span><strong>Agênero</strong><small>Não se identifica com nenhum gênero.</small></span>
-                                            </label>
-                                            <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-identidade-genero" value="Gênero fluido" required>
-                                                <span><strong>Gênero fluido</strong><small>Tem identidade de gênero que muda em momentos diferentes.</small></span>
-                                            </label>
-                                            <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-identidade-genero" value="Prefiro não responder" required>
-                                                <span><strong>Prefiro não responder</strong></span>
-                                            </label>
-                                        </div>
+                                    <div class="linha-estado-cidade" style="align-items: flex-start;">
+                                        <select id="cand-identidade-genero" required style="flex: 1; cursor: pointer;">
+                                            <option value="" disabled selected>Identidade de Gênero *</option>
+                                            <option value="Homem Cisgênero">Homem Cisgênero</option>
+                                            <option value="Mulher Cisgênero">Mulher Cisgênero</option>
+                                            <option value="Homem Transgênero">Homem Transgênero</option>
+                                            <option value="Mulher Transgênero">Mulher Transgênero</option>
+                                            <option value="Não binário">Não binário</option>
+                                            <option value="Agênero">Agênero</option>
+                                            <option value="Gênero fluido">Gênero fluido</option>
+                                            <option value="Prefiro não responder">Prefiro não responder</option>
+                                        </select>
                                     </div>
 
                                     <div class="linha-estado-cidade" style="flex-direction: column; align-items: stretch;">
@@ -935,38 +911,17 @@
                                         </div>
                                     </div>
 
-                                    <div class="linha-estado-cidade" style="flex-direction: column; align-items: stretch;">
-                                        <span style="display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 10px; font-weight: 600;">Qual é a sua orientação sexual? <span style="color: var(--error-red);">*</span></span>
-                                        <div class="radio-grupo-descricao" id="grupo-cand-orientacao-sexual">
-                                            <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-orientacao-sexual" value="Homossexual" required>
-                                                <span><strong>Homossexual</strong><small>Sente atração por pessoas do mesmo gênero.</small></span>
-                                            </label>
-                                            <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-orientacao-sexual" value="Heterossexual" required>
-                                                <span><strong>Heterossexual</strong><small>Sente atração por pessoas do gênero oposto.</small></span>
-                                            </label>
-                                            <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-orientacao-sexual" value="Bissexual" required>
-                                                <span><strong>Bissexual</strong><small>Sente atração por mais de um gênero.</small></span>
-                                            </label>
-                                            <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-orientacao-sexual" value="Pansexual" required>
-                                                <span><strong>Pansexual</strong><small>Sente atração por pessoas, independente do gênero.</small></span>
-                                            </label>
-                                            <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-orientacao-sexual" value="Assexual" required>
-                                                <span><strong>Assexual</strong><small>Sente pouca ou nenhuma atração sexual por outras pessoas.</small></span>
-                                            </label>
-                                            <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-orientacao-sexual" value="Outro" required>
-                                                <span><strong>Outro</strong><small>Não se identifica com as opções acima.</small></span>
-                                            </label>
-                                            <label class="radio-label-descricao">
-                                                <input type="radio" name="cand-orientacao-sexual" value="Prefiro não responder" required>
-                                                <span><strong>Prefiro não responder</strong></span>
-                                            </label>
-                                        </div>
+                                    <div class="linha-estado-cidade" style="align-items: flex-start;">
+                                        <select id="cand-orientacao-sexual" required style="flex: 1; cursor: pointer;">
+                                            <option value="" disabled selected>Qual é a sua orientação sexual? *</option>
+                                            <option value="Homossexual">Homossexual</option>
+                                            <option value="Heterossexual">Heterossexual</option>
+                                            <option value="Bissexual">Bissexual</option>
+                                            <option value="Pansexual">Pansexual</option>
+                                            <option value="Assexual">Assexual</option>
+                                            <option value="Outro">Outro</option>
+                                            <option value="Prefiro não responder">Prefiro não responder</option>
+                                        </select>
                                     </div>
 
                                     <div class="aviso-diversidade-caixa">
@@ -2131,11 +2086,15 @@ async function carregarVagasSite() {
                         showToast("Selecione o tipo de contrato que está buscando.", "error");
                         return;
                     }
+                    if (!document.getElementById('cand-identidade-genero').value) {
+                        showToast("Selecione sua identidade de gênero.", "error");
+                        return;
+                    }
                     if (!document.querySelector('input[name="cand-cor-raca"]:checked')) {
                         showToast("Selecione sua cor ou raça.", "error");
                         return;
                     }
-                    if (!document.querySelector('input[name="cand-orientacao-sexual"]:checked')) {
+                    if (!document.getElementById('cand-orientacao-sexual').value) {
                         showToast("Selecione sua orientação sexual.", "error");
                         return;
                     }
@@ -2189,9 +2148,9 @@ async function carregarVagasSite() {
                             vagas_interesse: vagasSelecionadas,
                             experiencia_resumo: document.getElementById('cand-experiencia').value,
                             estado_civil: document.getElementById('cand-estado-civil').value,
-                            identidade_genero: (document.querySelector('input[name="cand-identidade-genero"]:checked') || {}).value || '',
+                            identidade_genero: document.getElementById('cand-identidade-genero').value,
                             cor_raca: (document.querySelector('input[name="cand-cor-raca"]:checked') || {}).value || '',
-                            orientacao_sexual: (document.querySelector('input[name="cand-orientacao-sexual"]:checked') || {}).value || '',
+                            orientacao_sexual: document.getElementById('cand-orientacao-sexual').value,
                             pretensao_salarial: document.getElementById('cand-pretensao-salarial').value,
                             tipo_contrato: (document.querySelector('input[name="cand-tipo-contrato"]:checked') || {}).value || '',
                             pcd: (document.querySelector('input[name="cand-pcd"]:checked') || {}).value || '',
