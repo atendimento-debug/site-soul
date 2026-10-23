@@ -789,6 +789,16 @@
                             </div>
 
                             <div class="linha-estado-cidade">
+                                <select id="cand-identidade-genero" required style="flex: 1; cursor: pointer;">
+                                    <option value="" disabled selected>Identidade de Gênero *</option>
+                                    <option value="Cisgênero">Cisgênero</option>
+                                    <option value="Transgênero">Transgênero</option>
+                                    <option value="Não binário">Não binário</option>
+                                    <option value="Prefiro não informar">Prefiro não informar</option>
+                                </select>
+                            </div>
+
+                            <div class="linha-estado-cidade">
                                 <div style="flex: 1;">
                                     <span style="display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 6px; font-weight: 600;">Data de Nascimento <span style="color: var(--error-red);">*</span></span>
                                     <input type="date" id="cand-nascimento" required style="width: 100%;">
@@ -1868,6 +1878,7 @@ async function carregarVagasSite() {
                             vagas_interesse: vagasSelecionadas,
                             experiencia_resumo: document.getElementById('cand-experiencia').value,
                             estado_civil: document.getElementById('cand-estado-civil').value,
+                            identidade_genero: document.getElementById('cand-identidade-genero').value,
                             cpf: cpfValor.replace(/\D/g, ''),
                             data_nascimento: document.getElementById('cand-nascimento').value,
                             cep: document.getElementById('cand-cep').value,
