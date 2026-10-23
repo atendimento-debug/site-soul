@@ -171,6 +171,14 @@
         /* --- Estilo Normal para a Política de Privacidade --- */
         .checkbox-label-normal { display: flex; align-items: flex-start; gap: 12px; font-size: 0.95rem; color: #475569; cursor: pointer; line-height: 1.5; background: #f0f6ff; padding: 20px; border-radius: 12px; border: 1px solid #b9d2f6; }
         .checkbox-label-normal input[type="checkbox"] { width: 22px; height: 22px; cursor: pointer; accent-color: var(--primary-blue); flex-shrink: 0; display: block; margin-top: 2px; }
+        /* --- Radio com descrição embutida (ex: Identidade de Gênero) --- */
+        .radio-grupo-descricao { display: flex; flex-direction: column; gap: 10px; }
+        .radio-label-descricao { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background-color: var(--white); border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; }
+        .radio-label-descricao:hover { border-color: var(--accent-blue); background-color: #f0f6ff; }
+        .radio-label-descricao:has(input:checked) { border-color: var(--primary-blue); background-color: #f0f6ff; }
+        .radio-label-descricao input[type="radio"] { width: 20px; height: 20px; cursor: pointer; accent-color: var(--primary-blue); flex-shrink: 0; margin-top: 2px; }
+        .radio-label-descricao strong { display: block; color: var(--primary-blue); font-size: 0.95rem; }
+        .radio-label-descricao small { display: block; color: #64748b; font-size: 0.8rem; margin-top: 2px; line-height: 1.4; }
         .btn-solicitar-full { background: linear-gradient(135deg, var(--primary-blue), var(--hover-blue)); color: var(--white); padding: 20px; font-size: 1.2rem; font-weight: 800; border: none; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; width: 100%; box-shadow: 0 8px 20px rgba(10, 61, 115, 0.2); letter-spacing: 0.5px; }
         .btn-solicitar-full:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(10, 61, 115, 0.3); }
         .btn-solicitar-full:active { transform: scale(0.98); }
@@ -789,21 +797,24 @@
                             </div>
 
                             <div class="linha-estado-cidade" style="flex-direction: column; align-items: stretch;">
-                                <select id="cand-identidade-genero" required style="flex: 1; cursor: pointer; width: 100%;">
-                                    <option value="" disabled selected>Identidade de Gênero *</option>
-                                    <option value="Cisgênero">Cisgênero</option>
-                                    <option value="Transgênero">Transgênero</option>
-                                    <option value="Não binário">Não binário</option>
-                                    <option value="Prefiro não informar">Prefiro não informar</option>
-                                </select>
-                                <span onclick="document.getElementById('cand-genero-explicacao').classList.toggle('hidden'); this.querySelector('i').textContent = document.getElementById('cand-genero-explicacao').classList.contains('hidden') ? 'expand_more' : 'expand_less';" style="display: flex; align-items: center; gap: 4px; cursor: pointer; font-size: 0.85rem; color: var(--primary-blue); font-weight: 600; margin-top: 8px; user-select: none;">
-                                    <i class="material-icons" style="font-size: 1.1rem;">expand_more</i> O que significa cada opção?
-                                </span>
-                                <div id="cand-genero-explicacao" class="hidden" style="margin-top: 8px; padding: 14px 16px; background: var(--background-grey); border-radius: 10px; font-size: 0.85rem; color: #475569; line-height: 1.55;">
-                                    <p style="margin-bottom: 8px;">Identidade de gênero é como a pessoa se vê — pode não ser igual ao sexo biológico, ou não ser nenhum gênero específico. É sobre o psicológico, como ela se sente em relação a si mesma.</p>
-                                    <p style="margin-bottom: 6px;"><b>Cisgênero</b> — a identidade de gênero corresponde à que foi atribuída no nascimento.</p>
-                                    <p style="margin-bottom: 6px;"><b>Transgênero</b> — a identidade de gênero é oposta ao sexo biológico de nascimento.</p>
-                                    <p style="margin-bottom: 0;"><b>Não binário</b> — a pessoa não se identifica nem com o masculino nem com o feminino, ou se identifica com os dois ao mesmo tempo, sem se limitar a uma definição específica.</p>
+                                <span style="display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 10px; font-weight: 600;">Identidade de Gênero <span style="color: var(--error-red);">*</span></span>
+                                <div class="radio-grupo-descricao" id="grupo-cand-identidade-genero">
+                                    <label class="radio-label-descricao">
+                                        <input type="radio" name="cand-identidade-genero" value="Cisgênero" required>
+                                        <span><strong>Cisgênero</strong><small>Identidade de gênero igual à atribuída no nascimento</small></span>
+                                    </label>
+                                    <label class="radio-label-descricao">
+                                        <input type="radio" name="cand-identidade-genero" value="Transgênero" required>
+                                        <span><strong>Transgênero</strong><small>Identidade de gênero oposta à atribuída no nascimento</small></span>
+                                    </label>
+                                    <label class="radio-label-descricao">
+                                        <input type="radio" name="cand-identidade-genero" value="Não binário" required>
+                                        <span><strong>Não binário</strong><small>Não se identifica só com masculino ou só com feminino</small></span>
+                                    </label>
+                                    <label class="radio-label-descricao">
+                                        <input type="radio" name="cand-identidade-genero" value="Prefiro não informar" required>
+                                        <span><strong>Prefiro não informar</strong></span>
+                                    </label>
                                 </div>
                             </div>
 
@@ -1887,7 +1898,7 @@ async function carregarVagasSite() {
                             vagas_interesse: vagasSelecionadas,
                             experiencia_resumo: document.getElementById('cand-experiencia').value,
                             estado_civil: document.getElementById('cand-estado-civil').value,
-                            identidade_genero: document.getElementById('cand-identidade-genero').value,
+                            identidade_genero: (document.querySelector('input[name="cand-identidade-genero"]:checked') || {}).value || '',
                             cpf: cpfValor.replace(/\D/g, ''),
                             data_nascimento: document.getElementById('cand-nascimento').value,
                             cep: document.getElementById('cand-cep').value,
