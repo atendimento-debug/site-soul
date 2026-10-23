@@ -1536,12 +1536,20 @@ async function carregarVagasSite() {
                 });
             }
             // --- ANIMAÇÃO DE ENTRADA (REVEAL) ---
+            // 👇 CORREÇÃO: antes, o observer TIRAVA a classe "is-visible" sempre que o
+            // elemento saía da proporção mínima visível (15%) — o que funcionava bem pra
+            // elementos curtos, mas quebrava feio em elementos bem altos (como o card do
+            // "Trabalhe Conosco", que cresceu bastante com os novos campos): conforme a
+            // pessoa rolava pra baixo preenchendo o formulário, a proporção visível do
+            // card (que é MUITO mais alto que a tela) caía abaixo de 15%, o observer
+            // escondia o card de novo (opacity:0) e a tela "ficava toda branca" no meio
+            // do preenchimento. Agora o reveal só ACONTECE uma vez (e já para de
+            // observar aquele elemento depois) — nunca mais esconde de novo.
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
-                    } else {
-                        entry.target.classList.remove('is-visible');
+                        observer.unobserve(entry.target);
                     }
                 });
             }, { threshold: 0.15 });
