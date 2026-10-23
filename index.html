@@ -788,14 +788,23 @@
                                 </div>
                             </div>
 
-                            <div class="linha-estado-cidade">
-                                <select id="cand-identidade-genero" required style="flex: 1; cursor: pointer;">
+                            <div class="linha-estado-cidade" style="flex-direction: column; align-items: stretch;">
+                                <select id="cand-identidade-genero" required style="flex: 1; cursor: pointer; width: 100%;">
                                     <option value="" disabled selected>Identidade de Gênero *</option>
                                     <option value="Cisgênero">Cisgênero</option>
                                     <option value="Transgênero">Transgênero</option>
                                     <option value="Não binário">Não binário</option>
                                     <option value="Prefiro não informar">Prefiro não informar</option>
                                 </select>
+                                <span onclick="document.getElementById('cand-genero-explicacao').classList.toggle('hidden'); this.querySelector('i').textContent = document.getElementById('cand-genero-explicacao').classList.contains('hidden') ? 'expand_more' : 'expand_less';" style="display: flex; align-items: center; gap: 4px; cursor: pointer; font-size: 0.85rem; color: var(--primary-blue); font-weight: 600; margin-top: 8px; user-select: none;">
+                                    <i class="material-icons" style="font-size: 1.1rem;">expand_more</i> O que significa cada opção?
+                                </span>
+                                <div id="cand-genero-explicacao" class="hidden" style="margin-top: 8px; padding: 14px 16px; background: var(--background-grey); border-radius: 10px; font-size: 0.85rem; color: #475569; line-height: 1.55;">
+                                    <p style="margin-bottom: 8px;">Identidade de gênero é como a pessoa se vê — pode não ser igual ao sexo biológico, ou não ser nenhum gênero específico. É sobre o psicológico, como ela se sente em relação a si mesma.</p>
+                                    <p style="margin-bottom: 6px;"><b>Cisgênero</b> — a identidade de gênero corresponde à que foi atribuída no nascimento.</p>
+                                    <p style="margin-bottom: 6px;"><b>Transgênero</b> — a identidade de gênero é oposta ao sexo biológico de nascimento.</p>
+                                    <p style="margin-bottom: 0;"><b>Não binário</b> — a pessoa não se identifica nem com o masculino nem com o feminino, ou se identifica com os dois ao mesmo tempo, sem se limitar a uma definição específica.</p>
+                                </div>
                             </div>
 
                             <div class="linha-estado-cidade">
