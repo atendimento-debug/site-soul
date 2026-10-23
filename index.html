@@ -182,6 +182,15 @@
         /* --- Grupo de radios compacto (lado a lado, ex: Tipo de Contrato / PCD Sim-Não) --- */
         .radio-grupo-compacto { flex-direction: row; flex-wrap: wrap; }
         .radio-grupo-compacto .radio-label-descricao { flex: 1; min-width: 110px; justify-content: center; text-align: center; }
+        /* --- Dropdown recolhível com cards de descrição dentro (ex: Identidade de Gênero, Orientação Sexual) --- */
+        .dropdown-select-descricao { border: 2px solid #e2e8f0; border-radius: 12px; background-color: var(--white); transition: border-color 0.2s ease; }
+        .dropdown-select-descricao[open] { border-color: var(--primary-blue); }
+        .dropdown-select-descricao-resumo { list-style: none; padding: 14px 16px; cursor: pointer; font-size: 0.95rem; color: #94a3b8; font-weight: 600; display: flex; align-items: center; justify-content: space-between; }
+        .dropdown-select-descricao-resumo.preenchido { color: #1e293b; }
+        .dropdown-select-descricao-resumo::-webkit-details-marker { display: none; }
+        .dropdown-select-descricao-resumo::after { content: 'expand_more'; font-family: 'Material Icons'; color: #64748b; font-weight: 400; font-size: 1.3rem; flex-shrink: 0; margin-left: 10px; }
+        .dropdown-select-descricao[open] .dropdown-select-descricao-resumo::after { content: 'expand_less'; }
+        .dropdown-select-descricao .radio-grupo-descricao { padding: 0 14px 14px 14px; }
         /* --- Telefone com seletor de país (DDI) --- */
         .grupo-telefone-pais { display: flex; gap: 10px; }
         .select-pais-telefone { flex: 0 0 110px; border: 2px solid #e2e8f0; border-radius: 10px; padding: 0 8px; font-size: 0.95rem; background-color: var(--white); cursor: pointer; color: #1e293b; }
@@ -868,18 +877,43 @@
                                     </div>
 
                                     <div class="linha-estado-cidade" style="flex-direction: column; align-items: stretch;">
-                                        <select id="cand-identidade-genero" required style="width: 100%; cursor: pointer;" onchange="document.getElementById('desc-cand-identidade-genero').textContent = this.options[this.selectedIndex].dataset.desc || '';">
-                                            <option value="" disabled selected>Identidade de Gênero *</option>
-                                            <option value="Homem Cisgênero" data-desc="Nasceu homem e se identifica como homem.">Homem Cisgênero</option>
-                                            <option value="Mulher Cisgênero" data-desc="Nasceu mulher e se identifica como mulher.">Mulher Cisgênero</option>
-                                            <option value="Homem Transgênero" data-desc="Sexo atribuído no nascimento foi feminino; identifica-se como homem.">Homem Transgênero</option>
-                                            <option value="Mulher Transgênero" data-desc="Sexo atribuído no nascimento foi masculino; identifica-se como mulher.">Mulher Transgênero</option>
-                                            <option value="Não binário" data-desc="Não se identifica só como homem ou só como mulher.">Não binário</option>
-                                            <option value="Agênero" data-desc="Não se identifica com nenhum gênero.">Agênero</option>
-                                            <option value="Gênero fluido" data-desc="Tem identidade de gênero que muda em momentos diferentes.">Gênero fluido</option>
-                                            <option value="Prefiro não responder" data-desc="">Prefiro não responder</option>
-                                        </select>
-                                        <small id="desc-cand-identidade-genero" style="display: block; margin-top: 6px; color: #64748b; font-size: 0.8rem; min-height: 1em;"></small>
+                                        <details class="dropdown-select-descricao" id="detalhes-identidade-genero">
+                                            <summary class="dropdown-select-descricao-resumo" id="resumo-identidade-genero">Identidade de Gênero *</summary>
+                                            <div class="radio-grupo-descricao" id="grupo-cand-identidade-genero">
+                                                <label class="radio-label-descricao">
+                                                    <input type="radio" name="cand-identidade-genero" value="Homem Cisgênero" required onchange="selecionarOpcaoDescricao(this, 'identidade-genero')">
+                                                    <span><strong>Homem Cisgênero</strong><small>Nasceu homem e se identifica como homem.</small></span>
+                                                </label>
+                                                <label class="radio-label-descricao">
+                                                    <input type="radio" name="cand-identidade-genero" value="Mulher Cisgênero" required onchange="selecionarOpcaoDescricao(this, 'identidade-genero')">
+                                                    <span><strong>Mulher Cisgênero</strong><small>Nasceu mulher e se identifica como mulher.</small></span>
+                                                </label>
+                                                <label class="radio-label-descricao">
+                                                    <input type="radio" name="cand-identidade-genero" value="Homem Transgênero" required onchange="selecionarOpcaoDescricao(this, 'identidade-genero')">
+                                                    <span><strong>Homem Transgênero</strong><small>Sexo atribuído no nascimento foi feminino; identifica-se como homem.</small></span>
+                                                </label>
+                                                <label class="radio-label-descricao">
+                                                    <input type="radio" name="cand-identidade-genero" value="Mulher Transgênero" required onchange="selecionarOpcaoDescricao(this, 'identidade-genero')">
+                                                    <span><strong>Mulher Transgênero</strong><small>Sexo atribuído no nascimento foi masculino; identifica-se como mulher.</small></span>
+                                                </label>
+                                                <label class="radio-label-descricao">
+                                                    <input type="radio" name="cand-identidade-genero" value="Não binário" required onchange="selecionarOpcaoDescricao(this, 'identidade-genero')">
+                                                    <span><strong>Não binário</strong><small>Não se identifica só como homem ou só como mulher.</small></span>
+                                                </label>
+                                                <label class="radio-label-descricao">
+                                                    <input type="radio" name="cand-identidade-genero" value="Agênero" required onchange="selecionarOpcaoDescricao(this, 'identidade-genero')">
+                                                    <span><strong>Agênero</strong><small>Não se identifica com nenhum gênero.</small></span>
+                                                </label>
+                                                <label class="radio-label-descricao">
+                                                    <input type="radio" name="cand-identidade-genero" value="Gênero fluido" required onchange="selecionarOpcaoDescricao(this, 'identidade-genero')">
+                                                    <span><strong>Gênero fluido</strong><small>Tem identidade de gênero que muda em momentos diferentes.</small></span>
+                                                </label>
+                                                <label class="radio-label-descricao">
+                                                    <input type="radio" name="cand-identidade-genero" value="Prefiro não responder" required onchange="selecionarOpcaoDescricao(this, 'identidade-genero')">
+                                                    <span><strong>Prefiro não responder</strong></span>
+                                                </label>
+                                            </div>
+                                        </details>
                                     </div>
 
                                     <div class="linha-estado-cidade" style="flex-direction: column; align-items: stretch;">
@@ -913,17 +947,39 @@
                                     </div>
 
                                     <div class="linha-estado-cidade" style="flex-direction: column; align-items: stretch;">
-                                        <select id="cand-orientacao-sexual" required style="width: 100%; cursor: pointer;" onchange="document.getElementById('desc-cand-orientacao-sexual').textContent = this.options[this.selectedIndex].dataset.desc || '';">
-                                            <option value="" disabled selected>Qual é a sua orientação sexual? *</option>
-                                            <option value="Homossexual" data-desc="Sente atração por pessoas do mesmo gênero.">Homossexual</option>
-                                            <option value="Heterossexual" data-desc="Sente atração por pessoas do gênero oposto.">Heterossexual</option>
-                                            <option value="Bissexual" data-desc="Sente atração por mais de um gênero.">Bissexual</option>
-                                            <option value="Pansexual" data-desc="Sente atração por pessoas, independente do gênero.">Pansexual</option>
-                                            <option value="Assexual" data-desc="Sente pouca ou nenhuma atração sexual por outras pessoas.">Assexual</option>
-                                            <option value="Outro" data-desc="Não se identifica com as opções acima.">Outro</option>
-                                            <option value="Prefiro não responder" data-desc="">Prefiro não responder</option>
-                                        </select>
-                                        <small id="desc-cand-orientacao-sexual" style="display: block; margin-top: 6px; color: #64748b; font-size: 0.8rem; min-height: 1em;"></small>
+                                        <details class="dropdown-select-descricao" id="detalhes-orientacao-sexual">
+                                            <summary class="dropdown-select-descricao-resumo" id="resumo-orientacao-sexual">Qual é a sua orientação sexual? *</summary>
+                                            <div class="radio-grupo-descricao" id="grupo-cand-orientacao-sexual">
+                                                <label class="radio-label-descricao">
+                                                    <input type="radio" name="cand-orientacao-sexual" value="Homossexual" required onchange="selecionarOpcaoDescricao(this, 'orientacao-sexual')">
+                                                    <span><strong>Homossexual</strong><small>Sente atração por pessoas do mesmo gênero.</small></span>
+                                                </label>
+                                                <label class="radio-label-descricao">
+                                                    <input type="radio" name="cand-orientacao-sexual" value="Heterossexual" required onchange="selecionarOpcaoDescricao(this, 'orientacao-sexual')">
+                                                    <span><strong>Heterossexual</strong><small>Sente atração por pessoas do gênero oposto.</small></span>
+                                                </label>
+                                                <label class="radio-label-descricao">
+                                                    <input type="radio" name="cand-orientacao-sexual" value="Bissexual" required onchange="selecionarOpcaoDescricao(this, 'orientacao-sexual')">
+                                                    <span><strong>Bissexual</strong><small>Sente atração por mais de um gênero.</small></span>
+                                                </label>
+                                                <label class="radio-label-descricao">
+                                                    <input type="radio" name="cand-orientacao-sexual" value="Pansexual" required onchange="selecionarOpcaoDescricao(this, 'orientacao-sexual')">
+                                                    <span><strong>Pansexual</strong><small>Sente atração por pessoas, independente do gênero.</small></span>
+                                                </label>
+                                                <label class="radio-label-descricao">
+                                                    <input type="radio" name="cand-orientacao-sexual" value="Assexual" required onchange="selecionarOpcaoDescricao(this, 'orientacao-sexual')">
+                                                    <span><strong>Assexual</strong><small>Sente pouca ou nenhuma atração sexual por outras pessoas.</small></span>
+                                                </label>
+                                                <label class="radio-label-descricao">
+                                                    <input type="radio" name="cand-orientacao-sexual" value="Outro" required onchange="selecionarOpcaoDescricao(this, 'orientacao-sexual')">
+                                                    <span><strong>Outro</strong><small>Não se identifica com as opções acima.</small></span>
+                                                </label>
+                                                <label class="radio-label-descricao">
+                                                    <input type="radio" name="cand-orientacao-sexual" value="Prefiro não responder" required onchange="selecionarOpcaoDescricao(this, 'orientacao-sexual')">
+                                                    <span><strong>Prefiro não responder</strong></span>
+                                                </label>
+                                            </div>
+                                        </details>
                                     </div>
 
                                     <div class="aviso-diversidade-caixa">
@@ -1179,6 +1235,16 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
                 toast.classList.remove('show');
                 setTimeout(() => { toast.remove(); }, 400); 
             }, 5000);
+        }
+        // --- DROPDOWN RECOLHÍVEL COM CARDS DE DESCRIÇÃO (Identidade de Gênero / Orientação Sexual) ---
+        function selecionarOpcaoDescricao(input, campo) {
+            const resumo = document.getElementById('resumo-' + campo);
+            if (resumo) {
+                resumo.textContent = input.value;
+                resumo.classList.add('preenchido');
+            }
+            const detalhes = document.getElementById('detalhes-' + campo);
+            if (detalhes) detalhes.open = false;
         }
         // --- SISTEMA DE MODAL (LGPD) ---
         function openModal(event) {
@@ -2088,7 +2154,7 @@ async function carregarVagasSite() {
                         showToast("Selecione o tipo de contrato que está buscando.", "error");
                         return;
                     }
-                    if (!document.getElementById('cand-identidade-genero').value) {
+                    if (!document.querySelector('input[name="cand-identidade-genero"]:checked')) {
                         showToast("Selecione sua identidade de gênero.", "error");
                         return;
                     }
@@ -2096,7 +2162,7 @@ async function carregarVagasSite() {
                         showToast("Selecione sua cor ou raça.", "error");
                         return;
                     }
-                    if (!document.getElementById('cand-orientacao-sexual').value) {
+                    if (!document.querySelector('input[name="cand-orientacao-sexual"]:checked')) {
                         showToast("Selecione sua orientação sexual.", "error");
                         return;
                     }
@@ -2150,9 +2216,9 @@ async function carregarVagasSite() {
                             vagas_interesse: vagasSelecionadas,
                             experiencia_resumo: document.getElementById('cand-experiencia').value,
                             estado_civil: document.getElementById('cand-estado-civil').value,
-                            identidade_genero: document.getElementById('cand-identidade-genero').value,
+                            identidade_genero: (document.querySelector('input[name="cand-identidade-genero"]:checked') || {}).value || '',
                             cor_raca: (document.querySelector('input[name="cand-cor-raca"]:checked') || {}).value || '',
-                            orientacao_sexual: document.getElementById('cand-orientacao-sexual').value,
+                            orientacao_sexual: (document.querySelector('input[name="cand-orientacao-sexual"]:checked') || {}).value || '',
                             pretensao_salarial: document.getElementById('cand-pretensao-salarial').value,
                             tipo_contrato: (document.querySelector('input[name="cand-tipo-contrato"]:checked') || {}).value || '',
                             pcd: (document.querySelector('input[name="cand-pcd"]:checked') || {}).value || '',
