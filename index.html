@@ -867,18 +867,19 @@
                                         </div>
                                     </div>
 
-                                    <div class="linha-estado-cidade" style="align-items: flex-start;">
-                                        <select id="cand-identidade-genero" required style="flex: 1; cursor: pointer;">
+                                    <div class="linha-estado-cidade" style="flex-direction: column; align-items: stretch;">
+                                        <select id="cand-identidade-genero" required style="width: 100%; cursor: pointer;" onchange="document.getElementById('desc-cand-identidade-genero').textContent = this.options[this.selectedIndex].dataset.desc || '';">
                                             <option value="" disabled selected>Identidade de Gênero *</option>
-                                            <option value="Homem Cisgênero">Homem Cisgênero</option>
-                                            <option value="Mulher Cisgênero">Mulher Cisgênero</option>
-                                            <option value="Homem Transgênero">Homem Transgênero</option>
-                                            <option value="Mulher Transgênero">Mulher Transgênero</option>
-                                            <option value="Não binário">Não binário</option>
-                                            <option value="Agênero">Agênero</option>
-                                            <option value="Gênero fluido">Gênero fluido</option>
-                                            <option value="Prefiro não responder">Prefiro não responder</option>
+                                            <option value="Homem Cisgênero" data-desc="Nasceu homem e se identifica como homem.">Homem Cisgênero</option>
+                                            <option value="Mulher Cisgênero" data-desc="Nasceu mulher e se identifica como mulher.">Mulher Cisgênero</option>
+                                            <option value="Homem Transgênero" data-desc="Sexo atribuído no nascimento foi feminino; identifica-se como homem.">Homem Transgênero</option>
+                                            <option value="Mulher Transgênero" data-desc="Sexo atribuído no nascimento foi masculino; identifica-se como mulher.">Mulher Transgênero</option>
+                                            <option value="Não binário" data-desc="Não se identifica só como homem ou só como mulher.">Não binário</option>
+                                            <option value="Agênero" data-desc="Não se identifica com nenhum gênero.">Agênero</option>
+                                            <option value="Gênero fluido" data-desc="Tem identidade de gênero que muda em momentos diferentes.">Gênero fluido</option>
+                                            <option value="Prefiro não responder" data-desc="">Prefiro não responder</option>
                                         </select>
+                                        <small id="desc-cand-identidade-genero" style="display: block; margin-top: 6px; color: #64748b; font-size: 0.8rem; min-height: 1em;"></small>
                                     </div>
 
                                     <div class="linha-estado-cidade" style="flex-direction: column; align-items: stretch;">
@@ -911,17 +912,18 @@
                                         </div>
                                     </div>
 
-                                    <div class="linha-estado-cidade" style="align-items: flex-start;">
-                                        <select id="cand-orientacao-sexual" required style="flex: 1; cursor: pointer;">
+                                    <div class="linha-estado-cidade" style="flex-direction: column; align-items: stretch;">
+                                        <select id="cand-orientacao-sexual" required style="width: 100%; cursor: pointer;" onchange="document.getElementById('desc-cand-orientacao-sexual').textContent = this.options[this.selectedIndex].dataset.desc || '';">
                                             <option value="" disabled selected>Qual é a sua orientação sexual? *</option>
-                                            <option value="Homossexual">Homossexual</option>
-                                            <option value="Heterossexual">Heterossexual</option>
-                                            <option value="Bissexual">Bissexual</option>
-                                            <option value="Pansexual">Pansexual</option>
-                                            <option value="Assexual">Assexual</option>
-                                            <option value="Outro">Outro</option>
-                                            <option value="Prefiro não responder">Prefiro não responder</option>
+                                            <option value="Homossexual" data-desc="Sente atração por pessoas do mesmo gênero.">Homossexual</option>
+                                            <option value="Heterossexual" data-desc="Sente atração por pessoas do gênero oposto.">Heterossexual</option>
+                                            <option value="Bissexual" data-desc="Sente atração por mais de um gênero.">Bissexual</option>
+                                            <option value="Pansexual" data-desc="Sente atração por pessoas, independente do gênero.">Pansexual</option>
+                                            <option value="Assexual" data-desc="Sente pouca ou nenhuma atração sexual por outras pessoas.">Assexual</option>
+                                            <option value="Outro" data-desc="Não se identifica com as opções acima.">Outro</option>
+                                            <option value="Prefiro não responder" data-desc="">Prefiro não responder</option>
                                         </select>
+                                        <small id="desc-cand-orientacao-sexual" style="display: block; margin-top: 6px; color: #64748b; font-size: 0.8rem; min-height: 1em;"></small>
                                     </div>
 
                                     <div class="aviso-diversidade-caixa">
