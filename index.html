@@ -287,6 +287,10 @@
             padding-right: 10px; 
             flex: 1; 
         }
+        .vaga-desc.rich { white-space: normal; }
+        .vaga-desc.rich p { margin: 0 0 8px; }
+        .vaga-desc.rich ul, .vaga-desc.rich ol { margin: 4px 0 8px 20px; padding: 0; }
+        .vaga-desc.rich b { color: #334155; }
         .vaga-desc::-webkit-scrollbar { width: 6px; }
         .vaga-desc::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 8px; }
         .vaga-desc::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 8px; }
@@ -1364,6 +1368,27 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
             document.getElementById('cookieBanner').classList.remove('show');
         }
        // 👇 FUNÇÃO: BUSCAR VAGAS DO SUPABASE (ATUALIZADA E BLINDADA) 👇
+// Mostra a descrição da vaga com negrito/listas/quebras de linha, limpando qualquer HTML fora da lista permitida.
+function descricaoVagaHtml(d) {
+    d = String(d || '');
+    const esc = (x) => x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    if (!/<(b|i|u|p|br|ul|ol|li|strong|em|div)\b/i.test(d)) return esc(d).replace(/\n/g, '<br>');
+    const doc = new DOMParser().parseFromString('<div id="r">' + d + '</div>', 'text/html');
+    const OK = { B: 'b', STRONG: 'b', I: 'i', EM: 'i', U: 'u', BR: 'br', P: 'p', DIV: 'p', UL: 'ul', OL: 'ol', LI: 'li' };
+    const limpa = (no) => {
+        let out = '';
+        no.childNodes.forEach(n => {
+            if (n.nodeType === 3) { out += esc(n.textContent); return; }
+            if (n.nodeType !== 1) return;
+            if (n.tagName === 'SCRIPT' || n.tagName === 'STYLE') return;
+            const t = OK[n.tagName];
+            if (!t) { out += limpa(n); return; }
+            out += t === 'br' ? '<br>' : `<${t}>${limpa(n)}</${t}>`;
+        });
+        return out;
+    };
+    return limpa(doc.getElementById('r'));
+}
 async function carregarVagasSite() {
     const container = document.getElementById('lista-vagas-site');
     if(!container) return;
@@ -1390,7 +1415,7 @@ async function carregarVagasSite() {
                                 <span class="vaga-meta-tag"><i class="material-icons" style="font-size: 16px;">location_on</i> ${vaga.cidade}</span>
                             </div>
                             
-                            <div class="vaga-desc">${vaga.descricao || 'Detalhes da vaga na entrevista.'}</div>
+                            <div class="vaga-desc rich">${vaga.descricao ? descricaoVagaHtml(vaga.descricao) : 'Detalhes da vaga na entrevista.'}</div>
                         </div>
                         <div class="btn-me-interesso" data-cargo="${encodeURIComponent(vaga.titulo || '')}" data-cidade="${encodeURIComponent(vaga.cidade || '')}" onclick="selecionarVaga(decodeURIComponent(this.dataset.cargo), decodeURIComponent(this.dataset.cidade))"><i class="material-icons" style="font-size: 18px; vertical-align: middle; margin-right: 6px;">send</i>Me Interesso</div>
                     </div>
