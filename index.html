@@ -1470,7 +1470,7 @@ async function carregarVagasSite() {
             const cidades = window.vagasDisponiveis.filter(v => v.cargo === cargo)
                 .sort((a, b) => (a.cidade + a.uf).localeCompare(b.cidade + b.uf, 'pt-BR'));
             selCid.innerHTML = '<option value="" disabled selected>Cidade da vaga *</option>' +
-                cidades.map(v => `<option value="${(v.cidade + '|' + v.uf).replace(/"/g, '&quot;')}">${v.cidade} - ${v.uf}</option>`).join('');
+                cidades.map(v => `<option value="${(v.cidade + '|' + v.uf).replace(/"/g, '&quot;')}">${v.cidade}${v.uf ? ' - ' + v.uf : ''}</option>`).join('');
             selCid.disabled = !cidades.length;
         };
         document.addEventListener('DOMContentLoaded', () => {
