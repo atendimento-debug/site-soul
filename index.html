@@ -1079,33 +1079,15 @@
                             </div>
 
                             <div class="checkbox-container">
-                                <span class="checkbox-container-title">Qual a sua Área de Interesse? (Pode selecionar mais de uma) <span style="color: var(--error-red);">*</span></span>
-                                <div class="checkbox-grid">
-                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Controlador de Acesso"> Controlador de Acesso</label>
-                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Auxiliar de Limpeza"> Auxiliar de Limpeza</label>
-                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Copeira"> Copeira</label>
-                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Auxiliar de Produção"> Auxiliar de Produção</label>
-                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Assistente Administrativo"> Assistente Administrativo</label>
-                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Auxiliar de Escritório"> Auxiliar de Escritório</label>
-                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Portaria e Recepção"> Portaria e Recepção</label>
-                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Zeladoria"> Zeladoria</label>
-                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Coletor de Resíduos"> Coletor de Resíduos</label>
-                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Jardineiro"> Jardineiro</label>
-                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Estoquista"> Estoquista</label>
-                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Enfermagem"> Enfermagem</label>
-                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Analista Clinico"> Analista Clinico</label>
-                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Técnico de Laboratório"> Téc. de Laboratório</label>
-                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Nutricionista"> Nutricionista</label>
-                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Encarregado(a)"> Encarregado(a)</label>
-                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Supervisores"> Supervisores</label>
-                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Gestão de RH"> Gestão de RH</label>
-                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Auxiliar de RH"> Auxiliar de RH</label>
-                                    <label class="checkbox-label"><input type="checkbox" name="cand-vaga" value="Financeiro"> Financeiro</label>
-                                    
-                                    <label class="checkbox-label"><input type="checkbox" id="chk-cand-outros" name="cand-vaga" value="Outros"> Outro Cargo</label>
-                                </div>
-                                <div id="wrapper-cand-outro" class="outra-vaga-wrapper">
-                                    <input type="text" id="cand-vaga-outra" placeholder="Digite o cargo que está buscando se não estiver na lista...">
+                                <span class="checkbox-container-title"><i class="material-icons" style="font-size: 1.1rem; vertical-align: -2px; margin-right: 6px;">work</i>Para qual vaga você quer se candidatar? <span style="color: var(--error-red);">*</span></span>
+                                <span style="display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 10px; font-weight: 600;">Escolha o cargo e depois a cidade onde a vaga está disponível.</span>
+                                <div class="linha-estado-cidade">
+                                    <select id="cand-vaga-cargo" required disabled style="flex: 1; cursor: pointer;">
+                                        <option value="" disabled selected>Carregando vagas... *</option>
+                                    </select>
+                                    <select id="cand-vaga-cidade" required disabled style="flex: 1; cursor: pointer;">
+                                        <option value="" disabled selected>Escolha o cargo primeiro *</option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -1410,7 +1392,7 @@ async function carregarVagasSite() {
                             
                             <div class="vaga-desc">${vaga.descricao || 'Detalhes da vaga na entrevista.'}</div>
                         </div>
-                        <div class="btn-me-interesso" onclick="selecionarVaga('${vaga.titulo}')"><i class="material-icons" style="font-size: 18px; vertical-align: middle; margin-right: 6px;">send</i>Me Interesso</div>
+                        <div class="btn-me-interesso" data-cargo="${encodeURIComponent(vaga.titulo || '')}" data-cidade="${encodeURIComponent(vaga.cidade || '')}" onclick="selecionarVaga(decodeURIComponent(this.dataset.cargo), decodeURIComponent(this.dataset.cidade))"><i class="material-icons" style="font-size: 18px; vertical-align: middle; margin-right: 6px;">send</i>Me Interesso</div>
                     </div>
                 </div>
             `;
@@ -1422,46 +1404,83 @@ async function carregarVagasSite() {
     }
 }
         // 👇 AÇÃO AO CLICAR EM "ME INTERESSO" 👇
-        window.selecionarVaga = function(tituloVaga) {
+        window.selecionarVaga = function(tituloVaga, cidadeVaga) {
             // Muda a rota pro Trabalhe Conosco
             window.location.hash = '#/trabalhe';
-            
+
             // Dá um tempinho pro formulário renderizar na tela
-            setTimeout(() => {
-                // 1. Limpa qualquer check que já estivesse lá
-                document.querySelectorAll('input[name="cand-vaga"]').forEach(cb => cb.checked = false);
-                
-                // 2. Procura se a vaga é padrão do formulário
-                const checkboxExato = document.querySelector(`input[name="cand-vaga"][value="${tituloVaga}"]`);
-                
-                if (checkboxExato) {
-                    // Achou! Só marca.
-                    checkboxExato.checked = true;
-                } else {
-                    // Não achou? Então a vaga é Diferente/Customizada pelo RH
-                    const chkOutros = document.getElementById('chk-cand-outros');
-                    if (chkOutros) {
-                        chkOutros.checked = true;
-                        // Dispara o evento pra caixa de texto abrir
-                        chkOutros.dispatchEvent(new Event('change'));
-                        
-                        const inputOutro = document.getElementById('cand-vaga-outra');
-                        if (inputOutro) {
-                            inputOutro.value = tituloVaga;
-                            // Dá um highlight visual pro cara ver que preencheu sozinho
-                            inputOutro.style.borderColor = "var(--success-green)";
-                            setTimeout(() => { inputOutro.style.borderColor = ""; }, 2000);
-                        }
-                    }
+            setTimeout(async () => {
+                await (window.vagasCarregando || Promise.resolve());
+                const selCargo = document.getElementById('cand-vaga-cargo');
+                if (!selCargo) return;
+                const cargo = (tituloVaga || '').trim();
+                // Pega LITERALMENTE o cargo da vaga clicada (se não estiver na lista, cria a opção).
+                let optCargo = Array.from(selCargo.options).find(o => o.value === cargo);
+                if (!optCargo) {
+                    optCargo = new Option(cargo, cargo);
+                    selCargo.add(optCargo);
                 }
-                showToast(`Vaga selecionada: ${tituloVaga}`, "success");
+                selCargo.value = cargo;
+                window.popularCidadesDaVaga(cargo);
+
+                // Cidade/UF da vaga (aceita "Taubaté/SP" ou "Taubaté - SP")
+                const m = String(cidadeVaga || '').trim().match(/^(.*?)\s*[\/\-–,]\s*([A-Za-z]{2})$/);
+                const cid = (m ? m[1] : String(cidadeVaga || '')).trim();
+                const uf = m ? m[2].toUpperCase() : '';
+                const selCid = document.getElementById('cand-vaga-cidade');
+                if (selCid && cid) {
+                    const valor = cid + '|' + uf;
+                    const norm = (t) => String(t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+                    let optCid = Array.from(selCid.options).find(o => o.value && norm(o.value) === norm(valor));
+                    if (!optCid) {
+                        optCid = new Option(uf ? `${cid} - ${uf}` : cid, valor);
+                        selCid.add(optCid);
+                    }
+                    selCid.disabled = false;
+                    selCid.value = optCid.value;
+                }
+                if (selCargo.scrollIntoView) selCargo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                showToast(`Vaga selecionada: ${cargo}${cid ? ' — ' + cid + (uf ? '/' + uf : '') : ''}`, "success");
             }, 300);
+        };
+
+        // 👇 RECRUTAMENTO: cargos e cidades vêm das unidades cadastradas no sistema (RPC rs_vagas_publicas).
+        // O candidato escolhe a VAGA (cargo + cidade/UF) — é isso que vai pro RH, e não o endereço dele.
+        window.vagasDisponiveis = [];
+        window.carregarVagasFormulario = async function() {
+            const selCargo = document.getElementById('cand-vaga-cargo');
+            if (!selCargo) return;
+            try {
+                const { data, error } = await supabaseClient.rpc('rs_vagas_publicas');
+                if (error) throw error;
+                window.vagasDisponiveis = data || [];
+            } catch (err) {
+                console.error('Erro ao carregar vagas do formulário:', err);
+                window.vagasDisponiveis = [];
+            }
+            const cargos = Array.from(new Set(window.vagasDisponiveis.map(v => v.cargo))).sort((a, b) => a.localeCompare(b, 'pt-BR'));
+            selCargo.innerHTML = cargos.length
+                ? '<option value="" disabled selected>Cargo *</option>' + cargos.map(c => `<option value="${c.replace(/"/g, '&quot;')}">${c}</option>`).join('')
+                : '<option value="" disabled selected>Nenhuma vaga disponível no momento</option>';
+            selCargo.disabled = !cargos.length;
+        };
+        window.popularCidadesDaVaga = function(cargo) {
+            const selCid = document.getElementById('cand-vaga-cidade');
+            if (!selCid) return;
+            const cidades = window.vagasDisponiveis.filter(v => v.cargo === cargo)
+                .sort((a, b) => (a.cidade + a.uf).localeCompare(b.cidade + b.uf, 'pt-BR'));
+            selCid.innerHTML = '<option value="" disabled selected>Cidade da vaga *</option>' +
+                cidades.map(v => `<option value="${(v.cidade + '|' + v.uf).replace(/"/g, '&quot;')}">${v.cidade} - ${v.uf}</option>`).join('');
+            selCid.disabled = !cidades.length;
         };
         document.addEventListener('DOMContentLoaded', () => {
             handleRoute();
             
             // Chama o carregamento das vagas
             carregarVagasSite();
+            window.vagasCarregando = window.carregarVagasFormulario();
+            const selCargoForm = document.getElementById('cand-vaga-cargo');
+            if (selCargoForm) selCargoForm.addEventListener('change', function() { window.popularCidadesDaVaga(this.value); });
             if (localStorage.getItem('soul_high_contrast') === 'true') document.body.classList.add('high-contrast');
             if (localStorage.getItem('soul_large_text') === 'true') document.documentElement.classList.add('large-text');
             if (!localStorage.getItem('soul_cookies_accepted')) {
@@ -2091,19 +2110,19 @@ async function carregarVagasSite() {
         // (a confirmação com o Google agora acontece dentro da função do servidor, junto com o envio)
         // -----------------------------------
 
-                    const checkboxes = document.querySelectorAll('input[name="cand-vaga"]:checked');
-                    if (checkboxes.length === 0) {
-                        showToast("Selecione pelo menos uma área de interesse.", "error");
+                    // 👇 A VAGA escolhida (cargo + cidade/UF) é o que vai pro RH — não o endereço do candidato.
+                    const vagaCargo = (document.getElementById('cand-vaga-cargo').value || '').trim();
+                    const vagaCidadeBruta = document.getElementById('cand-vaga-cidade').value || '';
+                    if (!vagaCargo) {
+                        showToast("Escolha o cargo da vaga.", "error");
                         return;
                     }
-                    // Lógica Mágica de Captura de Vagas (Incluindo o "Outros")
-                    let arrayVagas = Array.from(checkboxes).map(cb => cb.value);
-                    if (arrayVagas.includes("Outros")) {
-                        const textoOutro = document.getElementById('cand-vaga-outra').value.trim();
-                        arrayVagas = arrayVagas.filter(v => v !== "Outros"); 
-                        if (textoOutro) arrayVagas.push(`Outros: ${textoOutro}`); 
+                    if (!vagaCidadeBruta) {
+                        showToast("Escolha a cidade da vaga.", "error");
+                        return;
                     }
-                    const vagasSelecionadas = arrayVagas.join(', ');
+                    const [vagaCidade, vagaUf] = vagaCidadeBruta.split('|');
+                    const vagasSelecionadas = vagaCargo;
                     const file = inputFile.files[0];
                     if (!file) {
                         showToast("Por favor, anexe um currículo.", "error");
@@ -2213,8 +2232,15 @@ async function carregarVagasSite() {
                             nome: document.getElementById('cand-nome').value,
                             email: emailInput,
                             telefone: telefoneInput,
-                            cidade: document.getElementById('cand-cidade').value,
-                            estado: document.getElementById('cand-estado').value,
+                            // Cidade/estado = da VAGA (é o que o RH usa pra separar os candidatos).
+                            cidade: vagaCidade,
+                            estado: vagaUf,
+                            vaga_cargo: vagaCargo,
+                            vaga_cidade: vagaCidade,
+                            vaga_uf: vagaUf,
+                            // O endereço do candidato continua salvo (CEP, rua, número, bairro + cidade/UF dele).
+                            candidato_cidade: document.getElementById('cand-cidade').value,
+                            candidato_estado: document.getElementById('cand-estado').value,
                             vagas_interesse: vagasSelecionadas,
                             experiencia_resumo: document.getElementById('cand-experiencia').value,
                             estado_civil: document.getElementById('cand-estado-civil').value,
@@ -2232,7 +2258,7 @@ async function carregarVagasSite() {
                             endereco_rua: document.getElementById('cand-rua').value,
                             endereco_numero: document.getElementById('cand-numero').value,
                             endereco_complemento: document.getElementById('cand-complemento').value,
-                            endereco_bairro: document.getElementById('cand-bairro').value,
+                            endereco_bairro: document.getElementById('cand-bairro').value + (document.getElementById('cand-cidade').value ? ' (' + document.getElementById('cand-cidade').value + '/' + document.getElementById('cand-estado').value + ')' : ''),
                             cnh_possui: cnhPossuiValor,
                             cnh_categoria: cnhPossuiValor === 'Sim' ? cnhCategoriaValor : null,
                             formacao_academica: document.getElementById('cand-formacao').value,
@@ -2261,7 +2287,8 @@ async function carregarVagasSite() {
                         }
                         showToast("Currículo enviado com sucesso!", "success");
                         formCurriculo.reset();
-                        document.getElementById('wrapper-cand-outro').classList.remove('show');
+                        const selCidReset = document.getElementById('cand-vaga-cidade');
+                        if (selCidReset) { selCidReset.innerHTML = '<option value="" disabled selected>Escolha o cargo primeiro *</option>'; selCidReset.disabled = true; }
                         document.getElementById('wrapper-cand-indicacao').classList.remove('show');
                         document.getElementById('wrapper-cand-como-soube-outro').classList.remove('show');
                         fileDisplay.classList.remove('file-selected');
