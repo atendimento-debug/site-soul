@@ -815,6 +815,19 @@
                     <div class="form-container">
                         <form id="form-curriculo">
                             <div class="checkbox-container">
+                                <span class="checkbox-container-title"><i class="material-icons" style="font-size: 1.1rem; vertical-align: -2px; margin-right: 6px;">work</i>Para qual vaga você quer se candidatar? <span style="color: var(--error-red);">*</span></span>
+                                <span style="display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 10px; font-weight: 600;">Escolha o cargo e, depois, a cidade onde a vaga está disponível.</span>
+                                <div class="linha-estado-cidade">
+                                    <select id="cand-vaga-cargo" required disabled style="flex: 1; cursor: pointer;">
+                                        <option value="" disabled selected>Carregando vagas... *</option>
+                                    </select>
+                                    <select id="cand-vaga-cidade" required disabled style="flex: 1; cursor: pointer;">
+                                        <option value="" disabled selected>Escolha o cargo primeiro *</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="checkbox-container">
                                 <span class="checkbox-container-title"><i class="material-icons" style="font-size: 1.1rem; vertical-align: -2px; margin-right: 6px;">person</i>Dados Pessoais</span>
                                 <div style="display: flex; flex-direction: column; gap: 20px;">
                                     <input type="text" id="cand-nome" placeholder="Seu Nome Completo *" required>
@@ -1079,19 +1092,6 @@
                                     <textarea id="cand-formacao" placeholder="Formação Acadêmica (Ex: Ensino Médio Completo, Técnico em Segurança, etc.) *" rows="3" required></textarea>
                                     <textarea id="cand-experiencia-profissional" placeholder="Experiência Profissional (empresas, cargos e período em que trabalhou) *" rows="4" required></textarea>
                                     <textarea id="cand-objetivos" placeholder="Seus objetivos profissionais *" rows="3" required></textarea>
-                                </div>
-                            </div>
-
-                            <div class="checkbox-container">
-                                <span class="checkbox-container-title"><i class="material-icons" style="font-size: 1.1rem; vertical-align: -2px; margin-right: 6px;">work</i>Para qual vaga você quer se candidatar? <span style="color: var(--error-red);">*</span></span>
-                                <span style="display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 10px; font-weight: 600;">Escolha o cargo e depois a cidade onde a vaga está disponível.</span>
-                                <div class="linha-estado-cidade">
-                                    <select id="cand-vaga-cargo" required disabled style="flex: 1; cursor: pointer;">
-                                        <option value="" disabled selected>Carregando vagas... *</option>
-                                    </select>
-                                    <select id="cand-vaga-cidade" required disabled style="flex: 1; cursor: pointer;">
-                                        <option value="" disabled selected>Escolha o cargo primeiro *</option>
-                                    </select>
                                 </div>
                             </div>
 
@@ -1369,6 +1369,8 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
         }
        // 👇 FUNÇÃO: BUSCAR VAGAS DO SUPABASE (ATUALIZADA E BLINDADA) 👇
 // Mostra a descrição da vaga com negrito/listas/quebras de linha, limpando qualquer HTML fora da lista permitida.
+// Compara cargos sem diferença de maiúscula/acento/espaço (AUXILIAR DE PRODUÇÃO = Auxiliar de Produção).
+function chaveCargo(t) { return String(t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim().toLowerCase(); }
 function descricaoVagaHtml(d) {
     d = String(d || '');
     const esc = (x) => x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -1402,22 +1404,27 @@ async function carregarVagasSite() {
         }
         // 👇 Inverte a ordem das vagas aqui no front-end para mostrar a mais recente primeiro
         data.reverse();
+        // Um card por CARGO (sem repetir por cidade e sem mostrar cidade/estado).
+        const grupos = new Map();
+        data.forEach(v => {
+            const titulo = String(v.titulo || '').trim();
+            if (!titulo) return;
+            const k = chaveCargo(titulo);
+            const g = grupos.get(k);
+            if (!g) grupos.set(k, { titulo, descricao: v.descricao || '' });
+            else if (!g.descricao && v.descricao) g.descricao = v.descricao;
+        });
         let html = '';
-        data.forEach(vaga => {
+        grupos.forEach(vaga => {
             html += `
                 <div class="vaga-card">
                     <div class="vaga-conteudo">
                         <div>
                             <span class="vaga-status-pill"><i class="material-icons" style="font-size: 13px;">fiber_manual_record</i> Vaga Ativa</span>
-                            <h3 class="vaga-title">${vaga.titulo}</h3>
-                            
-                            <div class="vaga-meta">
-                                <span class="vaga-meta-tag"><i class="material-icons" style="font-size: 16px;">location_on</i> ${vaga.cidade}</span>
-                            </div>
-                            
+                            <h3 class="vaga-title">${vaga.titulo.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</h3>
                             <div class="vaga-desc rich">${vaga.descricao ? descricaoVagaHtml(vaga.descricao) : 'Detalhes da vaga na entrevista.'}</div>
                         </div>
-                        <div class="btn-me-interesso" data-cargo="${encodeURIComponent(vaga.titulo || '')}" data-cidade="${encodeURIComponent(vaga.cidade || '')}" onclick="selecionarVaga(decodeURIComponent(this.dataset.cargo), decodeURIComponent(this.dataset.cidade))"><i class="material-icons" style="font-size: 18px; vertical-align: middle; margin-right: 6px;">send</i>Me Interesso</div>
+                        <div class="btn-me-interesso" data-cargo="${encodeURIComponent(vaga.titulo)}" onclick="selecionarVaga(decodeURIComponent(this.dataset.cargo))"><i class="material-icons" style="font-size: 18px; vertical-align: middle; margin-right: 6px;">send</i>Me Interesso</div>
                     </div>
                 </div>
             `;
@@ -1429,7 +1436,7 @@ async function carregarVagasSite() {
     }
 }
         // 👇 AÇÃO AO CLICAR EM "ME INTERESSO" 👇
-        window.selecionarVaga = function(tituloVaga, cidadeVaga) {
+        window.selecionarVaga = function(tituloVaga) {
             // Muda a rota pro Trabalhe Conosco
             window.location.hash = '#/trabalhe';
 
@@ -1438,34 +1445,16 @@ async function carregarVagasSite() {
                 await (window.vagasCarregando || Promise.resolve());
                 const selCargo = document.getElementById('cand-vaga-cargo');
                 if (!selCargo) return;
-                const cargo = (tituloVaga || '').trim();
-                // Pega LITERALMENTE o cargo da vaga clicada (se não estiver na lista, cria a opção).
-                let optCargo = Array.from(selCargo.options).find(o => o.value === cargo);
-                if (!optCargo) {
-                    optCargo = new Option(cargo, cargo);
-                    selCargo.add(optCargo);
-                }
-                selCargo.value = cargo;
-                window.popularCidadesDaVaga(cargo);
-
-                // Cidade/UF da vaga (aceita "Taubaté/SP" ou "Taubaté - SP")
-                const m = String(cidadeVaga || '').trim().match(/^(.*?)\s*[\/\-–,]\s*([A-Za-z]{2})$/);
-                const cid = (m ? m[1] : String(cidadeVaga || '')).trim();
-                const uf = m ? m[2].toUpperCase() : '';
+                const k = chaveCargo(tituloVaga);
+                let opt = Array.from(selCargo.options).find(o => o.value && chaveCargo(o.value) === k);
+                if (!opt) { opt = new Option(String(tituloVaga || '').trim(), String(tituloVaga || '').trim()); selCargo.add(opt); selCargo.disabled = false; }
+                selCargo.value = opt.value;
+                // Já mostra as cidades/estados disponíveis pra esse cargo (se só tiver uma, já seleciona).
+                window.popularCidadesDaVaga(opt.value);
                 const selCid = document.getElementById('cand-vaga-cidade');
-                if (selCid && cid) {
-                    const valor = cid + '|' + uf;
-                    const norm = (t) => String(t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-                    let optCid = Array.from(selCid.options).find(o => o.value && norm(o.value) === norm(valor));
-                    if (!optCid) {
-                        optCid = new Option(uf ? `${cid} - ${uf}` : cid, valor);
-                        selCid.add(optCid);
-                    }
-                    selCid.disabled = false;
-                    selCid.value = optCid.value;
-                }
+                if (selCid && selCid.options.length === 2) selCid.selectedIndex = 1;
                 if (selCargo.scrollIntoView) selCargo.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                showToast(`Vaga selecionada: ${cargo}${cid ? ' — ' + cid + (uf ? '/' + uf : '') : ''}`, "success");
+                showToast(`Vaga selecionada: ${opt.value}. Agora escolha a cidade.`, "success");
             }, 300);
         };
 
@@ -1483,7 +1472,9 @@ async function carregarVagasSite() {
                 console.error('Erro ao carregar vagas do formulário:', err);
                 window.vagasDisponiveis = [];
             }
-            const cargos = Array.from(new Set(window.vagasDisponiveis.map(v => v.cargo))).sort((a, b) => a.localeCompare(b, 'pt-BR'));
+            const mapaCargos = new Map();
+            window.vagasDisponiveis.forEach(v => { const k = chaveCargo(v.cargo); if (k && !mapaCargos.has(k)) mapaCargos.set(k, String(v.cargo).trim()); });
+            const cargos = Array.from(mapaCargos.values()).sort((a, b) => a.localeCompare(b, 'pt-BR'));
             selCargo.innerHTML = cargos.length
                 ? '<option value="" disabled selected>Cargo *</option>' + cargos.map(c => `<option value="${c.replace(/"/g, '&quot;')}">${c}</option>`).join('')
                 : '<option value="" disabled selected>Nenhuma vaga disponível no momento</option>';
@@ -1492,7 +1483,10 @@ async function carregarVagasSite() {
         window.popularCidadesDaVaga = function(cargo) {
             const selCid = document.getElementById('cand-vaga-cidade');
             if (!selCid) return;
-            const cidades = window.vagasDisponiveis.filter(v => v.cargo === cargo)
+            const kc = chaveCargo(cargo);
+            const vistos = new Set();
+            const cidades = window.vagasDisponiveis.filter(v => chaveCargo(v.cargo) === kc)
+                .filter(v => { const c = chaveCargo(v.cidade + '|' + v.uf); if (vistos.has(c)) return false; vistos.add(c); return true; })
                 .sort((a, b) => (a.cidade + a.uf).localeCompare(b.cidade + b.uf, 'pt-BR'));
             selCid.innerHTML = '<option value="" disabled selected>Cidade da vaga *</option>' +
                 cidades.map(v => `<option value="${(v.cidade + '|' + v.uf).replace(/"/g, '&quot;')}">${v.cidade}${v.uf ? ' - ' + v.uf : ''}</option>`).join('');
