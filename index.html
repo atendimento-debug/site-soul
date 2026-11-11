@@ -1951,9 +1951,14 @@ async function carregarVagasSite() {
                                 selectEstado.value = data.uf;
                                 try {
                                     await carregarCidadesPorUf(data.uf);
-                                    if (data.localidade && selectCidade) {
-                                        const opcaoExiste = Array.from(selectCidade.options).some(o => o.value === data.localidade);
-                                        if (opcaoExiste) selectCidade.value = data.localidade;
+                                    const campoCidade = document.getElementById('cand-cidade');
+                                    if (data.localidade && campoCidade) {
+                                        if (campoCidade.tagName === 'INPUT') {
+                                            campoCidade.value = data.localidade;
+                                        } else {
+                                            const opcaoExiste = Array.from(campoCidade.options).some(o => o.value === data.localidade);
+                                            if (opcaoExiste) campoCidade.value = data.localidade;
+                                        }
                                     }
                                 } catch (err) {
                                     console.error("Erro ao carregar cidades do CEP", err);
@@ -2004,32 +2009,84 @@ async function carregarVagasSite() {
             // 👇 NOVO: virou uma função reaproveitável (retorna Promise) pra poder ser
             // chamada tanto quando a pessoa troca o Estado manualmente quanto quando o
             // CEP já vem preenchido com o Estado/Cidade automaticamente.
+            // 👇 À PROVA DE FALHA: Estado e Cidade vêm da API do IBGE, que às vezes fica lenta ou
+            // fora do ar (principalmente no celular com internet fraca). Antes, se ela falhasse,
+            // o campo ficava vazio/travado e a pessoa não conseguia enviar o currículo.
+            // Agora: (1) a lista de Estados já vem pronta, sem depender de internet;
+            // (2) as cidades tentam o IBGE (com limite de tempo), depois a BrasilAPI;
+            // (3) se tudo falhar, o campo Cidade vira um campo de digitação livre.
+            const ESTADOS_BR = [['AC','Acre'],['AL','Alagoas'],['AP','Amapá'],['AM','Amazonas'],['BA','Bahia'],['CE','Ceará'],['DF','Distrito Federal'],['ES','Espírito Santo'],['GO','Goiás'],['MA','Maranhão'],['MT','Mato Grosso'],['MS','Mato Grosso do Sul'],['MG','Minas Gerais'],['PA','Pará'],['PB','Paraíba'],['PR','Paraná'],['PE','Pernambuco'],['PI','Piauí'],['RJ','Rio de Janeiro'],['RN','Rio Grande do Norte'],['RS','Rio Grande do Sul'],['RO','Rondônia'],['RR','Roraima'],['SC','Santa Catarina'],['SP','São Paulo'],['SE','Sergipe'],['TO','Tocantins']];
+            async function fetchJsonComTempo(url, ms) {
+                const ctrl = new AbortController();
+                const t = setTimeout(() => ctrl.abort(), ms);
+                try {
+                    const r = await fetch(url, { signal: ctrl.signal });
+                    if (!r.ok) throw new Error('HTTP ' + r.status);
+                    return await r.json();
+                } finally { clearTimeout(t); }
+            }
+            async function buscarCidadesDaUf(uf) {
+                const fontes = [
+                    async () => (await fetchJsonComTempo(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios?orderBy=nome`, 8000)).map(c => c.nome),
+                    async () => (await fetchJsonComTempo(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios?orderBy=nome`, 12000)).map(c => c.nome),
+                    async () => (await fetchJsonComTempo(`https://brasilapi.com.br/api/ibge/municipios/v1/${uf}?providers=dados-abertos-br,gov,wikipedia`, 12000)).map(c => c.nome).sort((a, b) => a.localeCompare(b, 'pt-BR'))
+                ];
+                for (const tentar of fontes) {
+                    try {
+                        const nomes = await tentar();
+                        if (Array.isArray(nomes) && nomes.length > 0) return nomes;
+                    } catch (err) { console.warn('Falha ao buscar cidades, tentando outra fonte', err); }
+                }
+                return null;
+            }
+            let selectCidadeSelectOriginal = selectCidade;
+            function cidadeComoSelect() {
+                const atual = document.getElementById('cand-cidade');
+                if (atual && atual.tagName === 'SELECT') return atual;
+                if (atual && selectCidadeSelectOriginal) { atual.replaceWith(selectCidadeSelectOriginal); }
+                return document.getElementById('cand-cidade');
+            }
+            function cidadeComoTexto() {
+                const atual = document.getElementById('cand-cidade');
+                if (atual && atual.tagName === 'INPUT') return atual;
+                const inp = document.createElement('input');
+                inp.type = 'text';
+                inp.id = 'cand-cidade';
+                inp.required = true;
+                inp.placeholder = 'Digite o nome da sua cidade';
+                inp.style.cssText = 'flex: 2;';
+                atual.replaceWith(inp);
+                return inp;
+            }
             async function carregarCidadesPorUf(uf) {
-                selectCidade.innerHTML = '<option value="" disabled selected>Carregando cidades...</option>';
-                selectCidade.disabled = true;
-                const res = await fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios?orderBy=nome`);
-                const cidades = await res.json();
-                selectCidade.innerHTML = '<option value="" disabled selected>Selecione a Cidade</option>';
-                cidades.forEach(cidade => {
+                let sel = cidadeComoSelect();
+                sel.innerHTML = '<option value="" disabled selected>Carregando cidades...</option>';
+                sel.disabled = true;
+                const nomes = await buscarCidadesDaUf(uf);
+                if (!nomes) {
+                    // Nenhuma fonte respondeu: deixa a pessoa digitar a cidade e seguir com o envio.
+                    const inp = cidadeComoTexto();
+                    showToast("Não conseguimos carregar a lista de cidades. Digite o nome da sua cidade no campo.", "error");
+                    return [];
+                }
+                sel = cidadeComoSelect();
+                sel.innerHTML = '<option value="" disabled selected>Selecione a Cidade</option>';
+                nomes.forEach(nome => {
                     const option = document.createElement('option');
-                    option.value = cidade.nome;
-                    option.textContent = cidade.nome;
-                    selectCidade.appendChild(option);
+                    option.value = nome;
+                    option.textContent = nome;
+                    sel.appendChild(option);
                 });
-                selectCidade.disabled = false;
-                return cidades;
+                sel.disabled = false;
+                return nomes;
             }
             if(selectEstado && selectCidade) {
-                fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome')
-                    .then(res => res.json())
-                    .then(estados => {
-                        estados.forEach(estado => {
-                            const option = document.createElement('option');
-                            option.value = estado.sigla;
-                            option.textContent = estado.nome;
-                            selectEstado.appendChild(option);
-                        });
-                    });
+                ESTADOS_BR.forEach(([sigla, nome]) => {
+                    const option = document.createElement('option');
+                    option.value = sigla;
+                    option.textContent = nome;
+                    selectEstado.appendChild(option);
+                });
                 selectEstado.addEventListener('change', (e) => {
                     carregarCidadesPorUf(e.target.value);
                 });
@@ -2045,7 +2102,7 @@ async function carregarVagasSite() {
     // --- VALIDAÇÃO DO RECAPTCHA (CONFIRMADA NO SERVIDOR) ---
     const recaptchaResponse = e.target.querySelector('.g-recaptcha-response').value;
     if (!recaptchaResponse) {
-        showToast("Por favor, confirme que você não é um robô.", "error");
+        showToast(typeof grecaptcha === "undefined" ? "O captcha não carregou (internet fraca ou bloqueio). Atualize a página e tente de novo." : "Por favor, confirme que você não é um robô.", "error");
         return;
     }
     // (a confirmação com o Google agora acontece dentro da função do servidor, junto com o envio)
@@ -2127,7 +2184,7 @@ async function carregarVagasSite() {
         // --- VALIDAÇÃO DO RECAPTCHA (CONFIRMADA NO SERVIDOR) ---
         const recaptchaResponse = e.target.querySelector('.g-recaptcha-response').value;
         if (!recaptchaResponse) {
-            showToast("Por favor, confirme que você não é um robô.", "error");
+            showToast(typeof grecaptcha === "undefined" ? "O captcha não carregou (internet fraca ou bloqueio). Atualize a página e tente de novo." : "Por favor, confirme que você não é um robô.", "error");
             return;
         }
         // (a confirmação com o Google agora acontece dentro da função do servidor, junto com o envio)
